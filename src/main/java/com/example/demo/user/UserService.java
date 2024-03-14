@@ -11,13 +11,11 @@ public class UserService {
     public List<User> GetUsers() {
         return List.of(
                 new User(
-                        1L,
+                        11,
                         "Ines",
-                        "Moalla",
-                        "",
-                        "Inesmoalla68@gmail.com",
-                        LocalDate.of(2003, Month.JANUARY, 10),
-                        21
+                        "12345678",
+                        "Inesmoalla68@gmail.com"
+
                 )
         );
     }

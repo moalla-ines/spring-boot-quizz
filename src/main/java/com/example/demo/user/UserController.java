@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping(path = "api/v1/user")
+    @RequestMapping(path = "api/v1/user")
 public class UserController {
 
     private final UserService userService;
@@ -19,7 +19,7 @@ public class UserController {
         this.userService = userService;
     }
 
-    @GetMapping("api/v1/acceuil_view")
+    @GetMapping("api/v1/LoginView")
     public List<User> getUsers() {
         return userService.getAllUsers();
     }
@@ -47,11 +47,10 @@ public class UserController {
         public User updateUser(Long id, User newUser) {
             User existingUser = userRepository.findById(id).orElse(null);
             if (existingUser != null) {
-                existingUser.setFirstname(newUser.getFirstname());
-                existingUser.setLastname(newUser.getLastname());
+                existingUser.setUsername(newUser.getUsername());
+                existingUser.setPassword(newUser.getPassword());
                 existingUser.setEmail(newUser.getEmail());
-                existingUser.setDob(newUser.getDob());
-                existingUser.setAge(newUser.getAge());
+
                 return userRepository.save(existingUser);
             }
             return null;

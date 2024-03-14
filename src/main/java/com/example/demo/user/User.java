@@ -12,56 +12,42 @@ import java.time.LocalDate;
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
-    private String firstname;
-    private String lastname;
+    private  Integer id;
+    private String username;
+
     private String password;
     private String email;
-    private LocalDate dob;
-    private Integer age;
 
-    public User(Long id, String firstname, String lastname, String password, String email, LocalDate dob, Integer age) {
+    public User(Integer id, String username, String password, String email) {
         this.id = id;
-        this.firstname = firstname;
-        this.lastname = lastname;
+        this.username = username;
         this.password = password;
         this.email = email;
-        this.dob = dob;
-        this.age = age;
     }
 
-    public User(String firstname, String lastname, String password, String email, LocalDate dob, Integer age) {
-        this.firstname = firstname;
-        this.lastname = lastname;
+    public User(String username, String password, String email) {
+        this.username = username;
         this.password = password;
         this.email = email;
-        this.dob = dob;
-        this.age = age;
+
     }
 
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
-    public String getFirstname() {
-        return firstname;
+    public String getUsername() {
+        return username;
     }
 
-    public void setFirstname(String firstname) {
-        this.firstname = firstname;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
-    public String getLastname() {
-        return lastname;
-    }
-
-    public void setLastname(String lastname) {
-        this.lastname = lastname;
-    }
     public String getPassword() {
         return password;
     }
@@ -69,6 +55,7 @@ public class User {
     public void setPassword(String password) {
         this.password = password;
     }
+
     public String getEmail() {
         return email;
     }
@@ -77,34 +64,20 @@ public class User {
         this.email = email;
     }
 
-
-
-    public LocalDate getDob() {
-        return dob;
-    }
-
-    public void setDob(LocalDate dob) {
-        this.dob = dob;
-    }
-
-    public Integer getAge() {
-        return age;
-    }
-
-    public void setAge(Integer age) {
-        this.age = age;
-    }
-
     @Override
     public String toString() {
         return "User{" +
                 "id=" + id +
-                ", firstname='" + firstname + '\'' +
-                ", lastname='" + lastname + '\'' +
+                ", username='" + username + '\'' +
                 ", password='" + password + '\'' +
                 ", email='" + email + '\'' +
-                ", dob=" + dob +
-                ", age=" + age +
                 '}';
     }
 }
+
+
+
+
+
+
+
