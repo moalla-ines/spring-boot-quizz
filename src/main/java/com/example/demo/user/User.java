@@ -7,14 +7,10 @@ import jakarta.persistence.Id;
 
 import java.time.LocalDate;
 @Entity
-
-
 public class User {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private  Integer id;
     private String username;
-
     private String password;
     private String email;
 
@@ -23,6 +19,9 @@ public class User {
         this.username = username;
         this.password = password;
         this.email = email;
+    }
+
+    public User() {
     }
 
     public User(String username, String password, String email) {

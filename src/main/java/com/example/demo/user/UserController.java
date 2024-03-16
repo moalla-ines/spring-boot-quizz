@@ -2,14 +2,13 @@ package com.example.demo.user;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-    @RequestMapping(path = "api/v1/user")
+@RequestMapping("api/v1/user")
+@CrossOrigin
 public class UserController {
 
     private final UserService userService;
@@ -19,44 +18,18 @@ public class UserController {
         this.userService = userService;
     }
 
-    @GetMapping("api/v1/LoginView")
+    @GetMapping()
     public List<User> getUsers() {
         return userService.getAllUsers();
     }
 
-    @Service
-    public class UserService {
-        private final UserRepository userRepository;
+    @GetMapping("/{id}")
+    public User getUserById(@PathVariable Integer id){
+        return userService.getUserById(id);
+    }
 
-        @Autowired
-        public UserService(UserRepository userRepository) {
-            this.userRepository = userRepository;
-        }
-
-        public List<User> getAllUsers() {
-            return userRepository.findAll();
-        }
-
-        public User getUserById(Long id) {
-            return userRepository.findById(id).orElse(null);
-        }
-
-        public User createUser(User user) {
-            return userRepository.save(user);
-        }
-        public User updateUser(Long id, User newUser) {
-            User existingUser = userRepository.findById(id).orElse(null);
-            if (existingUser != null) {
-                existingUser.setUsername(newUser.getUsername());
-                existingUser.setPassword(newUser.getPassword());
-                existingUser.setEmail(newUser.getEmail());
-
-                return userRepository.save(existingUser);
-            }
-            return null;
-        }
-
-        public void deleteUser(Long id) {
-            userRepository.deleteById(id);
-        }
-    }}
+    @PostMapping()
+    public void postUsers(@RequestBody User user){
+        userService.createUser(user);
+    }
+    }
