@@ -1,9 +1,12 @@
 package com.example.demo.Controller;
 
+import com.example.demo.Dto.LoginDto;
 import com.example.demo.Dto.UserDto;
 import com.example.demo.Entity.User;
+import com.example.demo.Response.LoginResponse;
 import com.example.demo.Service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -35,9 +38,14 @@ public class UserController {
         userService.createUser(user);
     }
 
-    @PostMapping(path =  "/save")
+    @PostMapping(path = "/save")
     public String saveUser(@RequestBody UserDto userDto){
         String id = userService.addUser(userDto);
         return id;
+    }
+    @PostMapping(path = "/login")
+    public ResponseEntity loginUser(@RequestBody LoginDto loginDto){
+       LoginResponse loginResponse = userService.loginUser(loginDto);
+       return ResponseEntity.ok(loginResponse);
     }
 }

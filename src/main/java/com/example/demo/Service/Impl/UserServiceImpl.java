@@ -1,8 +1,10 @@
 package com.example.demo.Service.Impl;
 
+import com.example.demo.Dto.LoginDto;
 import com.example.demo.Dto.UserDto;
 import com.example.demo.Entity.User;
 import com.example.demo.Repository.UserRepository;
+import com.example.demo.Response.LoginResponse;
 import com.example.demo.Service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -64,6 +66,11 @@ public class UserServiceImpl implements UserService {
         );
         userRepository.save(user);
         return user.getUsername();
+    }
+
+    @Override
+    public LoginResponse loginUser(LoginDto loginDto) {
+        return null;
     }
 }
 
