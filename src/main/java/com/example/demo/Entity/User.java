@@ -1,21 +1,25 @@
-package com.example.demo.user;
+package com.example.demo.Entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 import java.time.LocalDate;
 @Entity
+@Table(name = "user")
 public class User {
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private  Integer id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "iduser")
+
+    private  Integer iduser;
+    @Column(name = "username")
     private String username;
+    @Column(name = "password")
     private String password;
+    @Column(name = "email")
     private String email;
 
-    public User(Integer id, String username, String password, String email) {
-        this.id = id;
+    public User(Integer iduser, String username, String password, String email) {
+        this.iduser = iduser;
         this.username = username;
         this.password = password;
         this.email = email;
@@ -32,11 +36,11 @@ public class User {
     }
 
     public Integer getId() {
-        return id;
+        return iduser;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public void setId(Integer iduser) {
+        this.iduser = iduser;
     }
 
     public String getUsername() {
@@ -66,7 +70,7 @@ public class User {
     @Override
     public String toString() {
         return "User{" +
-                "id=" + id +
+                "iduser=" + iduser +
                 ", username='" + username + '\'' +
                 ", password='" + password + '\'' +
                 ", email='" + email + '\'' +

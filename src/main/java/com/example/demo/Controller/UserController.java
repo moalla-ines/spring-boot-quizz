@@ -1,7 +1,9 @@
-package com.example.demo.user;
+package com.example.demo.Controller;
 
+import com.example.demo.Dto.UserDto;
+import com.example.demo.Entity.User;
+import com.example.demo.Service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -32,4 +34,10 @@ public class UserController {
     public void postUsers(@RequestBody User user){
         userService.createUser(user);
     }
+
+    @PostMapping(path =  "/save")
+    public String saveUser(@RequestBody UserDto userDto){
+        String id = userService.addUser(userDto);
+        return id;
     }
+}
