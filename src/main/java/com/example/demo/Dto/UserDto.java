@@ -1,11 +1,10 @@
 package com.example.demo.Dto;
 
 public class UserDto {
-    private  Integer iduser;
+    private Integer iduser;
     private String username;
     private String password;
     private String email;
-
 
     public UserDto(Integer iduser, String username, String password, String email) {
         this.iduser = iduser;
@@ -16,7 +15,6 @@ public class UserDto {
 
     public UserDto() {
     }
-
 
     public Integer getIduser() {
         return iduser;
@@ -49,7 +47,6 @@ public class UserDto {
     public void setEmail(String email) {
         this.email = email;
     }
-
 
     @Override
     public String toString() {

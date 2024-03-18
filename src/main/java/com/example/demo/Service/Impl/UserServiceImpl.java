@@ -61,17 +61,29 @@ public class UserServiceImpl implements UserService {
         User user = new User(
                 userDto.getIduser(),
                 userDto.getUsername(),
-                userDto.getEmail(),
-                passwordEncoder.encode(userDto.getPassword())
+                userDto.getPassword(),
+                userDto.getEmail()
         );
         userRepository.save(user);
         return user.getUsername();
     }
 
+
+
     @Override
     public LoginResponse loginUser(LoginDto loginDto) {
-        return null;
+        String msg = "";
+        User user1 = userRepository.findByEmail(loginDto.getEmail());
+        if (user1 != null) {
+            String password = loginDto.getPassword();
+            String storedPassword = user1.getPassword(); // Mot de passe en clair
+            if (password.equals(storedPassword)) { // Ne comparez pas les mots de passe en clair en production
+                return new LoginResponse("Login Success", true);
+            } else {
+                return new LoginResponse("Password not match", false);
+            }
+        } else {
+            return new LoginResponse("Email not found", false);
+        }
     }
 }
-
-

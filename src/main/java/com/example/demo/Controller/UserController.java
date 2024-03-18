@@ -10,7 +10,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-
 @RestController
 @RequestMapping("api/v1/user")
 @CrossOrigin
@@ -34,18 +33,20 @@ public class UserController {
     }
 
     @PostMapping()
-    public void postUsers(@RequestBody User user){
-        userService.createUser(user);
+    public ResponseEntity<User> postUsers(@RequestBody User user){
+        User createdUser = userService.createUser(user);
+        return ResponseEntity.ok(createdUser);
     }
 
-    @PostMapping(path = "/save")
-    public String saveUser(@RequestBody UserDto userDto){
+    @PostMapping(path = "/signup")
+    public ResponseEntity<String> saveUser(@RequestBody UserDto userDto){
         String id = userService.addUser(userDto);
-        return id;
+        return ResponseEntity.ok(id);
     }
-    @PostMapping(path = "/login")
-    public ResponseEntity loginUser(@RequestBody LoginDto loginDto){
-       LoginResponse loginResponse = userService.loginUser(loginDto);
-       return ResponseEntity.ok(loginResponse);
+
+    @PostMapping(path = "/auth")
+    public ResponseEntity<LoginResponse> loginUser(@RequestBody LoginDto loginDto){
+        LoginResponse loginResponse = userService.loginUser(loginDto);
+        return ResponseEntity.ok(loginResponse);
     }
 }

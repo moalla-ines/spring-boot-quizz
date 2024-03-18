@@ -3,22 +3,23 @@ package com.example.demo.Entity;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
+
+
 @Entity
-@Table(name = "user")
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "iduser")
+    private Integer iduser;
 
-    private  Integer iduser;
-    @Column(name = "username")
     private String username;
-    @Column(name = "password")
     private String password;
-    @Column(name = "email")
     private String email;
 
-    public User(Integer iduser, String username, String password, String email) {
+
+
+
+
+public User(Integer iduser, String username, String password, String email) {
         this.iduser = iduser;
         this.username = username;
         this.password = password;
