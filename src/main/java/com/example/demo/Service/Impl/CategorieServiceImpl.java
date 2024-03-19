@@ -19,26 +19,6 @@ public class CategorieServiceImpl implements CategorieService {
     }
 
     @Override
-    public List<Categorie> findAll() {
-        return null;
-    }
-
-    @Override
-    public Optional<Categorie> findById(Integer id) {
-        return Optional.empty();
-    }
-
-    @Override
-    public Categorie save(Categorie categorie) {
-        return null;
-    }
-
-    @Override
-    public void deleteById(Integer id) {
-
-    }
-
-    @Override
     public List<Categorie> getAllCategories() {
         return categorieRepository.findAll();
     }

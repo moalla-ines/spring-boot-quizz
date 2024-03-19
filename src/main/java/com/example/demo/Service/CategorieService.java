@@ -7,13 +7,6 @@ import java.util.Optional;
 
 public interface CategorieService {
 
-    List<Categorie> findAll();
-
-    Optional<Categorie> findById(Integer id);
-
-    Categorie save(Categorie categorie);
-
-    void deleteById(Integer id);
 
     List<Categorie> getAllCategories();
 

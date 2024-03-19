@@ -2,6 +2,7 @@ package com.example.demo.Controller;
 
 import com.example.demo.Dto.LoginDto;
 import com.example.demo.Dto.UserDto;
+import com.example.demo.Entity.Categorie;
 import com.example.demo.Entity.User;
 import com.example.demo.Response.LoginResponse;
 import com.example.demo.Service.UserService;
@@ -28,18 +29,18 @@ public class UserController {
     }
 
     @GetMapping("/{id}")
-    public User getUserById(@PathVariable Integer id){
+    public User getUserById(@PathVariable Integer id) {
         return userService.getUserById(id);
     }
 
     @PostMapping()
-    public ResponseEntity<User> postUsers(@RequestBody User user){
+    public ResponseEntity<User> postUsers(@RequestBody User user) {
         User createdUser = userService.createUser(user);
         return ResponseEntity.ok(createdUser);
     }
 
     @PostMapping(path = "/signup")
-    public ResponseEntity<String> saveUser(@RequestBody UserDto userDto){
+    public ResponseEntity<String> saveUser(@RequestBody UserDto userDto) {
         // Vérifier si le rôle est spécifié, sinon utiliser "user" par défaut
         String role = userDto.getRole() != null ? userDto.getRole() : "user";
         userDto.setRole(role);
@@ -50,8 +51,25 @@ public class UserController {
 
 
     @PostMapping(path = "/auth")
-    public ResponseEntity<LoginResponse> loginUser(@RequestBody LoginDto loginDto){
+    public ResponseEntity<LoginResponse> loginUser(@RequestBody LoginDto loginDto) {
         LoginResponse loginResponse = userService.loginUser(loginDto);
         return ResponseEntity.ok(loginResponse);
     }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<User> updateUser(@PathVariable Integer id, @RequestBody User newUser) {
+        User updatedUser = userService.updateUser(id, newUser);
+        if (updatedUser != null) {
+            return ResponseEntity.ok(updatedUser);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteUser(@PathVariable Integer id) {
+        userService.deleteUser(id);
+        return ResponseEntity.noContent().build();
+    }
+
 }
