@@ -1,13 +1,21 @@
 package com.example.demo.Entity;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+
+@Entity
 public class Question {
-    private Integer id_question;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer idquestion;
     private String text;
-    private String options ;
+    private String options;
     private Integer indice_option;
 
-    public Question(Integer id_question, String text, String options, Integer indice_option) {
-        this.id_question = id_question;
+    public Question(Integer idquestion, String text, String options, Integer indice_option) {
+        this.idquestion = idquestion;
         this.text = text;
         this.options = options;
         this.indice_option = indice_option;
@@ -19,15 +27,12 @@ public class Question {
         this.indice_option = indice_option;
     }
 
-    public Question() {
+    public Integer getIdquestion() {
+        return idquestion;
     }
 
-    public Integer getId_question() {
-        return id_question;
-    }
-
-    public void setId_question(Integer id_question) {
-        this.id_question = id_question;
+    public void setIdquestion(Integer idquestion) {
+        this.idquestion = idquestion;
     }
 
     public String getText() {
@@ -57,7 +62,7 @@ public class Question {
     @Override
     public String toString() {
         return "Question{" +
-                "id_question=" + id_question +
+                "idquestion=" + idquestion +
                 ", text='" + text + '\'' +
                 ", options='" + options + '\'' +
                 ", indice_option=" + indice_option +

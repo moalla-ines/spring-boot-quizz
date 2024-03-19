@@ -12,11 +12,16 @@ public class Categorie {
     private Integer idcategorie;
     private String titre_categorie;
 
-    public Categorie() {
+    public Categorie(Integer idcategorie, String titre_categorie) {
+        this.idcategorie = idcategorie;
+        this.titre_categorie = titre_categorie;
     }
 
     public Categorie(String titre_categorie) {
         this.titre_categorie = titre_categorie;
+    }
+
+    public Categorie() {
     }
 
     public Integer getIdcategorie() {

@@ -7,13 +7,13 @@ import jakarta.persistence.Id;
 
 @Entity
 public class Niveau {
-@Id
-@GeneratedValue(strategy = GenerationType.IDENTITY)
-private Integer id_niveau;
-private String name;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer idniveau;
+    private String name;
 
-    public Niveau(Integer id_niveau, String name) {
-        this.id_niveau = id_niveau;
+    public Niveau(Integer idniveau, String name) {
+        this.idniveau = idniveau;
         this.name = name;
     }
 
@@ -24,12 +24,13 @@ private String name;
     public Niveau() {
     }
 
-    public Integer getId_niveau() {
-        return id_niveau;
+
+    public Integer getIdniveau() {
+        return idniveau;
     }
 
-    public void setId_niveau(Integer id_niveau) {
-        this.id_niveau = id_niveau;
+    public void setIdniveau(Integer idniveau) {
+        this.idniveau = idniveau;
     }
 
     public String getName() {
@@ -43,7 +44,7 @@ private String name;
     @Override
     public String toString() {
         return "Niveau{" +
-                "id_niveau=" + id_niveau +
+                "idniveau=" + idniveau +
                 ", name='" + name + '\'' +
                 '}';
     }
