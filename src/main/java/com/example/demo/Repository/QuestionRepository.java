@@ -1,4 +1,8 @@
 package com.example.demo.Repository;
 
-public interface QuestionRepository {
+import com.example.demo.Entity.Niveau;
+import com.example.demo.Entity.Question;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface QuestionRepository extends JpaRepository<Question, Integer> {
 }

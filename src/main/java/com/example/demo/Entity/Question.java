@@ -27,6 +27,9 @@ public class Question {
         this.indice_option = indice_option;
     }
 
+    public Question() {
+    }
+
     public Integer getIdquestion() {
         return idquestion;
     }

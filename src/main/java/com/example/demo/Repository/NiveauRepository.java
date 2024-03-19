@@ -1,4 +1,7 @@
 package com.example.demo.Repository;
 
-public interface NiveauRepository {
+import com.example.demo.Entity.Niveau;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface NiveauRepository extends JpaRepository<Niveau, Integer> {
 }
