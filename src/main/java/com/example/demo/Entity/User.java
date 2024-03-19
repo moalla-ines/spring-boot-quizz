@@ -15,32 +15,31 @@ public class User {
     private String password;
     private String email;
 
+    private String role;
 
-
-
-
-public User(Integer iduser, String username, String password, String email) {
+    public User(Integer iduser, String username, String password, String email, String role) {
         this.iduser = iduser;
         this.username = username;
         this.password = password;
         this.email = email;
+        this.role = role;
+    }
+
+    public User(String username, String password, String email, String role) {
+        this.username = username;
+        this.password = password;
+        this.email = email;
+        this.role = role;
     }
 
     public User() {
     }
 
-    public User(String username, String password, String email) {
-        this.username = username;
-        this.password = password;
-        this.email = email;
-
-    }
-
-    public Integer getId() {
+    public Integer getIduser() {
         return iduser;
     }
 
-    public void setId(Integer iduser) {
+    public void setIduser(Integer iduser) {
         this.iduser = iduser;
     }
 
@@ -68,6 +67,14 @@ public User(Integer iduser, String username, String password, String email) {
         this.email = email;
     }
 
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
+    }
+
     @Override
     public String toString() {
         return "User{" +
@@ -75,13 +82,9 @@ public User(Integer iduser, String username, String password, String email) {
                 ", username='" + username + '\'' +
                 ", password='" + password + '\'' +
                 ", email='" + email + '\'' +
+                ", role='" + role + '\'' +
                 '}';
     }
 }
-
-
-
-
-
 
 

@@ -40,9 +40,14 @@ public class UserController {
 
     @PostMapping(path = "/signup")
     public ResponseEntity<String> saveUser(@RequestBody UserDto userDto){
+        // Vérifier si le rôle est spécifié, sinon utiliser "user" par défaut
+        String role = userDto.getRole() != null ? userDto.getRole() : "user";
+        userDto.setRole(role);
+
         String id = userService.addUser(userDto);
         return ResponseEntity.ok(id);
     }
+
 
     @PostMapping(path = "/auth")
     public ResponseEntity<LoginResponse> loginUser(@RequestBody LoginDto loginDto){

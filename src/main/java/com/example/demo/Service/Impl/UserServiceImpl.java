@@ -15,12 +15,12 @@ import java.util.List;
 @Service
 public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
-    private final PasswordEncoder passwordEncoder;
+
 
     @Autowired
-    public UserServiceImpl(UserRepository userRepository, PasswordEncoder passwordEncoder) {
+    public UserServiceImpl(UserRepository userRepository) {
         this.userRepository = userRepository;
-        this.passwordEncoder = passwordEncoder;
+
     }
 
     @Override
@@ -58,12 +58,15 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public String addUser(UserDto userDto) {
+
+        userDto.setRole("2");
+
         User user = new User(
                 userDto.getIduser(),
                 userDto.getUsername(),
                 userDto.getPassword(),
-                userDto.getEmail()
-        );
+                userDto.getEmail(),
+                userDto.getRole());
         userRepository.save(user);
         return user.getUsername();
     }

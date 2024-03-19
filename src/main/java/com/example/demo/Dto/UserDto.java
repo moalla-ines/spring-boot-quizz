@@ -5,12 +5,14 @@ public class UserDto {
     private String username;
     private String password;
     private String email;
+    private String role;
 
-    public UserDto(Integer iduser, String username, String password, String email) {
+    public UserDto(Integer iduser, String username, String password, String email, String role) {
         this.iduser = iduser;
         this.username = username;
         this.password = password;
         this.email = email;
+        this.role = role;
     }
 
     public UserDto() {
@@ -48,6 +50,14 @@ public class UserDto {
         this.email = email;
     }
 
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
+    }
+
     @Override
     public String toString() {
         return "UserDto{" +
@@ -55,6 +65,7 @@ public class UserDto {
                 ", username='" + username + '\'' +
                 ", password='" + password + '\'' +
                 ", email='" + email + '\'' +
+                ", role='" + role + '\'' +
                 '}';
     }
 }
