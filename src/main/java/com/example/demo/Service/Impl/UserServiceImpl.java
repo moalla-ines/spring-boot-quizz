@@ -2,6 +2,7 @@ package com.example.demo.Service.Impl;
 
 import com.example.demo.Dto.LoginDto;
 import com.example.demo.Dto.UserDto;
+import com.example.demo.Entity.TypeUser;
 import com.example.demo.Entity.User;
 import com.example.demo.Repository.UserRepository;
 import com.example.demo.Response.LoginResponse;
@@ -56,20 +57,23 @@ public class UserServiceImpl implements UserService {
         userRepository.deleteById(id);
     }
 
+
     @Override
     public String addUser(UserDto userDto) {
+        TypeUser user = new TypeUser(2,"user");
+        userDto.setRole(String.valueOf(user));
 
-        userDto.setRole("2");
-
-        User user = new User(
+        User user1 = new User(
                 userDto.getIduser(),
                 userDto.getUsername(),
                 userDto.getPassword(),
                 userDto.getEmail(),
                 userDto.getRole());
-        userRepository.save(user);
-        return user.getUsername();
+        userRepository.save(user1);
+        return user1.getUsername();
     }
+
+
 
 
 

@@ -3,6 +3,7 @@ package com.example.demo.Controller;
 import com.example.demo.Dto.LoginDto;
 import com.example.demo.Dto.UserDto;
 import com.example.demo.Entity.Categorie;
+import com.example.demo.Entity.TypeUser;
 import com.example.demo.Entity.User;
 import com.example.demo.Response.LoginResponse;
 import com.example.demo.Service.UserService;
@@ -19,12 +20,16 @@ public class UserController {
     private final UserService userService;
 
     @Autowired
+
     public UserController(UserService userService) {
+
         this.userService = userService;
+
     }
 
     @GetMapping()
     public List<User> getUsers() {
+
         return userService.getAllUsers();
     }
 
@@ -41,9 +46,9 @@ public class UserController {
 
     @PostMapping(path = "/signup")
     public ResponseEntity<String> saveUser(@RequestBody UserDto userDto) {
-        // Vérifier si le rôle est spécifié, sinon utiliser "user" par défaut
-        String role = userDto.getRole() != null ? userDto.getRole() : "user";
-        userDto.setRole(role);
+
+        TypeUser typeuserDto = new TypeUser(2,"user");
+        userDto.setRole(String.valueOf(typeuserDto));
 
         String id = userService.addUser(userDto);
         return ResponseEntity.ok(id);

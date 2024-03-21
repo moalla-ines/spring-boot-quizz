@@ -1,9 +1,6 @@
 package com.example.demo.Entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 @Entity
 public class Question {
@@ -11,24 +8,14 @@ public class Question {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer idquestion;
     private String text;
-    private String options;
-    private Integer indice_option;
-
-    public Question(Integer idquestion, String text, String options, Integer indice_option) {
-        this.idquestion = idquestion;
-        this.text = text;
-        this.options = options;
-        this.indice_option = indice_option;
-    }
-
-    public Question(String text, String options, Integer indice_option) {
-        this.text = text;
-        this.options = options;
-        this.indice_option = indice_option;
-    }
-
-    public Question() {
-    }
+    private String option1;
+    private String option2;
+    private String option3;
+    private String option4;
+    private Integer indice_optionCorrecte;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "idquiz")
+    private Quiz quiz;
 
     public Integer getIdquestion() {
         return idquestion;
@@ -46,29 +33,57 @@ public class Question {
         this.text = text;
     }
 
-    public String getOptions() {
-        return options;
+    public String getOption1() {
+        return option1;
     }
 
-    public void setOptions(String options) {
-        this.options = options;
+    public void setOption1(String option1) {
+        this.option1 = option1;
     }
 
-    public Integer getIndice_option() {
-        return indice_option;
+    public String getOption2() {
+        return option2;
     }
 
-    public void setIndice_option(Integer indice_option) {
-        this.indice_option = indice_option;
+    public void setOption2(String option2) {
+        this.option2 = option2;
     }
 
-    @Override
-    public String toString() {
-        return "Question{" +
-                "idquestion=" + idquestion +
-                ", text='" + text + '\'' +
-                ", options='" + options + '\'' +
-                ", indice_option=" + indice_option +
-                '}';
+    public String getOption3() {
+        return option3;
+    }
+
+    public void setOption3(String option3) {
+        this.option3 = option3;
+    }
+
+    public String getOption4() {
+        return option4;
+    }
+
+    public void setOption4(String option4) {
+        this.option4 = option4;
+    }
+
+    public Integer getIndice_optionCorrecte() {
+        return indice_optionCorrecte;
+    }
+
+    public void setIndice_optionCorrecte(Integer indice_optionCorrecte) {
+        this.indice_optionCorrecte = indice_optionCorrecte;
+    }
+
+    public Question(Integer idquestion, String text, String option1, String option2, String option3, String option4, Integer indice_optionCorrecte) {
+        this.idquestion = idquestion;
+        this.text = text;
+        this.option1 = option1;
+        this.option2 = option2;
+        this.option3 = option3;
+        this.option4 = option4;
+        this.indice_optionCorrecte = indice_optionCorrecte;
+    }
+
+    public Question() {
     }
 }
+

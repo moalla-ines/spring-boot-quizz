@@ -1,13 +1,15 @@
 package com.example.demo.Dto;
 
+import com.example.demo.Entity.TypeUser;
+
 public class UserDto {
     private Integer iduser;
     private String username;
     private String password;
     private String email;
-    private String role;
+    private TypeUser role;
 
-    public UserDto(Integer iduser, String username, String password, String email, String role) {
+    public UserDto(Integer iduser, String username, String password, String email, TypeUser role) {
         this.iduser = iduser;
         this.username = username;
         this.password = password;
@@ -50,7 +52,7 @@ public class UserDto {
         this.email = email;
     }
 
-    public String getRole() {
+    public TypeUser getRole() {
         return role;
     }
 
@@ -65,7 +67,7 @@ public class UserDto {
                 ", username='" + username + '\'' +
                 ", password='" + password + '\'' +
                 ", email='" + email + '\'' +
-                ", role='" + role + '\'' +
+                ", role='" + role.getValue() + '\'' +
                 '}';
     }
 }

@@ -1,5 +1,6 @@
 package com.example.demo.Entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 
 
@@ -15,9 +16,11 @@ public class User {
     private String password;
     private String email;
 
-    private String role;
+    @ManyToOne
+    @JoinColumn(name = "role", referencedColumnName = "idTypeUser")
+    private TypeUser role;
 
-    public User(Integer iduser, String username, String password, String email, String role) {
+    public User(Integer iduser, String username, String password, String email, TypeUser role) {
         this.iduser = iduser;
         this.username = username;
         this.password = password;
@@ -25,7 +28,7 @@ public class User {
         this.role = role;
     }
 
-    public User(String username, String password, String email, String role) {
+    public User(String username, String password, String email, TypeUser role) {
         this.username = username;
         this.password = password;
         this.email = email;
@@ -67,11 +70,11 @@ public class User {
         this.email = email;
     }
 
-    public String getRole() {
+    public TypeUser getRole() {
         return role;
     }
 
-    public void setRole(String role) {
+    public void setRole(TypeUser role) {
         this.role = role;
     }
 
@@ -86,5 +89,3 @@ public class User {
                 '}';
     }
 }
-
-
