@@ -61,7 +61,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public String addUser(UserDto userDto) {
         TypeUser user = new TypeUser(2,"user");
-        userDto.setRole(String.valueOf(user));
+        userDto.setRole(user);
 
         User user1 = new User(
                 userDto.getIduser(),

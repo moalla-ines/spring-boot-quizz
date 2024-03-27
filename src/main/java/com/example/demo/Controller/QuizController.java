@@ -12,7 +12,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/quizzes")
-public class QuizController {
+public class    QuizController {
 
     private final QuizService quizService;
 

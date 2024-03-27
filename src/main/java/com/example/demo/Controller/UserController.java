@@ -48,7 +48,7 @@ public class UserController {
     public ResponseEntity<String> saveUser(@RequestBody UserDto userDto) {
 
         TypeUser typeuserDto = new TypeUser(2,"user");
-        userDto.setRole(String.valueOf(typeuserDto));
+        userDto.setRole(typeuserDto);
 
         String id = userService.addUser(userDto);
         return ResponseEntity.ok(id);

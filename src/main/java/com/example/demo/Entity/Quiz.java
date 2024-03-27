@@ -8,7 +8,7 @@ import java.util.List;
 public class Quiz {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer idquiz;
+    private Integer id;
 
 
     @JoinColumn(name = "idcategorie")
@@ -20,26 +20,26 @@ public class Quiz {
     public Quiz() {
     }
 
-    public Quiz(Integer idquiz, Integer idcategorie, List<Question> questions) {
-        this.idquiz = idquiz;
+    public Quiz(Integer id, Integer idcategorie, List<Question> questions) {
+        this.id = id;
         this.idcategorie = idcategorie;
         this.questions = questions;
     }
 
-    public Integer getIdquiz() {
-        return idquiz;
+    public Integer getId() {
+        return id;
     }
 
-    public void setIdquiz(Integer id) {
-        this.idquiz = idquiz;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public Integer getId_categorie() {
         return idcategorie;
     }
 
-    public void setId_categorie(Integer idcategorie) {
-        this.idcategorie = idcategorie;
+    public void setId_categorie(Integer id_categorie) {
+        this.idcategorie = id_categorie;
     }
 
     public List<Question> getQuestions() {
@@ -53,8 +53,8 @@ public class Quiz {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append("Quiz{idquiz=").append(idquiz);
-        sb.append(", idcategorie=").append(idcategorie);
+        sb.append("Quiz{id=").append(id);
+        sb.append(", id_categorie=").append(idcategorie);
         sb.append(", questions=[");
         for (Question question : questions) {
             sb.append(question.getText()).append(", ");
