@@ -6,7 +6,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 
 @Entity
-public class User  {
+public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer iduser;
@@ -87,4 +87,6 @@ public class User  {
                 ", role='" + role + '\'' +
                 '}';
     }
+
+
 }
