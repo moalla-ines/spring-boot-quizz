@@ -1,12 +1,17 @@
 package com.example.demo.Entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
-import org.springframework.security.core.userdetails.UserDetails;
+import org.antlr.v4.runtime.misc.LogManager;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 @Entity
-public class User {
+@Table(name = "users")
+public class UserEntity {
+
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer iduser;
@@ -14,27 +19,27 @@ public class User {
     private String username;
     private String password;
     private String email;
-
-    @ManyToOne
-    @JoinColumn(name = "role", referencedColumnName = "idTypeUser")
-    private TypeUser role;
-
-    public User(Integer iduser, String username, String password, String email, TypeUser role) {
+@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+@JoinTable(name = "type_user",joinColumns =
+@JoinColumn(name = "user_id",referencedColumnName = "iduser"),
+inverseJoinColumns =@JoinColumn(name = "role_id", referencedColumnName = "idrole") )
+private List<Role>roles = new ArrayList<>();
+    public UserEntity(Integer iduser, String username, String password, String email) {
         this.iduser = iduser;
         this.username = username;
         this.password = password;
         this.email = email;
-        this.role = role;
+
     }
 
-    public User(String username, String password, String email, TypeUser role) {
+    public UserEntity(String username, String password, String email) {
         this.username = username;
         this.password = password;
         this.email = email;
-        this.role = role;
+
     }
 
-    public User() {
+    public UserEntity() {
     }
 
     public Integer getIduser() {
@@ -69,13 +74,6 @@ public class User {
         this.email = email;
     }
 
-    public TypeUser getRole() {
-        return role;
-    }
-
-    public void setRole(TypeUser role) {
-        this.role = role;
-    }
 
     @Override
     public String toString() {
@@ -84,7 +82,7 @@ public class User {
                 ", username='" + username + '\'' +
                 ", password='" + password + '\'' +
                 ", email='" + email + '\'' +
-                ", role='" + role + '\'' +
+
                 '}';
     }
 

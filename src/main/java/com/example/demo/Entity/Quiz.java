@@ -10,19 +10,17 @@ public class Quiz {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    @Column(name = "idcategorie")
+    private Integer idCategorie;
 
-    @JoinColumn(name = "idcategorie")
-    public Integer idcategorie;
-
-    @OneToMany(mappedBy = "quiz", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "quiz", cascade = CascadeType.ALL)
     private List<Question> questions;
-
     public Quiz() {
     }
 
-    public Quiz(Integer id, Integer idcategorie, List<Question> questions) {
+    public Quiz(Integer id, Integer idCategorie, List<Question> questions) {
         this.id = id;
-        this.idcategorie = idcategorie;
+        this.idCategorie = idCategorie;
         this.questions = questions;
     }
 
@@ -34,12 +32,12 @@ public class Quiz {
         this.id = id;
     }
 
-    public Integer getId_categorie() {
-        return idcategorie;
+    public Integer getIdCategorie() {
+        return idCategorie;
     }
 
-    public void setId_categorie(Integer id_categorie) {
-        this.idcategorie = id_categorie;
+    public void setIdCategorie(Integer idCategorie) {
+        this.idCategorie = idCategorie;
     }
 
     public List<Question> getQuestions() {
@@ -52,14 +50,10 @@ public class Quiz {
 
     @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append("Quiz{id=").append(id);
-        sb.append(", id_categorie=").append(idcategorie);
-        sb.append(", questions=[");
-        for (Question question : questions) {
-            sb.append(question.getText()).append(", ");
-        }
-        sb.append("]}");
-        return sb.toString();
+        return "Quiz{" +
+                "id=" + id +
+                ", idCategorie=" + idCategorie +
+                ", questions=" + questions +
+                '}';
     }
 }

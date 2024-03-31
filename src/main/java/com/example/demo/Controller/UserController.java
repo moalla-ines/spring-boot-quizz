@@ -2,9 +2,8 @@ package com.example.demo.Controller;
 
 import com.example.demo.Dto.LoginDto;
 import com.example.demo.Dto.UserDto;
-import com.example.demo.Entity.Categorie;
-import com.example.demo.Entity.TypeUser;
-import com.example.demo.Entity.User;
+
+import com.example.demo.Entity.UserEntity;
 import com.example.demo.Response.LoginResponse;
 import com.example.demo.Service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,27 +27,26 @@ public class UserController {
     }
 
     @GetMapping()
-    public List<User> getUsers() {
+    public List<UserEntity> getUsers() {
 
         return userService.getAllUsers();
     }
 
     @GetMapping("/{id}")
-    public User getUserById(@PathVariable Integer id) {
+    public UserEntity getUserById(@PathVariable Integer id) {
         return userService.getUserById(id);
     }
 
     @PostMapping()
-    public ResponseEntity<User> postUsers(@RequestBody User user) {
-        User createdUser = userService.createUser(user);
+    public ResponseEntity<UserEntity> postUsers(@RequestBody UserEntity user) {
+        UserEntity createdUser = userService.createUser(user);
         return ResponseEntity.ok(createdUser);
     }
 
     @PostMapping(path = "/signup")
     public ResponseEntity<String> saveUser(@RequestBody UserDto userDto) {
 
-        TypeUser typeuserDto = new TypeUser(2,"user");
-        userDto.setRole(typeuserDto);
+
 
         String id = userService.addUser(userDto);
         return ResponseEntity.ok(id);
@@ -56,14 +54,16 @@ public class UserController {
 
 
     @PostMapping(path = "/auth")
+
     public ResponseEntity<LoginResponse> loginUser(@RequestBody LoginDto loginDto) {
+
         LoginResponse loginResponse = userService.loginUser(loginDto);
         return ResponseEntity.ok(loginResponse);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<User> updateUser(@PathVariable Integer id, @RequestBody User newUser) {
-        User updatedUser = userService.updateUser(id, newUser);
+    public ResponseEntity<UserEntity> updateUser(@PathVariable Integer id, @RequestBody UserEntity newUser) {
+        UserEntity updatedUser = userService.updateUser(id, newUser);
         if (updatedUser != null) {
             return ResponseEntity.ok(updatedUser);
         } else {

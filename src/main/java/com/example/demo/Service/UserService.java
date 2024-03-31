@@ -2,19 +2,19 @@ package com.example.demo.Service;
 
 import com.example.demo.Dto.LoginDto;
 import com.example.demo.Dto.UserDto;
-import com.example.demo.Entity.User;
+import com.example.demo.Entity.UserEntity;
 import com.example.demo.Response.LoginResponse;
 
 import java.util.List;
 
 public interface UserService {
-    List<User> getAllUsers();
+    List<UserEntity> getAllUsers();
 
-    User getUserById(Integer id);
+    UserEntity getUserById(Integer id);
 
-    User createUser(User user);
+    UserEntity createUser(UserEntity user);
 
-    User updateUser(Integer id, User newUser);
+    UserEntity updateUser(Integer id, UserEntity newUser);
 
     void deleteUser(Integer id);
 

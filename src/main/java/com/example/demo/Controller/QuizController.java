@@ -1,7 +1,9 @@
 package com.example.demo.Controller;
 
+import com.example.demo.Entity.Question;
 import com.example.demo.Entity.Quiz;
 import com.example.demo.Service.QuizService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -11,8 +13,8 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/api/quizzes")
-public class    QuizController {
+@RequestMapping("/api/v1/quizzes")
+public class QuizController {
 
     private final QuizService quizService;
 
@@ -34,8 +36,10 @@ public class    QuizController {
     }
 
     @PostMapping
-    public ResponseEntity<Quiz> createQuiz(@RequestBody Quiz quiz) {
+    public ResponseEntity<Quiz> createQuiz(@RequestBody Quiz quiz ) {
+
         Quiz createdQuiz = quizService.createQuiz(quiz);
+
         return ResponseEntity.status(HttpStatus.CREATED).body(createdQuiz);
     }
 

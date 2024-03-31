@@ -14,7 +14,7 @@ public class Question {
     private String option4;
     private Integer indice_optionCorrecte;
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "idquiz")
+    @JoinColumn(name = "quiz_id")
     private Quiz quiz;
 
     public Integer getIdquestion() {
@@ -73,7 +73,15 @@ public class Question {
         this.indice_optionCorrecte = indice_optionCorrecte;
     }
 
-    public Question(Integer idquestion, String text, String option1, String option2, String option3, String option4, Integer indice_optionCorrecte) {
+    public Quiz getQuiz() {
+        return quiz;
+    }
+
+    public void setQuiz(Quiz quiz) {
+        this.quiz = quiz;
+    }
+
+    public Question(Integer idquestion, String text, String option1, String option2, String option3, String option4, Integer indice_optionCorrecte, Quiz quiz) {
         this.idquestion = idquestion;
         this.text = text;
         this.option1 = option1;
@@ -81,6 +89,7 @@ public class Question {
         this.option3 = option3;
         this.option4 = option4;
         this.indice_optionCorrecte = indice_optionCorrecte;
+        this.quiz = quiz;
     }
 
     public Question() {
