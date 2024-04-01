@@ -14,7 +14,7 @@ public class Question {
     private String option4;
     private Integer indice_optionCorrecte;
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "quiz_id")
+    @JoinColumn(name = "idquiz")
     private Quiz quiz;
 
     public Integer getIdquestion() {

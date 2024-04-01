@@ -1,36 +1,38 @@
 package com.example.demo.Entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 @Entity
 public class Niveau {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer idniveau;
+    private Integer idNiveau;
     private String name;
 
-    public Niveau(Integer idniveau, String name) {
-        this.idniveau = idniveau;
+    @ManyToOne
+    @JoinColumn(name = "id_categorie", referencedColumnName = "idcategorie")
+    private Categorie categorie;
+
+    public Niveau(Integer idNiveau, String name, Categorie categorie) {
+        this.idNiveau = idNiveau;
         this.name = name;
+        this.categorie = categorie;
     }
 
-    public Niveau(String name) {
+    public Niveau(String name, Categorie categorie) {
         this.name = name;
+        this.categorie = categorie;
     }
 
     public Niveau() {
     }
 
-
-    public Integer getIdniveau() {
-        return idniveau;
+    public Integer getIdNiveau() {
+        return idNiveau;
     }
 
-    public void setIdniveau(Integer idniveau) {
-        this.idniveau = idniveau;
+    public void setIdNiveau(Integer idNiveau) {
+        this.idNiveau = idNiveau;
     }
 
     public String getName() {
@@ -41,11 +43,20 @@ public class Niveau {
         this.name = name;
     }
 
+    public Categorie getCategorie() {
+        return categorie;
+    }
+
+    public void setCategorie(Categorie categorie) {
+        this.categorie = categorie;
+    }
+
     @Override
     public String toString() {
         return "Niveau{" +
-                "idniveau=" + idniveau +
+                "idNiveau=" + idNiveau +
                 ", name='" + name + '\'' +
+                ", categorie=" + categorie +
                 '}';
     }
 }

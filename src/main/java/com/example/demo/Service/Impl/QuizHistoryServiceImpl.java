@@ -48,8 +48,8 @@ public class QuizHistoryServiceImpl implements QuizHistoryService {
     public void deleteQuizHistory(Integer id) {
         quizHistoryRepository.deleteById(id);
     }
-    public Integer getQuizScore(Integer userId, Integer quizId) {
-        return quizHistoryRepository.findScoreByUserIdAndQuizId(userId, quizId);
+    public Integer getQuizScore(Integer id_user, Integer id_quiz) {
+        return quizHistoryRepository.findScoreByUserIdAndQuizId(id_user, id_quiz);
     }
     public int calculateScore(List<Question> questions, List<String> userAnswers) {
         int score = 0;

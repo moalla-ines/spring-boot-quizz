@@ -43,10 +43,8 @@ public  class QuizServiceImpl implements QuizService {
         if (existingQuizOptional.isPresent()) {
             // Mettre à jour l'objet existingQuiz avec les nouvelles données de quiz
             Quiz existingQuiz = existingQuizOptional.get();
-            existingQuiz.setIdCategorie(quiz.getIdCategorie());
+            existingQuiz.setCategorie(quiz.getCategorie());
             existingQuiz.setQuestions(quiz.getQuestions());
-
-            // Mettre à jour le quiz avec les questions associées
             for (Question question : existingQuiz.getQuestions()) {
                 question.setQuiz(existingQuiz);
             }
@@ -72,8 +70,8 @@ public  class QuizServiceImpl implements QuizService {
         Optional<Quiz> existingQuizOptional = quizRepository.findById(id);
         if (existingQuizOptional.isPresent()) {
             Quiz existingQuiz = existingQuizOptional.get();
-            updatedQuiz.setIdCategorie(existingQuiz.getIdCategorie());
-
+            updatedQuiz.setCategorie(existingQuiz.getCategorie());
+            updatedQuiz.setQuestions(existingQuiz.getQuestions());
             return quizRepository.save(existingQuiz);
         } else {
             throw new IllegalArgumentException("Quiz not found with id " + id);

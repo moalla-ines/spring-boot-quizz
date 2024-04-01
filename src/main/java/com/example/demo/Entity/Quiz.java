@@ -8,19 +8,22 @@ import java.util.List;
 public class Quiz {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "idquiz")
     private Integer idquiz;
 
-    @Column(name = "idcategorie")
-    private Integer idCategorie;
+    @ManyToOne
+    @JoinColumn(name = "idcategorie", referencedColumnName = "idcategorie")
+    private Categorie categorie;
 
     @OneToMany(mappedBy = "quiz", cascade = CascadeType.ALL)
     private List<Question> questions;
+
     public Quiz() {
     }
 
-    public Quiz(Integer idquiz, Integer idCategorie, List<Question> questions) {
+    public Quiz(Integer idquiz, Categorie categorie, List<Question> questions) {
         this.idquiz = idquiz;
-        this.idCategorie = idCategorie;
+        this.categorie = categorie;
         this.questions = questions;
     }
 
@@ -28,16 +31,16 @@ public class Quiz {
         return idquiz;
     }
 
-    public void setId(Integer idquiz) {
+    public void setIdquiz(Integer idquiz) {
         this.idquiz = idquiz;
     }
 
-    public Integer getIdCategorie() {
-        return idCategorie;
+    public Categorie getCategorie() {
+        return categorie;
     }
 
-    public void setIdCategorie(Integer idCategorie) {
-        this.idCategorie = idCategorie;
+    public void setCategorie(Categorie categorie) {
+        this.categorie = categorie;
     }
 
     public List<Question> getQuestions() {
@@ -52,7 +55,7 @@ public class Quiz {
     public String toString() {
         return "Quiz{" +
                 "idquiz=" + idquiz +
-                ", idCategorie=" + idCategorie +
+                ", categorie=" + categorie +
                 ", questions=" + questions +
                 '}';
     }
