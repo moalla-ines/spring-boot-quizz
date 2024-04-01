@@ -1,5 +1,6 @@
 package com.example.demo.Controller;
 
+import com.example.demo.Entity.Question;
 import com.example.demo.Entity.QuizHistory;
 import com.example.demo.Service.QuizHistoryService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,4 +46,16 @@ public class QuizHistoryController {
         quizHistoryService.deleteQuizHistory(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
+    @GetMapping("/user/{userId}/quiz/{quizId}/score")
+    public ResponseEntity<Integer> getQuizScore(@PathVariable Integer userId, @PathVariable Integer quizId) {
+        Integer score = quizHistoryService.getQuizScore(userId, quizId);
+        return new ResponseEntity<>(score, HttpStatus.OK);
+    }
+    @PostMapping("/calculate-score")
+    public ResponseEntity<Integer> calculateScore(@RequestBody List<String> userAnswers) {
+        List<Question> questions = null; // Récupérez les questions du quiz
+        int score = quizHistoryService.calculateScore(questions, userAnswers);
+        return new ResponseEntity<>(score, HttpStatus.OK);
+    }
+
 }

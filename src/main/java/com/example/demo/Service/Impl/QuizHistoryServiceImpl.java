@@ -1,5 +1,6 @@
 package com.example.demo.Service.Impl;
 
+import com.example.demo.Entity.Question;
 import com.example.demo.Entity.QuizHistory;
 import com.example.demo.Repository.QuizHistoryRepository;
 import com.example.demo.Service.QuizHistoryService;
@@ -35,8 +36,8 @@ public class QuizHistoryServiceImpl implements QuizHistoryService {
         Optional<QuizHistory> existingQuizHistory = quizHistoryRepository.findById(id);
         if (existingQuizHistory.isPresent()) {
             QuizHistory quizHistory = existingQuizHistory.get();
-            quizHistory.setIdquiz(newQuizHistory.getIdquiz());
-            quizHistory.setIduser(newQuizHistory.getIduser());
+            quizHistory.setQuiz(newQuizHistory.getQuiz());
+            quizHistory.setUser(newQuizHistory.getUser());
             quizHistory.setScore(newQuizHistory.getScore());
             return quizHistoryRepository.save(quizHistory);
         }
@@ -47,4 +48,21 @@ public class QuizHistoryServiceImpl implements QuizHistoryService {
     public void deleteQuizHistory(Integer id) {
         quizHistoryRepository.deleteById(id);
     }
+    public Integer getQuizScore(Integer userId, Integer quizId) {
+        return quizHistoryRepository.findScoreByUserIdAndQuizId(userId, quizId);
+    }
+    public int calculateScore(List<Question> questions, List<String> userAnswers) {
+        int score = 0;
+        for (int i = 0; i < questions.size(); i++) {
+            Question question = questions.get(i);
+            String userAnswer = userAnswers.get(i);
+            if (question.getIndice_optionCorrecte() != null && userAnswer != null &&
+                    question.getIndice_optionCorrecte() == Integer.parseInt(userAnswer)) {
+                score++;
+            }
+        }
+        return score;
+    }
+
+
 }

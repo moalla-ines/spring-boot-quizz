@@ -1,13 +1,17 @@
 package com.example.demo.Security;
 
+import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -19,40 +23,43 @@ import static org.springframework.security.web.util.matcher.RequestMatcher.*;
 
 @Configuration
 @EnableWebSecurity
+@RequiredArgsConstructor
+
 public class SecurityConfig {
-    private JwtAuthEntryPoint jwtAuthEntryPoint;
-    private CustomUserDetailsService userDetailsService;
+    private final JwtAuthEntryPoint jwtAuthEntryPoint;
+    private final CustomUserDetailsService userDetailsService;
+    private final AuthenticationProvider authenticationProvider;
+    private  final  JwtAuthenticationFilter jwtAuthenticationFilter;
     @Autowired
-    public SecurityConfig(JwtAuthEntryPoint jwtAuthEntryPoint, CustomUserDetailsService userDetailsService, CustomUserDetailsService customUserDetailsService) {
+    public SecurityConfig(JwtAuthEntryPoint jwtAuthEntryPoint, CustomUserDetailsService userDetailsService, AuthenticationProvider authenticationProvider, JwtAuthenticationFilter jwtAuthenticationFilter, CustomUserDetailsService customUserDetailsService) {
         this.jwtAuthEntryPoint = jwtAuthEntryPoint;
         this.userDetailsService = userDetailsService;
+        this.authenticationProvider = authenticationProvider;
+        this.jwtAuthenticationFilter = jwtAuthenticationFilter;
         this.customUserDetailsService = customUserDetailsService;
     }
 
     public CustomUserDetailsService customUserDetailsService;
 
-  
+
 
 
 
     @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http
-                .csrf().disable()
-                .exceptionHandling()
-                .authenticationEntryPoint(jwtAuthEntryPoint)
-                .and()
-                .sessionManagement()
-                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                .and()
-                .authorizeRequests()
-                .antMatchers("/api/auth/**").permitAll()
-                .anyRequest().authenticated()
-                .and()
-                .httpBasic();
+    public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
 
-        http.addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
-        return http.build();
+        httpSecurity
+                .csrf(AbstractHttpConfigurer::disable)
+                .authorizeHttpRequests(
+                        request -> request.requestMatchers("/**").permitAll()
+                                //.requestMatchers("/api/v1/product/**").permitAll()
+                                .anyRequest().authenticated())
+                .sessionManagement(manger-> manger.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .authenticationProvider(authenticationProvider).addFilterBefore(
+                     jwtAuthenticationFilter   ,UsernamePasswordAuthenticationFilter.class
+                );
+
+        return httpSecurity.build();
     }
 
 
