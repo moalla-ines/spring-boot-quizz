@@ -12,13 +12,10 @@ public interface UserService {
 
     UserEntity getUserById(Integer id);
 
-    UserEntity createUser(UserEntity user);
+    UserEntity createUser(UserDto user);
 
-    UserEntity updateUser(Integer id, UserEntity newUser);
+    UserEntity updateUser(Integer id, UserDto newUser);
 
     void deleteUser(Integer id);
 
-    String addUser(UserDto userDto);
-
-    LoginResponse loginUser(LoginDto loginDto);
 }
