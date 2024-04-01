@@ -8,7 +8,7 @@ import java.util.List;
 public class Quiz {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Integer idquiz;
 
     @Column(name = "idcategorie")
     private Integer idCategorie;
@@ -18,18 +18,18 @@ public class Quiz {
     public Quiz() {
     }
 
-    public Quiz(Integer id, Integer idCategorie, List<Question> questions) {
-        this.id = id;
+    public Quiz(Integer idquiz, Integer idCategorie, List<Question> questions) {
+        this.idquiz = idquiz;
         this.idCategorie = idCategorie;
         this.questions = questions;
     }
 
-    public Integer getId() {
-        return id;
+    public Integer getIdquiz() {
+        return idquiz;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public void setId(Integer idquiz) {
+        this.idquiz = idquiz;
     }
 
     public Integer getIdCategorie() {
@@ -51,7 +51,7 @@ public class Quiz {
     @Override
     public String toString() {
         return "Quiz{" +
-                "id=" + id +
+                "idquiz=" + idquiz +
                 ", idCategorie=" + idCategorie +
                 ", questions=" + questions +
                 '}';

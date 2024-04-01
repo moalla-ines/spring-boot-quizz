@@ -38,7 +38,7 @@ public  class QuizServiceImpl implements QuizService {
     @Override
     public Quiz createQuiz(Quiz quiz) {
         // Récupérer le quiz existant en fonction de son ID
-        Optional<Quiz> existingQuizOptional = quizRepository.findById(quiz.getId());
+        Optional<Quiz> existingQuizOptional = quizRepository.findById(quiz.getIdquiz());
 
         if (existingQuizOptional.isPresent()) {
             // Mettre à jour l'objet existingQuiz avec les nouvelles données de quiz

@@ -24,6 +24,8 @@ public class UserEntity {
 @JoinColumn(name = "user_id",referencedColumnName = "iduser"),
 inverseJoinColumns =@JoinColumn(name = "role_id", referencedColumnName = "idrole") )
 private List<Role>roles = new ArrayList<>();
+
+
     public UserEntity(Integer iduser, String username, String password, String email) {
         this.iduser = iduser;
         this.username = username;
