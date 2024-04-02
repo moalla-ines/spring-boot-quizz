@@ -10,7 +10,7 @@ public class QuizHistory {
     private Integer id;
 
     @ManyToOne
-    @JoinColumn(name = "id_user", referencedColumnName = "iduser")
+    @JoinColumn(name = "id_user", referencedColumnName = "id")
     private UserEntity user;
 
     @ManyToOne

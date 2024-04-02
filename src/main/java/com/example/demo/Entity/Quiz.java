@@ -9,7 +9,12 @@ public class Quiz {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "idquiz")
-    private Integer idquiz;
+    private Integer id;
+    private String titre_quiz;
+    private String description;
+    private Integer nb_questions;
+
+
 
     @ManyToOne
     @JoinColumn(name = "idcategorie", referencedColumnName = "idcategorie")
@@ -21,18 +26,21 @@ public class Quiz {
     public Quiz() {
     }
 
-    public Quiz(Integer idquiz, Categorie categorie, List<Question> questions) {
-        this.idquiz = idquiz;
+    public Quiz(Integer id,String titre_quiz,String description, Integer nb_questions, Categorie categorie, List<Question> questions) {
+        this.id = id;
+        this.titre_quiz = titre_quiz;
+        this.description = description;
+        this.nb_questions = nb_questions;
         this.categorie = categorie;
         this.questions = questions;
     }
 
-    public Integer getIdquiz() {
-        return idquiz;
+    public Integer getId() {
+        return id;
     }
 
-    public void setIdquiz(Integer idquiz) {
-        this.idquiz = idquiz;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public Categorie getCategorie() {
@@ -54,9 +62,33 @@ public class Quiz {
     @Override
     public String toString() {
         return "Quiz{" +
-                "idquiz=" + idquiz +
+                "idquiz=" + id +
                 ", categorie=" + categorie +
                 ", questions=" + questions +
                 '}';
+    }
+
+    public String getTitre_quiz() {
+        return titre_quiz;
+    }
+
+    public void setTitre_quiz(String titre_quiz) {
+        this.titre_quiz = titre_quiz;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public Integer getNb_questions() {
+        return nb_questions;
+    }
+
+    public void setNb_questions(Integer nb_questions) {
+        this.nb_questions = nb_questions;
     }
 }

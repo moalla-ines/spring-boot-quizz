@@ -13,7 +13,7 @@ public class Categorie {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer idcategorie;
     private String titre_categorie;
-    @OneToMany(mappedBy = "idquiz", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "id", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Quiz> quizzes;
 
     public Categorie(Integer idcategorie, String titre_categorie, List<Quiz> quizzes) {

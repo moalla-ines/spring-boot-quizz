@@ -38,11 +38,14 @@ public  class QuizServiceImpl implements QuizService {
     @Override
     public Quiz createQuiz(Quiz quiz) {
         // Récupérer le quiz existant en fonction de son ID
-        Optional<Quiz> existingQuizOptional = quizRepository.findById(quiz.getIdquiz());
+        Optional<Quiz> existingQuizOptional = quizRepository.findById(quiz.getId());
 
         if (existingQuizOptional.isPresent()) {
             // Mettre à jour l'objet existingQuiz avec les nouvelles données de quiz
             Quiz existingQuiz = existingQuizOptional.get();
+            existingQuiz.setTitre_quiz(quiz.getTitre_quiz());
+            existingQuiz.setDescription(quiz.getDescription());
+            existingQuiz.setNb_questions(quiz.getNb_questions());
             existingQuiz.setCategorie(quiz.getCategorie());
             existingQuiz.setQuestions(quiz.getQuestions());
             for (Question question : existingQuiz.getQuestions()) {
@@ -56,6 +59,7 @@ public  class QuizServiceImpl implements QuizService {
             return quizRepository.save(quiz);
         }
     }
+
 
 
 
