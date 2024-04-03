@@ -1,9 +1,8 @@
 package com.example.demo.Entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
+
+import java.util.List;
 
 @Entity
 public class Score {
@@ -13,13 +12,17 @@ public class Score {
     private Integer idscore;
 
     private Integer value;
+    @OneToMany(mappedBy = "id", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<QuizHistory> quizHistoryList;
 
     public Score() {
     }
 
-    public Score(Integer idscore, Integer value) {
+    public Score(Integer idscore, Integer value, List<QuizHistory> quizHistoryList) {
         this.idscore = idscore;
         this.value = value;
+
+        this.quizHistoryList = quizHistoryList;
     }
 
     public Integer getIdscore() {
@@ -44,5 +47,13 @@ public class Score {
                 "idscore=" + idscore +
                 ", value=" + value +
                 '}';
+    }
+
+    public List<QuizHistory> getQuizHistoryList() {
+        return quizHistoryList;
+    }
+
+    public void setQuizHistoryList(List<QuizHistory> quizHistoryList) {
+        this.quizHistoryList = quizHistoryList;
     }
 }

@@ -15,18 +15,23 @@ public class Categorie {
     private String titre_categorie;
     @OneToMany(mappedBy = "id", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Quiz> quizzes;
+    @OneToMany(mappedBy = "id", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Niveau> niveauList;
 
-    public Categorie(Integer idcategorie, String titre_categorie, List<Quiz> quizzes) {
+    public Categorie(Integer idcategorie, String titre_categorie, List<Quiz> quizzes, List<Niveau> niveauList) {
         this.idcategorie = idcategorie;
         this.titre_categorie = titre_categorie;
         this.quizzes = quizzes;
+        this.niveauList = niveauList;
     }
 
-    public Categorie(String titre_categorie) {
+    public Categorie(String titre_categorie, List<Niveau> niveauList) {
         this.titre_categorie = titre_categorie;
+        this.niveauList = niveauList;
     }
 
-    public Categorie() {
+    public Categorie(List<Niveau> niveauList) {
+        this.niveauList = niveauList;
     }
     public List<Quiz> getQuizzes() {
         return quizzes;
@@ -57,5 +62,13 @@ public class Categorie {
                 "idcategorie=" + idcategorie +
                 ", titre_categorie='" + titre_categorie + '\'' +
                 '}';
+    }
+
+    public List<Niveau> getNiveauList() {
+        return niveauList;
+    }
+
+    public void setNiveauList(List<Niveau> niveauList) {
+        this.niveauList = niveauList;
     }
 }

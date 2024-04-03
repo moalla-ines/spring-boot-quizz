@@ -14,6 +14,8 @@ public class Quiz {
     private String description;
     private Integer nb_questions;
 
+    @OneToMany(mappedBy = "id", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<QuizHistory> quizHistoryList;
 
 
     @ManyToOne
@@ -26,11 +28,12 @@ public class Quiz {
     public Quiz() {
     }
 
-    public Quiz(Integer id,String titre_quiz,String description, Integer nb_questions, Categorie categorie, List<Question> questions) {
+    public Quiz(Integer id, String titre_quiz, String description, Integer nb_questions, List<QuizHistory> quizHistoryList, Categorie categorie, List<Question> questions) {
         this.id = id;
         this.titre_quiz = titre_quiz;
         this.description = description;
         this.nb_questions = nb_questions;
+        this.quizHistoryList = quizHistoryList;
         this.categorie = categorie;
         this.questions = questions;
     }
@@ -90,5 +93,13 @@ public class Quiz {
 
     public void setNb_questions(Integer nb_questions) {
         this.nb_questions = nb_questions;
+    }
+
+    public List<QuizHistory> getQuizHistoryList() {
+        return quizHistoryList;
+    }
+
+    public void setQuizHistoryList(List<QuizHistory> quizHistoryList) {
+        this.quizHistoryList = quizHistoryList;
     }
 }
