@@ -15,7 +15,7 @@ public class Categorie {
     private String titre_categorie;
     @OneToMany(mappedBy = "id", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Quiz> quizzes;
-    @OneToMany(mappedBy = "id", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "idNiveau", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Niveau> niveauList;
 
     public Categorie(Integer idcategorie, String titre_categorie, List<Quiz> quizzes, List<Niveau> niveauList) {
