@@ -1,8 +1,8 @@
 package com.example.demo.Service.Impl;
 
-import com.example.demo.Entity.Question;
-import com.example.demo.Entity.QuizHistory;
+import com.example.demo.Entity.*;
 import com.example.demo.Repository.QuizHistoryRepository;
+import com.example.demo.Repository.ScoreRepository;
 import com.example.demo.Service.QuizHistoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,6 +16,14 @@ public class QuizHistoryServiceImpl implements QuizHistoryService {
     @Autowired
     private QuizHistoryRepository quizHistoryRepository;
 
+    @Autowired
+    private ScoreRepository scoreRepository;
+
+    public QuizHistoryServiceImpl(QuizHistoryRepository quizHistoryRepository, ScoreRepository scoreRepository) {
+        this.quizHistoryRepository = quizHistoryRepository;
+        this.scoreRepository = scoreRepository;
+    }
+
     @Override
     public List<QuizHistory> getAllQuizHistory() {
         return quizHistoryRepository.findAll();
@@ -27,7 +35,12 @@ public class QuizHistoryServiceImpl implements QuizHistoryService {
     }
 
     @Override
-    public QuizHistory createQuizHistory(QuizHistory quizHistory) {
+    public QuizHistory createQuizHistory(UserEntity user, Quiz quiz) {
+        Score score = new Score();
+        score.setValue(10);
+        scoreRepository.save(score);
+
+        QuizHistory quizHistory = new QuizHistory(user, quiz, score);
         return quizHistoryRepository.save(quizHistory);
     }
 
@@ -48,9 +61,12 @@ public class QuizHistoryServiceImpl implements QuizHistoryService {
     public void deleteQuizHistory(Integer id) {
         quizHistoryRepository.deleteById(id);
     }
+
+    @Override
     public Integer getQuizScore(Integer userId, Integer quizId) {
         return quizHistoryRepository.findScoreByUserIdAndQuizId(userId, quizId);
     }
+
     public int calculateScore(List<Question> questions, List<String> userAnswers) {
         int score = 0;
         for (int i = 0; i < questions.size(); i++) {
@@ -64,5 +80,8 @@ public class QuizHistoryServiceImpl implements QuizHistoryService {
         return score;
     }
 
-
+    @Override
+    public void createQuizHistory(QuizHistory quizHistory) {
+        quizHistoryRepository.save(quizHistory);
+    }
 }

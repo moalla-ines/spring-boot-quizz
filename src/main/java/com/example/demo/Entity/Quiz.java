@@ -10,33 +10,31 @@ public class Quiz {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "idquiz")
     private Integer id;
+
     private String titre_quiz;
     private String description;
     private Integer nb_questions;
 
-    @OneToMany(mappedBy = "id", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "quiz", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<QuizHistory> quizHistoryList;
 
-
     @ManyToOne
-    @JoinColumn(name = "idcategorie", referencedColumnName = "idcategorie")
+    @JoinColumn(name = "idcategorie")
     private Categorie categorie;
 
-    @OneToMany(mappedBy = "quiz", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "quiz", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Question> questions;
 
     public Quiz() {
     }
 
-    public Quiz(Integer id, String titre_quiz, String description, Integer nb_questions, List<QuizHistory> quizHistoryList, Categorie categorie, List<Question> questions) {
-        this.id = id;
+    public Quiz(String titre_quiz, String description, Integer nb_questions, Categorie categorie) {
         this.titre_quiz = titre_quiz;
         this.description = description;
         this.nb_questions = nb_questions;
-        this.quizHistoryList = quizHistoryList;
         this.categorie = categorie;
-        this.questions = questions;
     }
+
 
     public Integer getId() {
         return id;
@@ -61,7 +59,6 @@ public class Quiz {
     public void setQuestions(List<Question> questions) {
         this.questions = questions;
     }
-
     @Override
     public String toString() {
         return "Quiz{" +
@@ -70,6 +67,7 @@ public class Quiz {
                 ", questions=" + questions +
                 '}';
     }
+
 
     public String getTitre_quiz() {
         return titre_quiz;

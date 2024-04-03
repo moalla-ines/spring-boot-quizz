@@ -30,9 +30,9 @@ public class Categorie {
         this.niveauList = niveauList;
     }
 
-    public Categorie(List<Niveau> niveauList) {
-        this.niveauList = niveauList;
+    public Categorie() {
     }
+
     public List<Quiz> getQuizzes() {
         return quizzes;
     }

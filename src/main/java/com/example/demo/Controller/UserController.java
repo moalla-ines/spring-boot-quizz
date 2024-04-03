@@ -1,7 +1,9 @@
 package com.example.demo.Controller;
 
 import com.example.demo.Dto.UserDto;
+import com.example.demo.Entity.QuizHistory;
 import com.example.demo.Entity.UserEntity;
+import com.example.demo.Service.QuizHistoryService;
 import com.example.demo.Service.UserService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,10 +19,12 @@ import java.util.List;
 public class UserController {
 
     private final UserService userService;
+    private final QuizHistoryService quizHistoryService;
 
     @Autowired
-    public UserController(UserService userService) {
+    public UserController(UserService userService, QuizHistoryService quizHistoryService) {
         this.userService = userService;
+        this.quizHistoryService = quizHistoryService;
     }
 
     @GetMapping
@@ -58,5 +62,22 @@ public class UserController {
     public ResponseEntity<Void> deleteUser(@PathVariable Integer id) {
         userService.deleteUser(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @PostMapping("/create-user-and-history")
+    public ResponseEntity<String> createUserAndHistory() {
+        // Créer un nouvel utilisateur
+        UserEntity user = new UserEntity();
+        user.setUsername("John Doe");
+        user.setEmail("john.doe@example.com");
+        userService.createUser(new UserDto());
+
+        // Créer un nouvel historique de quiz avec l'utilisateur sauvegardé
+        QuizHistory quizHistory = new QuizHistory();
+        quizHistory.setUser(user);
+        // Définir d'autres propriétés de l'historique de quiz
+        quizHistoryService.createQuizHistory(quizHistory);
+
+        return ResponseEntity.ok("Utilisateur et historique de quiz créés avec succès.");
     }
 }

@@ -47,8 +47,10 @@ public class UserServiceImpl implements UserService {
         if (optionalUser.isPresent()) {
             UserEntity existingUser = optionalUser.get();
             existingUser.setUsername(newUserDto.getUsername());
-            existingUser.setPassword(passwordEncoder.encode(newUserDto.getPassword())); // Encode le nouveau mot de passe
             existingUser.setEmail(newUserDto.getEmail());
+            if (!newUserDto.getPassword().isEmpty()) { // Vérifie si un nouveau mot de passe est fourni
+                existingUser.setPassword(passwordEncoder.encode(newUserDto.getPassword())); // Encode le nouveau mot de passe
+            }
             return userRepository.save(existingUser);
         }
         return null;

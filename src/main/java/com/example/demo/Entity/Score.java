@@ -12,7 +12,7 @@ public class Score {
     private Integer idscore;
 
     private Integer value;
-    @OneToMany(mappedBy = "id", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "score", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<QuizHistory> quizHistoryList;
 
     public Score() {
@@ -29,8 +29,8 @@ public class Score {
         return idscore;
     }
 
-    public void setIdscore(Integer id) {
-        this.idscore = idscore;
+    public void setIdscore(Integer idscore) {
+        this.idscore = this.idscore;
     }
 
     public Integer getValue() {

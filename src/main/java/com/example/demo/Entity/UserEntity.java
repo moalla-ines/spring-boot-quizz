@@ -25,7 +25,7 @@ public class UserEntity {
 inverseJoinColumns =@JoinColumn(name = "role_id", referencedColumnName = "idrole") )
 private List<Role>roles = new ArrayList<>();
 
-    @OneToMany(mappedBy = "id", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<QuizHistory> quizHistoryList;
 
     public UserEntity(Integer id, String username, String password, String email, List<Role> roles, List<QuizHistory> quizHistoryList) {
