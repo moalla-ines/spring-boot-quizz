@@ -24,13 +24,6 @@ public class QuizHistory {
     public QuizHistory() {
     }
 
-    public QuizHistory(Integer id, UserEntity user, Quiz quiz, Score score) {
-        this.id = id;
-        this.user = user;
-        this.quiz = quiz;
-        this.score = score;
-    }
-
     public QuizHistory(UserEntity user, Quiz quiz, Score score) {
         this.user = user;
         this.quiz = quiz;
@@ -57,7 +50,7 @@ public class QuizHistory {
         return quiz;
     }
 
-    public void setQuiz(Quiz quizz) {
+    public void setQuiz(Quiz quiz) {
         this.quiz = quiz;
     }
 
@@ -74,7 +67,7 @@ public class QuizHistory {
         return "QuizHistory{" +
                 "id=" + id +
                 ", user=" + user +
-                ", quiz=" + quizz +
+                ", quiz=" + quiz +
                 ", score=" + score +
                 '}';
     }

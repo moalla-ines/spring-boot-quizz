@@ -18,11 +18,15 @@ public class QuizHistoryServiceImpl implements QuizHistoryService {
 
     @Autowired
     private ScoreRepository scoreRepository;
+    private UserEntity user;
+    private Quiz quiz;
 
     public QuizHistoryServiceImpl(QuizHistoryRepository quizHistoryRepository, ScoreRepository scoreRepository) {
         this.quizHistoryRepository = quizHistoryRepository;
         this.scoreRepository = scoreRepository;
     }
+
+
 
     @Override
     public List<QuizHistory> getAllQuizHistory() {
@@ -35,7 +39,9 @@ public class QuizHistoryServiceImpl implements QuizHistoryService {
     }
 
     @Override
-    public QuizHistory createQuizHistory(UserEntity user, Quiz quizz) {
+    public QuizHistory createQuizHistory(UserEntity user, Quiz quiz) {
+        this.user = user;
+        this.quiz = quiz;
         Score score = new Score();
         score.setValue(10);
         scoreRepository.save(score);
@@ -43,6 +49,7 @@ public class QuizHistoryServiceImpl implements QuizHistoryService {
         QuizHistory quizHistory = new QuizHistory(user, quiz, score);
         return quizHistoryRepository.save(quizHistory);
     }
+
 
     @Override
     public QuizHistory updateQuizHistory(Integer id, QuizHistory newQuizHistory) {

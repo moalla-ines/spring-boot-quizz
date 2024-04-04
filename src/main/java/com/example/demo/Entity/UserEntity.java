@@ -18,11 +18,11 @@ public class UserEntity {
     private String username;
     private String password;
     private String email;
-@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-@JoinTable(name = "type_user",joinColumns =
-@JoinColumn(name = "user_id",referencedColumnName = "id"),
-inverseJoinColumns =@JoinColumn(name = "role_id", referencedColumnName = "idrole") )
-private List<Role>roles = new ArrayList<>();
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinTable(name = "type_user",joinColumns =
+    @JoinColumn(name = "user_id",referencedColumnName = "id"),
+            inverseJoinColumns =@JoinColumn(name = "role_id", referencedColumnName = "idrole") )
+    private List<Role>roles = new ArrayList<>();
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<QuizHistory> quizHistoryList;
@@ -32,7 +32,7 @@ private List<Role>roles = new ArrayList<>();
         this.username = username;
         this.password = password;
         this.email = email;
-this.roles=roles;
+        this.roles=roles;
         this.quizHistoryList = quizHistoryList;
     }
 
@@ -96,7 +96,7 @@ this.roles=roles;
         return roles;
     }
 
-    public void setRoles(int roles) {
+    public void setRoles() {
         this.roles = roles;
     }
 

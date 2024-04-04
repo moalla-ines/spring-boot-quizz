@@ -1,7 +1,7 @@
 package com.example.demo.Controller;
 
 import com.example.demo.Entity.Question;
-import com.example.demo.Entity.Quizz;
+import com.example.demo.Entity.Quiz;
 import com.example.demo.Entity.QuizHistory;
 import com.example.demo.Entity.UserEntity;
 import com.example.demo.Service.QuizHistoryService;
@@ -35,10 +35,10 @@ public class QuizHistoryController {
     public ResponseEntity<QuizHistory> createQuizHistory(@RequestBody QuizHistoryRequest quizHistoryRequest) {
         // Convertir QuizHistoryRequest en UserEntity et Quiz
         UserEntity user = quizHistoryRequest.getUser();
-        Quizz quizz = quizHistoryRequest.getQuiz();
+        Quiz quiz = quizHistoryRequest.getQuiz();
 
         // Créer QuizHistory avec la méthode du service
-        QuizHistory createdQuizHistory = quizHistoryService.createQuizHistory(user, quizz);
+        QuizHistory createdQuizHistory = quizHistoryService.createQuizHistory(user, quiz);
 
         return new ResponseEntity<>(createdQuizHistory, HttpStatus.CREATED);
     }
@@ -71,7 +71,7 @@ public class QuizHistoryController {
     // Classe interne pour la demande de QuizHistory
     static class QuizHistoryRequest {
         private UserEntity user;
-        private Quizz quizz;
+        private Quiz quiz;
 
         // Getters et setters
         public UserEntity getUser() {
@@ -82,12 +82,12 @@ public class QuizHistoryController {
             this.user = user;
         }
 
-        public Quizz getQuiz() {
-            return quizz;
+        public Quiz getQuiz() {
+            return quiz;
         }
 
-        public void setQuiz(Quizz quizz) {
-            this.quizz = quizz;
+        public void setQuiz(Quiz quiz) {
+            this.quiz = quiz;
         }
     }
 }
