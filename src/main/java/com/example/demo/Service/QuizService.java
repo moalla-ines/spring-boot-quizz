@@ -1,6 +1,7 @@
 package com.example.demo.Service;
 
 import com.example.demo.Entity.Quiz;
+import com.example.demo.Entity.Quizz;
 
 import java.util.List;
 import java.util.Optional;
@@ -11,11 +12,11 @@ public interface QuizService {
 
     Optional<Quiz> getQuizById(Integer id);
 
-    Quiz createQuiz(Quiz quiz);
+    Quizz createQuiz(Quizz quizz);
 
-    List<Quiz> getQuizzesByCategorie(Integer idCategorie);
+    List<Quizz> getQuizzesByCategorie(Integer idCategorie);
 
-    Quiz updateQuiz(Integer id, Quiz updatedQuiz);
+    Quizz updateQuiz(Integer id, Quizz updatedQuizz);
 
 
     void deleteQuiz(Integer id);

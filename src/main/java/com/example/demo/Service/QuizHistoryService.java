@@ -1,14 +1,14 @@
 package com.example.demo.Service;
 
 import com.example.demo.Entity.Question;
-import com.example.demo.Entity.Quiz;
+import com.example.demo.Entity.Quizz;
 import com.example.demo.Entity.QuizHistory;
 import com.example.demo.Entity.UserEntity;
 
 import java.util.List;
 
 public interface QuizHistoryService {
-    QuizHistory createQuizHistory(UserEntity user, Quiz quiz);
+    QuizHistory createQuizHistory(UserEntity user, Quizz quizz);
 
     List<QuizHistory> getAllQuizHistory();
 

@@ -2,6 +2,7 @@ package com.example.demo.Service.Impl;
 
 import com.example.demo.Entity.Question;
 import com.example.demo.Entity.Quiz;
+
 import com.example.demo.Repository.QuestionRepository;
 import com.example.demo.Repository.QuizRepository;
 import com.example.demo.Service.QuizService;
@@ -40,6 +41,7 @@ public  class QuizServiceImpl implements QuizService {
         // Récupérer le quiz existant en fonction de son ID
         Optional<Quiz> existingQuizOptional = quizRepository.findById(quiz.getId());
 
+        // Le quiz n'existe pas, donc sauvegarder le nouveau quiz
         if (existingQuizOptional.isPresent()) {
             // Mettre à jour l'objet existingQuiz avec les nouvelles données de quiz
             Quiz existingQuiz = existingQuizOptional.get();
@@ -48,16 +50,14 @@ public  class QuizServiceImpl implements QuizService {
             existingQuiz.setNb_questions(quiz.getNb_questions());
             existingQuiz.setCategorie(quiz.getCategorie());
             existingQuiz.setQuestions(quiz.getQuestions());
+            existingQuiz.setQuizHistoryList(quiz.getQuizHistoryList());
             for (Question question : existingQuiz.getQuestions()) {
                 question.setQuiz(existingQuiz);
             }
 
             // Sauvegarder le quiz mis à jour
             return quizRepository.save(existingQuiz);
-        } else {
-            // Le quiz n'existe pas, donc sauvegarder le nouveau quiz
-            return quizRepository.save(quiz);
-        }
+        } else return quizRepository.save(quiz);
     }
 
 
@@ -70,13 +70,13 @@ public  class QuizServiceImpl implements QuizService {
 
 
     @Override
-    public Quiz updateQuiz(Integer id, Quiz updatedQuiz) {
+    public Quiz updateQuiz(Integer id, Quiz updatedQuizz) {
         Optional<Quiz> existingQuizOptional = quizRepository.findById(id);
         if (existingQuizOptional.isPresent()) {
-            Quiz existingQuiz = existingQuizOptional.get();
-            updatedQuiz.setCategorie(existingQuiz.getCategorie());
-            updatedQuiz.setQuestions(existingQuiz.getQuestions());
-            return quizRepository.save(existingQuiz);
+            Quiz existingQuizz = existingQuizOptional.get();
+            updatedQuizz.setCategorie(existingQuizz.getCategorie());
+            updatedQuizz.setQuestions(existingQuizz.getQuestions());
+            return quizRepository.save(existingQuizz);
         } else {
             throw new IllegalArgumentException("Quiz not found with id " + id);
         }

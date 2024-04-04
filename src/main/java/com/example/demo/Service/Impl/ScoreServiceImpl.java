@@ -36,6 +36,7 @@ public class ScoreServiceImpl implements ScoreService {
         if (existingScore.isPresent()) {
             Score score = existingScore.get();
             score.setValue(newScore.getValue());
+            score.setQuizHistoryList(newScore.getQuizHistoryList());
             return scoreRepository.save(score);
         }
         return null;

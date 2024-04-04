@@ -14,11 +14,11 @@ public class Categorie {
     private Integer idcategorie;
     private String titre_categorie;
     @OneToMany(mappedBy = "id", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<Quiz> quizzes;
+    private List<Quizz> quizzes;
     @OneToMany(mappedBy = "idNiveau", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Niveau> niveauList;
 
-    public Categorie(Integer idcategorie, String titre_categorie, List<Quiz> quizzes, List<Niveau> niveauList) {
+    public Categorie(Integer idcategorie, String titre_categorie, List<Quizz> quizzes, List<Niveau> niveauList) {
         this.idcategorie = idcategorie;
         this.titre_categorie = titre_categorie;
         this.quizzes = quizzes;
@@ -33,11 +33,11 @@ public class Categorie {
     public Categorie() {
     }
 
-    public List<Quiz> getQuizzes() {
+    public List<Quizz> getQuizzes() {
         return quizzes;
     }
 
-    public void setQuizzes(List<Quiz> quizzes) {
+    public void setQuizzes(List<Quizz> quizzes) {
         this.quizzes = quizzes;
     }
     public Integer getIdcategorie() {

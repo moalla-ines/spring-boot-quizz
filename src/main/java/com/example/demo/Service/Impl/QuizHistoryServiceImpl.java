@@ -35,7 +35,7 @@ public class QuizHistoryServiceImpl implements QuizHistoryService {
     }
 
     @Override
-    public QuizHistory createQuizHistory(UserEntity user, Quiz quiz) {
+    public QuizHistory createQuizHistory(UserEntity user, Quiz quizz) {
         Score score = new Score();
         score.setValue(10);
         scoreRepository.save(score);

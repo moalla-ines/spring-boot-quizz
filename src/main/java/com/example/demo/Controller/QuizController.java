@@ -1,7 +1,6 @@
 package com.example.demo.Controller;
 
-import com.example.demo.Entity.Question;
-import com.example.demo.Entity.Quiz;
+import com.example.demo.Entity.Quizz;
 import com.example.demo.Service.QuizService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,29 +23,29 @@ public class QuizController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Quiz>> getAllQuizzes() {
-        List<Quiz> quizzes = quizService.getAllQuizzes();
+    public ResponseEntity<List<Quizz>> getAllQuizzes() {
+        List<Quizz> quizzes = quizService.getAllQuizzes();
         return ResponseEntity.ok(quizzes);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Quiz> getQuizById(@PathVariable Integer id) {
-        Optional<Quiz> quizOptional = quizService.getQuizById(id);
+    public ResponseEntity<Quizz> getQuizById(@PathVariable Integer id) {
+        Optional<Quizz> quizOptional = quizService.getQuizById(id);
         return quizOptional.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     @PostMapping
-    public ResponseEntity<Quiz> createQuiz(@RequestBody Quiz quiz ) {
+    public ResponseEntity<Quizz> createQuiz(@RequestBody Quizz quizz) {
 
-        Quiz createdQuiz = quizService.createQuiz(quiz);
+        Quizz createdQuizz = quizService.createQuiz(quizz);
 
-        return ResponseEntity.status(HttpStatus.CREATED).body(createdQuiz);
+        return ResponseEntity.status(HttpStatus.CREATED).body(createdQuizz);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Quiz> updateQuiz(@PathVariable Integer id, @RequestBody Quiz updatedQuiz) {
-        Quiz quiz = quizService.updateQuiz(id, updatedQuiz);
-        return ResponseEntity.ok(quiz);
+    public ResponseEntity<Quizz> updateQuiz(@PathVariable Integer id, @RequestBody Quizz updatedQuizz) {
+        Quizz quizz = quizService.updateQuiz(id, updatedQuizz);
+        return ResponseEntity.ok(quizz);
     }
 
     @DeleteMapping("/{id}")
@@ -56,8 +55,8 @@ public class QuizController {
     }
 
     @GetMapping("/categorie/{idCategorie}")
-    public ResponseEntity<List<Quiz>> getQuizzesByCategorie(@PathVariable Integer idCategorie) {
-        List<Quiz> quizzes = quizService.getQuizzesByCategorie(idCategorie);
+    public ResponseEntity<List<Quizz>> getQuizzesByCategorie(@PathVariable Integer idCategorie) {
+        List<Quizz> quizzes = quizService.getQuizzesByCategorie(idCategorie);
         return ResponseEntity.ok(quizzes);
     }
 

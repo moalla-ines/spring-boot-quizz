@@ -1,7 +1,6 @@
 package com.example.demo.Entity;
 
 import jakarta.persistence.*;
-import org.antlr.v4.runtime.misc.LogManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -97,7 +96,7 @@ this.roles=roles;
         return roles;
     }
 
-    public void setRoles(List<Role> roles) {
+    public void setRoles(int roles) {
         this.roles = roles;
     }
 
