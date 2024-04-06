@@ -36,29 +36,41 @@ public class QuizHistoryServiceImpl implements QuizHistoryService {
 
     @Override
     public QuizHistory createQuizHistory(QuizHistory quizHistory) {
-        // Save the user if not already persisted
+        // Retrieve the user from the database if it exists
         UserEntity user = quizHistory.getUser();
-        if (user != null && user.getId() == null) {
-            user = userRepository.save(user);
-            quizHistory.setUser(user);
+        if (user != null && user.getId() != null) {
+            Optional<UserEntity> existingUser = userRepository.findById(user.getId());
+            if (existingUser.isPresent()) {
+                user = existingUser.get();
+            }
         }
 
-        // Save the quiz if not already persisted
+        // Retrieve the quiz from the database if it exists
         Quiz quiz = quizHistory.getQuiz();
-        if (quiz != null && quiz.getId() == null) {
-            quiz = quizRepository.save(quiz);
-            quizHistory.setQuiz(quiz);
+        if (quiz != null && quiz.getId() != null) {
+            Optional<Quiz> existingQuiz = quizRepository.findById(quiz.getId());
+            if (existingQuiz.isPresent()) {
+                quiz = existingQuiz.get();
+            }
         }
 
-        // Save the score if not already persisted
+        // Retrieve the score from the database if it exists
         Score score = quizHistory.getScore();
-        if (score != null && score.getIdscore() == null) {
-            score = scoreRepository.save(score);
-            quizHistory.setScore(score);
+        if (score != null && score.getIdscore() != null) {
+            Optional<Score> existingScore = scoreRepository.findById(score.getIdscore());
+            if (existingScore.isPresent()) {
+                score = existingScore.get();
+            }
         }
+
+        // Save the quiz history
+        quizHistory.setUser(user);
+        quizHistory.setQuiz(quiz);
+        quizHistory.setScore(score);
 
         return quizHistoryRepository.save(quizHistory);
     }
+
 
 
 
