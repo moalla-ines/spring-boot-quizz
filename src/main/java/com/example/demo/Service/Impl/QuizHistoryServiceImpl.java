@@ -1,10 +1,8 @@
 package com.example.demo.Service.Impl;
 
-import com.example.demo.Entity.Question;
-import com.example.demo.Entity.QuizHistory;
-import com.example.demo.Entity.Score;
-import com.example.demo.Entity.UserEntity;
+import com.example.demo.Entity.*;
 import com.example.demo.Repository.QuizHistoryRepository;
+import com.example.demo.Repository.QuizRepository;
 import com.example.demo.Repository.UserRepository;
 import com.example.demo.Repository.ScoreRepository;
 import com.example.demo.Service.QuizHistoryService;
@@ -20,9 +18,11 @@ public class QuizHistoryServiceImpl implements QuizHistoryService {
     @Autowired
     private QuizHistoryRepository quizHistoryRepository;
     @Autowired
-    private ScoreRepository ScoreRepository;
+    private ScoreRepository scoreRepository;
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private QuizRepository quizRepository;
 
     @Override
     public List<QuizHistory> getAllQuizHistory() {
@@ -36,35 +36,31 @@ public class QuizHistoryServiceImpl implements QuizHistoryService {
 
     @Override
     public QuizHistory createQuizHistory(QuizHistory quizHistory) {
-
+        // Save the user if not already persisted
         UserEntity user = quizHistory.getUser();
-
-        // Check if the user is null or if it has an ID (indicating it's already persisted)
         if (user != null && user.getId() == null) {
-            // If the user is not yet persisted, save it first
             user = userRepository.save(user);
-
-            // Update the quizHistory with the saved user
             quizHistory.setUser(user);
         }
 
-        // Get the score from the quizHistory
-        Score score = quizHistory.getScore();
-
-
-        // Check if the score is null or if it has an ID (indicating it's already persisted)
-        if (score != null && score.getIdscore() == null) {
-            // If the score is not yet persisted, save it first
-            score = ScoreRepository.save(score);
-
-            // Update the quizHistory with the saved score
-            quizHistory.setScore(score);
-
+        // Save the quiz if not already persisted
+        Quiz quiz = quizHistory.getQuiz();
+        if (quiz != null && quiz.getId() == null) {
+            quiz = quizRepository.save(quiz);
+            quizHistory.setQuiz(quiz);
         }
 
-        // Save the quizHistory (with the updated score reference)
+        // Save the score if not already persisted
+        Score score = quizHistory.getScore();
+        if (score != null && score.getIdscore() == null) {
+            score = scoreRepository.save(score);
+            quizHistory.setScore(score);
+        }
+
         return quizHistoryRepository.save(quizHistory);
     }
+
+
 
 
     @Override

@@ -24,6 +24,7 @@ public class UserEntity {
             inverseJoinColumns =@JoinColumn(name = "role_id", referencedColumnName = "idrole") )
     private List<Role>roles = new ArrayList<>();
 
+
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<QuizHistory> quizHistoryList;
 
@@ -33,7 +34,7 @@ public class UserEntity {
         this.password = password;
         this.email = email;
         this.roles=roles;
-        this.quizHistoryList = quizHistoryList;
+        this.quizHistoryList = quizHistoryList != null ? quizHistoryList : new ArrayList<>();
     }
 
     public UserEntity(String username, String password, String email, List<Role>roles, List<QuizHistory> quizHistoryList) {
@@ -41,6 +42,10 @@ public class UserEntity {
         this.password = password;
         this.email = email;
         this.roles=roles;
+        this.quizHistoryList = quizHistoryList != null ? quizHistoryList : new ArrayList<>();
+    }
+
+    public UserEntity(List<QuizHistory> quizHistoryList) {
         this.quizHistoryList = quizHistoryList;
     }
 
@@ -96,9 +101,10 @@ public class UserEntity {
         return roles;
     }
 
-    public void setRoles() {
+    public void setRoles(List<Role> roles) {
         this.roles = roles;
     }
+
 
     public List<QuizHistory> getQuizHistoryList() {
         return quizHistoryList;

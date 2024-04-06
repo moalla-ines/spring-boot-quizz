@@ -35,7 +35,7 @@ public class UserDto {
     }
 
     public String getUsername() {
-        return email;
+        return username;
     }
 
 
