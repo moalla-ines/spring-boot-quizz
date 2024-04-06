@@ -1,9 +1,7 @@
 package com.example.demo.Controller;
 
 import com.example.demo.Entity.Question;
-import com.example.demo.Entity.Quiz;
 import com.example.demo.Entity.QuizHistory;
-import com.example.demo.Entity.UserEntity;
 import com.example.demo.Service.QuizHistoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -32,14 +30,8 @@ public class QuizHistoryController {
     }
 
     @PostMapping
-    public ResponseEntity<QuizHistory> createQuizHistory(@RequestBody QuizHistoryRequest quizHistoryRequest) {
-        // Convertir QuizHistoryRequest en UserEntity et Quiz
-        UserEntity user = quizHistoryRequest.getUser();
-        Quiz quiz = quizHistoryRequest.getQuiz();
-
-        // Créer QuizHistory avec la méthode du service
-        QuizHistory createdQuizHistory = quizHistoryService.createQuizHistory(user, quiz);
-
+    public ResponseEntity<QuizHistory> createQuizHistory(@RequestBody QuizHistory quizHistory) {
+        QuizHistory createdQuizHistory = quizHistoryService.createQuizHistory(quizHistory);
         return new ResponseEntity<>(createdQuizHistory, HttpStatus.CREATED);
     }
 
@@ -54,13 +46,11 @@ public class QuizHistoryController {
         quizHistoryService.deleteQuizHistory(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
-
     @GetMapping("/user/{userId}/quiz/{quizId}/score")
     public ResponseEntity<Integer> getQuizScore(@PathVariable Integer userId, @PathVariable Integer quizId) {
         Integer score = quizHistoryService.getQuizScore(userId, quizId);
         return new ResponseEntity<>(score, HttpStatus.OK);
     }
-
     @PostMapping("/calculate-score")
     public ResponseEntity<Integer> calculateScore(@RequestBody List<String> userAnswers) {
         List<Question> questions = null; // Récupérez les questions du quiz
@@ -68,26 +58,4 @@ public class QuizHistoryController {
         return new ResponseEntity<>(score, HttpStatus.OK);
     }
 
-    // Classe interne pour la demande de QuizHistory
-    static class QuizHistoryRequest {
-        private UserEntity user;
-        private Quiz quiz;
-
-        // Getters et setters
-        public UserEntity getUser() {
-            return user;
-        }
-
-        public void setUser(UserEntity user) {
-            this.user = user;
-        }
-
-        public Quiz getQuiz() {
-            return quiz;
-        }
-
-        public void setQuiz(Quiz quiz) {
-            this.quiz = quiz;
-        }
-    }
 }

@@ -1,7 +1,11 @@
 package com.example.demo.Service.Impl;
 
-import com.example.demo.Entity.*;
+import com.example.demo.Entity.Question;
+import com.example.demo.Entity.QuizHistory;
+import com.example.demo.Entity.Score;
+import com.example.demo.Entity.UserEntity;
 import com.example.demo.Repository.QuizHistoryRepository;
+import com.example.demo.Repository.UserRepository;
 import com.example.demo.Repository.ScoreRepository;
 import com.example.demo.Service.QuizHistoryService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,18 +19,10 @@ public class QuizHistoryServiceImpl implements QuizHistoryService {
 
     @Autowired
     private QuizHistoryRepository quizHistoryRepository;
-
     @Autowired
-    private ScoreRepository scoreRepository;
-    private UserEntity user;
-    private Quiz quiz;
-
-    public QuizHistoryServiceImpl(QuizHistoryRepository quizHistoryRepository, ScoreRepository scoreRepository) {
-        this.quizHistoryRepository = quizHistoryRepository;
-        this.scoreRepository = scoreRepository;
-    }
-
-
+    private ScoreRepository ScoreRepository;
+    @Autowired
+    private UserRepository userRepository;
 
     @Override
     public List<QuizHistory> getAllQuizHistory() {
@@ -39,14 +35,34 @@ public class QuizHistoryServiceImpl implements QuizHistoryService {
     }
 
     @Override
-    public QuizHistory createQuizHistory(UserEntity user, Quiz quiz) {
-        this.user = user;
-        this.quiz = quiz;
-        Score score = new Score();
-        score.setValue(10);
-        scoreRepository.save(score);
+    public QuizHistory createQuizHistory(QuizHistory quizHistory) {
 
-        QuizHistory quizHistory = new QuizHistory(user, quiz, score);
+        UserEntity user = quizHistory.getUser();
+
+        // Check if the user is null or if it has an ID (indicating it's already persisted)
+        if (user != null && user.getId() == null) {
+            // If the user is not yet persisted, save it first
+            user = userRepository.save(user);
+
+            // Update the quizHistory with the saved user
+            quizHistory.setUser(user);
+        }
+
+        // Get the score from the quizHistory
+        Score score = quizHistory.getScore();
+
+
+        // Check if the score is null or if it has an ID (indicating it's already persisted)
+        if (score != null && score.getIdscore() == null) {
+            // If the score is not yet persisted, save it first
+            score = ScoreRepository.save(score);
+
+            // Update the quizHistory with the saved score
+            quizHistory.setScore(score);
+
+        }
+
+        // Save the quizHistory (with the updated score reference)
         return quizHistoryRepository.save(quizHistory);
     }
 
@@ -68,12 +84,9 @@ public class QuizHistoryServiceImpl implements QuizHistoryService {
     public void deleteQuizHistory(Integer id) {
         quizHistoryRepository.deleteById(id);
     }
-
-    @Override
     public Integer getQuizScore(Integer userId, Integer quizId) {
         return quizHistoryRepository.findScoreByUserIdAndQuizId(userId, quizId);
     }
-
     public int calculateScore(List<Question> questions, List<String> userAnswers) {
         int score = 0;
         for (int i = 0; i < questions.size(); i++) {
@@ -87,8 +100,5 @@ public class QuizHistoryServiceImpl implements QuizHistoryService {
         return score;
     }
 
-    @Override
-    public void createQuizHistory(QuizHistory quizHistory) {
-        quizHistoryRepository.save(quizHistory);
-    }
+
 }

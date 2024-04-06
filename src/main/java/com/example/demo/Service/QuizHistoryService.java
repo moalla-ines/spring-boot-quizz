@@ -1,29 +1,22 @@
 package com.example.demo.Service;
 
 import com.example.demo.Entity.Question;
-import com.example.demo.Entity.Quiz;
-
 import com.example.demo.Entity.QuizHistory;
-import com.example.demo.Entity.UserEntity;
 
 import java.util.List;
 
 public interface QuizHistoryService {
-
-
-    QuizHistory createQuizHistory(UserEntity user, Quiz quiz);
-
     List<QuizHistory> getAllQuizHistory();
 
     QuizHistory getQuizHistoryById(Integer id);
 
-    QuizHistory updateQuizHistory(Integer id, QuizHistory newQuizHistory);
+    QuizHistory createQuizHistory(QuizHistory quizHistory);
+
+    QuizHistory updateQuizHistory(Integer id, QuizHistory quizHistory);
 
     void deleteQuizHistory(Integer id);
 
     Integer getQuizScore(Integer userId, Integer quizId);
 
     int calculateScore(List<Question> questions, List<String> userAnswers);
-
-    void createQuizHistory(QuizHistory quizHistory);
 }
