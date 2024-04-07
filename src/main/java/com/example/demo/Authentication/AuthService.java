@@ -14,6 +14,8 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
+
 @Service
 @RequiredArgsConstructor
 public class AuthService {
@@ -30,11 +32,12 @@ public class AuthService {
     }
 
     public AuthenticationResponse register(UserDto request) {
+        Role role = new Role("user");
         var user = new UserEntity(
                 request.getUsername(),
                 request.getEmail(),
                 passwordEncoder.encode(request.getPassword()),
-                new Role(request.getRole())
+            Collections.singletonList(role)
         );
         userRepository.save(user);
         var jwtToken = jwtService.generateToken(user);

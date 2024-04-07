@@ -51,6 +51,13 @@ public class UserEntity implements UserDetails {
         this.quizHistoryList = quizHistoryList != null ? quizHistoryList : new ArrayList<>();
     }
 
+    public UserEntity(String username, String password, String email, List<Role> roles) {
+        this.username = username;
+        this.password = password;
+        this.email = email;
+        this.roles = roles;
+    }
+
     public UserEntity(List<QuizHistory> quizHistoryList) {
         this.quizHistoryList = quizHistoryList;
     }
