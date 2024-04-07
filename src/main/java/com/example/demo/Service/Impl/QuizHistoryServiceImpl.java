@@ -42,6 +42,8 @@ public class QuizHistoryServiceImpl implements QuizHistoryService {
             Optional<UserEntity> existingUser = userRepository.findById(user.getId());
             if (existingUser.isPresent()) {
                 user = existingUser.get();
+            } else {
+                user = userRepository.save(user); // Save the user if it doesn't exist
             }
         }
 
@@ -51,29 +53,28 @@ public class QuizHistoryServiceImpl implements QuizHistoryService {
             Optional<Quiz> existingQuiz = quizRepository.findById(quiz.getId());
             if (existingQuiz.isPresent()) {
                 quiz = existingQuiz.get();
+            } else {
+                quiz = quizRepository.save(quiz); // Save the quiz if it doesn't exist
             }
         }
 
-        // Retrieve the score from the database if it exists
+        // Retrieve or save the score
         Score score = quizHistory.getScore();
         if (score != null && score.getIdscore() != null) {
             Optional<Score> existingScore = scoreRepository.findById(score.getIdscore());
             if (existingScore.isPresent()) {
                 score = existingScore.get();
+            } else {
+                score = scoreRepository.save(score); // Save the score if it doesn't exist
             }
         }
 
-        // Save the quiz history
+        // Set the updated entities in the quiz history and save it
         quizHistory.setUser(user);
         quizHistory.setQuiz(quiz);
         quizHistory.setScore(score);
-
         return quizHistoryRepository.save(quizHistory);
     }
-
-
-
-
 
     @Override
     public QuizHistory updateQuizHistory(Integer id, QuizHistory newQuizHistory) {
@@ -92,9 +93,13 @@ public class QuizHistoryServiceImpl implements QuizHistoryService {
     public void deleteQuizHistory(Integer id) {
         quizHistoryRepository.deleteById(id);
     }
+
+    @Override
     public Integer getQuizScore(Integer userId, Integer quizId) {
         return quizHistoryRepository.findScoreByUserIdAndQuizId(userId, quizId);
     }
+
+    @Override
     public int calculateScore(List<Question> questions, List<String> userAnswers) {
         int score = 0;
         for (int i = 0; i < questions.size(); i++) {
@@ -107,6 +112,4 @@ public class QuizHistoryServiceImpl implements QuizHistoryService {
         }
         return score;
     }
-
-
 }
