@@ -1,6 +1,7 @@
 package com.example.demo.Dto;
 
 
+import com.example.demo.Entity.Role;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -13,14 +14,15 @@ public class UserDto {
     private String username;
     private String password;
     private String email;
+private Role role;
 
-
-    public UserDto(Integer iduser, String username, String password, String email) {
+    public UserDto(Integer iduser, String username, String password, String email, Role role) {
         this.iduser = iduser;
         this.username = username;
         this.password = password;
         this.email = email;
 
+        this.role = role;
     }
 
     public UserDto() {
@@ -78,4 +80,11 @@ public class UserDto {
     }
 
 
+    public Role getRole() {
+        return role;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
+    }
 }
