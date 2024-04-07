@@ -7,16 +7,28 @@ import lombok.NoArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 @Data
 @Builder
-@AllArgsConstructor
-@NoArgsConstructor
+
 public class LoginDto {
 
+    private String email;
 
     private String password;
-    private String username;
 
+    public LoginDto(String email, String password) {
+        this.email = email;
+        this.password = password;
+    }
 
+    public LoginDto() {
+    }
 
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
 
     public String getPassword() {
         return password;
@@ -26,23 +38,14 @@ public class LoginDto {
         this.password = password;
     }
 
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
     @Override
     public String toString() {
         return "LoginDto{" +
-                "password='" + password + '\'' +
-                ", username='" + username + '\'' +
+                "email='" + email + '\'' +
+                ", password='" + password + '\'' +
                 '}';
     }
+}
 
-
-    }
 
 
