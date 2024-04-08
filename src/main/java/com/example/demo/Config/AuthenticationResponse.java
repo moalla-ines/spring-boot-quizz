@@ -6,12 +6,22 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
-@Builder
-@AllArgsConstructor
-@NoArgsConstructor
+
+
 public class AuthenticationResponse {
     private String token;
 
     public void setToken(String jwtToken) {
+    }
+
+    public AuthenticationResponse(String token) {
+        this.token = token;
+    }
+
+    public AuthenticationResponse() {
+    }
+
+    public String getToken() {
+        return token;
     }
 }

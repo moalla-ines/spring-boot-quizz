@@ -17,7 +17,7 @@ import org.springframework.stereotype.Service;
 import java.util.Collections;
 
 @Service
-@RequiredArgsConstructor
+
 public class AuthService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
@@ -35,8 +35,8 @@ public class AuthService {
         Role role = new Role("user");
         var user = new UserEntity(
                 request.getUsername(),
-                request.getEmail(),
                 passwordEncoder.encode(request.getPassword()),
+                request.getEmail(),
             Collections.singletonList(role)
         );
         userRepository.save(user);
