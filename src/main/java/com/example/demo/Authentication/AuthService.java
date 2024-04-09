@@ -36,11 +36,12 @@ public class AuthService {
 
     public AuthenticationResponse register(UserDto request) {
         Role role = new Role("user");
-        var user = User.builder()
-                .username(request.getUsername())
-                .password(passwordEncoder.encode(request.getPassword()))
-                .email(request.getEmail())
-                .roles(Collections.singletonList(role))
+        UserEntity.UserEntityBuilder builder = UserEntity.builder();
+        builder.username(request.getUsername());
+        builder.password(passwordEncoder.encode(request.getPassword()));
+        builder.email(request.getEmail());
+        builder.roles(Collections.singletonList(role));
+        var user = builder
                 .build();
         userRepository.save(user);
         var jwtToken = jwtService.generateToken(user);
@@ -57,7 +58,8 @@ public class AuthService {
                         request.getPassword()
                 )
         );
-        var user = userRepository.findByEmail(request.getEmail()).orElseThrow();
+        UserEntity user;
+        user = userRepository.findByEmail(request.getEmail()).orElseThrow();
         var jwtToken = jwtService.generateToken(user);
         var authenticationResponse = new AuthenticationResponse();
         authenticationResponse.setToken(jwtToken);

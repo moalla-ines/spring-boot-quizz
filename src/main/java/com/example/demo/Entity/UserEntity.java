@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.Builder;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.ArrayList;
@@ -65,6 +66,9 @@ public class UserEntity implements UserDetails {
     public UserEntity() {
     }
 
+
+
+
     public Integer getId() {
         return id;
     }
@@ -74,7 +78,7 @@ public class UserEntity implements UserDetails {
     }
 
     public String getUsername() {
-        return username;
+        return email;
     }
 
     @Override
