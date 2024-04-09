@@ -1,7 +1,9 @@
 package com.example.demo.Entity;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
@@ -14,6 +16,8 @@ import java.util.stream.Collectors;
 
 @Builder
 @Entity
+
+@AllArgsConstructor
 @Table(name = "users")
 public class UserEntity implements UserDetails {
 
@@ -34,15 +38,6 @@ public class UserEntity implements UserDetails {
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<QuizHistory> quizHistoryList;
-
-    public UserEntity(Integer id, String username, String password, String email, List<Role> roles, List<QuizHistory> quizHistoryList) {
-        this.id = id;
-        this.username = username;
-        this.password = password;
-        this.email = email;
-        this.roles=roles;
-        this.quizHistoryList = quizHistoryList != null ? quizHistoryList : new ArrayList<>();
-    }
 
     public UserEntity(String username, String password, String email, List<Role>roles, List<QuizHistory> quizHistoryList) {
         this.username = username;
