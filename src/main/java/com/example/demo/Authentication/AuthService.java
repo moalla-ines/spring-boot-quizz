@@ -10,6 +10,7 @@ import com.example.demo.Repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -31,21 +32,23 @@ public class AuthService {
         this.authenticationManager = authenticationManager;
     }
 
+
+
     public AuthenticationResponse register(UserDto request) {
         Role role = new Role("user");
-        var user = new UserEntity(
-                request.getUsername(),
-                passwordEncoder.encode(request.getPassword()),
-                request.getEmail(),
-            Collections.singletonList(role)
-        );
+        var user = User.builder()
+                .username(request.getUsername())
+                .password(passwordEncoder.encode(request.getPassword()))
+                .email(request.getEmail())
+                .roles(Collections.singletonList(role))
+                .build();
         userRepository.save(user);
         var jwtToken = jwtService.generateToken(user);
         var authenticationResponse = new AuthenticationResponse();
         authenticationResponse.setToken(jwtToken);
         return authenticationResponse;
-
     }
+
 
     public AuthenticationResponse authenticate(LoginDto request) {
         authenticationManager.authenticate(
@@ -54,15 +57,11 @@ public class AuthService {
                         request.getPassword()
                 )
         );
-        var userOptional = userRepository.findByEmail(request.getEmail());
-        if (userOptional.isCredentialsNonExpired()) {
-            var user = userOptional.getClass();
-            var jwtToken = jwtService.generateToken(userOptional);
-            var authenticationResponse = new AuthenticationResponse();
-            authenticationResponse.setToken(jwtToken);
-            return authenticationResponse;
-        } else {
-            throw new UsernameNotFoundException("User not found with email: " + request.getEmail());
+        var user = userRepository.findByEmail(request.getEmail()).orElseThrow();
+        var jwtToken = jwtService.generateToken(user);
+        var authenticationResponse = new AuthenticationResponse();
+        authenticationResponse.setToken(jwtToken);
+        return authenticationResponse;
         }
     }
-}
+

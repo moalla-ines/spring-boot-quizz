@@ -27,17 +27,9 @@ public class ApplicationConfig {
 
     @Bean
     public UserDetailsService userDetailsService() {
-        return new UserDetailsService() {
-            @Override
-            public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-                Optional<UserDetails> user = Optional.ofNullable(userRepository.findByEmail(username));
-                if (user.isPresent()) {
-                    return user.get();
-                } else {
-                    throw new UsernameNotFoundException("User not found with email: " + username);
-                }
-            }
-        };
+        return username -> userRepository.findByEmail(username).orElseThrow(() -> new UsernameNotFoundException("User not found"));
+
+
 
         }
     @Bean
