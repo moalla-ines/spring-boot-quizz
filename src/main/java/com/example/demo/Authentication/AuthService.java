@@ -52,6 +52,7 @@ public class AuthService {
 
 
     public AuthenticationResponse authenticate(LoginDto request) {
+        System.out.println(request);
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
                         request.getEmail(),
@@ -61,9 +62,12 @@ public class AuthService {
         UserEntity user;
         user = userRepository.findByEmail(request.getEmail()).orElseThrow();
         var jwtToken = jwtService.generateToken(user);
+System.out.println(jwtToken);
 
         return AuthenticationResponse.builder()
                 .token(jwtToken)
                 .build();
+
     }
+
 }
