@@ -12,6 +12,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/v1/categories")
+@CrossOrigin( origins = "http://localhost:57965")
 public class CategorieController {
 
     private final CategorieService categorieService;
