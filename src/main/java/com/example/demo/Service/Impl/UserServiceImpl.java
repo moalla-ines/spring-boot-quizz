@@ -61,20 +61,28 @@ public class UserServiceImpl implements UserService {
     }
 
 
+
     @Override
     public UserEntity updateUser(Integer id, UserDto newUserDto) {
         Optional<UserEntity> optionalUser = userRepository.findById(id);
         if (optionalUser.isPresent()) {
             UserEntity existingUser = optionalUser.get();
-            existingUser.setUsername(newUserDto.getUsername());
-            existingUser.setEmail(newUserDto.getEmail());
             if (!newUserDto.getPassword().isEmpty()) { // Vérifie si un nouveau mot de passe est fourni
                 existingUser.setPassword(passwordEncoder.encode(newUserDto.getPassword())); // Encode le nouveau mot de passe
+            }
+            // Vérifie si un nouveau nom d'utilisateur est fourni et met à jour si nécessaire
+            if (newUserDto.getUsername() != null && !newUserDto.getUsername().isEmpty()) {
+                existingUser.setUsername(newUserDto.getUsername());
+            }
+            // Vérifie si un nouvel e-mail est fourni et met à jour si nécessaire
+            if (newUserDto.getEmail() != null && !newUserDto.getEmail().isEmpty()) {
+                existingUser.setEmail(newUserDto.getEmail());
             }
             return userRepository.save(existingUser);
         }
         return null;
     }
+
 
     @Override
     public void deleteUser(Integer id) {
