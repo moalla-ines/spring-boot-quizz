@@ -16,7 +16,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/v1/user")
-@CrossOrigin(origins = "http://localhost:60641")
+@CrossOrigin()
 public class UserController {
 
     private final UserService userService;
@@ -58,6 +58,7 @@ public class UserController {
             UserEntity user = optionalUser.get();
             user.setPassword(passwordEncoder.encode(newPassword));
             userService.updateUserPassword(user, newPassword);
+            System.out.println(newPassword);
             return ResponseEntity.ok("Password updated successfully");
         } else {
             return ResponseEntity.notFound().build();

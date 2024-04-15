@@ -13,7 +13,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/v1/niveau")
-@CrossOrigin( origins = "http://localhost:57965")
+@CrossOrigin( )
 public class NiveauController {
 
     private final NiveauService niveauService;

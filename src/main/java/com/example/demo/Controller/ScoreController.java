@@ -11,7 +11,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/scores")
-@CrossOrigin( origins = "http://localhost:57965")
+@CrossOrigin()
 public class ScoreController {
 
     @Autowired

@@ -12,7 +12,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/quiz-history")
-@CrossOrigin( origins = "http://localhost:57965")
+@CrossOrigin( )
 public class QuizHistoryController {
 
     @Autowired

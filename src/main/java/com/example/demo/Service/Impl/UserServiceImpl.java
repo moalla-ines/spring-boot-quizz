@@ -89,6 +89,7 @@ public class UserServiceImpl implements UserService {
     public void updateUserPassword(UserEntity user, String newPassword) {
         user.setPassword(passwordEncoder.encode(newPassword));
         userRepository.save(user);
-        System.out.println(user);
+        System.out.println(newPassword);
+
     }
 }
