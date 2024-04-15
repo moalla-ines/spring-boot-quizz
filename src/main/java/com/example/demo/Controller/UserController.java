@@ -52,18 +52,17 @@ public class UserController {
     }
 
     @PutMapping("/{id}/password")
-    public ResponseEntity<String> updateUserPassword(@PathVariable Integer id, @RequestBody String newPassword) {
+    public ResponseEntity<String> updateUserPassword(@PathVariable Integer id, @RequestBody String newPassword, @RequestParam String token) {
         Optional<UserEntity> optionalUser = Optional.ofNullable(userService.getUserById(id));
         if (optionalUser.isPresent()) {
             UserEntity user = optionalUser.get();
-            user.setPassword(passwordEncoder.encode(newPassword));
-            userService.updateUserPassword(user, newPassword);
-            System.out.println(newPassword);
+            userService.updateUserPassword(user, newPassword, token);
             return ResponseEntity.ok("Password updated successfully");
         } else {
             return ResponseEntity.notFound().build();
         }
     }
+
 
     @PutMapping("/{id}")
     public ResponseEntity<UserEntity> updateUser(@PathVariable Integer id, @RequestBody UserDto userDto) {

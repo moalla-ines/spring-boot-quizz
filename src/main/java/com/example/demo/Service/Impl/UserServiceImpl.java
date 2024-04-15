@@ -1,5 +1,6 @@
 package com.example.demo.Service.Impl;
 
+import com.example.demo.Config.UnauthorizedException;
 import com.example.demo.Dto.UserDto;
 import com.example.demo.Entity.Role;
 import com.example.demo.Entity.UserEntity;
@@ -86,10 +87,26 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void updateUserPassword(UserEntity user, String newPassword) {
-        user.setPassword(passwordEncoder.encode(newPassword));
-        userRepository.save(user);
-        System.out.println(newPassword);
+    public void updateUserPassword(UserEntity user, String newPassword, String token) {
+        // Vérifie si le token est valide
+        if (isValidToken(token)) {
+            // Encode le nouveau mot de passe avant de le sauvegarder
+            user.setPassword(passwordEncoder.encode(newPassword));
+            // Sauvegarde les modifications de l'utilisateur
+            userRepository.save(user);
+            // Affiche le nouveau mot de passe (pour déboguer, à retirer en production)
+            System.out.println(newPassword);
+        } else {
+            // Lance une exception si le token est invalide ou manquant
+            throw new UnauthorizedException("Invalid or missing token");
+        }
+    }
+
+    private boolean isValidToken(String token) {
+        System.out.println(token);
+        // Vérifie si le token n'est ni nul ni vide (exemple simplifié)
+        return token != null && !token.isEmpty();
 
     }
+
 }

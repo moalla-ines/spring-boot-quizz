@@ -18,5 +18,7 @@ public interface UserService {
 
 
 
-    void updateUserPassword(UserEntity user, String newPassword);
+
+
+    void updateUserPassword(UserEntity user, String newPassword, String token);
 }
