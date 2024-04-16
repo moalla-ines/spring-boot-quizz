@@ -53,6 +53,10 @@ public class AuthService {
 
     public AuthenticationResponse authenticate(LoginDto request) {
         System.out.println(request);
+        System.out.println("mdp saisie "+passwordEncoder.encode(request.getPassword()));
+        UserEntity user1 = userRepository.findByEmail(request.getEmail())
+                .orElseThrow(() -> new UsernameNotFoundException("User not found with email: " + request.getEmail()));
+System.out.println("mdp stocké " +user1.getPassword());
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
                         request.getEmail(),

@@ -95,7 +95,7 @@ public class UserServiceImpl implements UserService {
             // Sauvegarde les modifications de l'utilisateur
             userRepository.save(user);
             // Affiche le nouveau mot de passe (pour déboguer, à retirer en production)
-            System.out.println(token);
+            System.out.println(newPassword);
         } else {
             // Lance une exception si le token est invalide ou manquant
             throw new UnauthorizedException("Invalid or missing token");
