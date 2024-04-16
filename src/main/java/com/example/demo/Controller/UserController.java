@@ -11,7 +11,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @RestController
@@ -52,12 +54,12 @@ public class UserController {
     }
 
     @PutMapping("/{id}/password")
-    public ResponseEntity<String> updateUserPassword(@PathVariable Integer id, @RequestBody String newPassword, @RequestParam String token) {
+    public ResponseEntity<Map<String, String>> updateUserPassword(@PathVariable Integer id, @RequestBody String newPassword, @RequestHeader("Authorization") String token) {
         Optional<UserEntity> optionalUser = Optional.ofNullable(userService.getUserById(id));
         if (optionalUser.isPresent()) {
             UserEntity user = optionalUser.get();
             userService.updateUserPassword(user, newPassword, token);
-            return ResponseEntity.ok("Password updated successfully");
+            return ResponseEntity.ok(Collections.singletonMap("message", "Password updated successfully"));
         } else {
             return ResponseEntity.notFound().build();
         }

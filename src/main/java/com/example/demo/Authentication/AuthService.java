@@ -2,6 +2,7 @@ package com.example.demo.Authentication;
 
 import com.example.demo.Config.AuthenticationResponse;
 import com.example.demo.Config.JwtService;
+import com.example.demo.Config.UnauthorizedException;
 import com.example.demo.Dto.LoginDto;
 import com.example.demo.Dto.UserDto;
 import com.example.demo.Entity.Role;
@@ -33,7 +34,6 @@ public class AuthService {
     }
 
 
-
     public AuthenticationResponse register(UserDto request) {
         Role role = new Role("user");
         UserEntity.UserEntityBuilder builder = UserEntity.builder();
@@ -59,15 +59,19 @@ public class AuthService {
                         request.getPassword()
                 )
         );
-        UserEntity user;
-        user = userRepository.findByEmail(request.getEmail()).orElseThrow();
+
+        UserEntity user = userRepository.findByEmail(request.getEmail())
+                .orElseThrow(() -> new UsernameNotFoundException("User not found with email: " + request.getEmail()));
+
+        if (!passwordEncoder.matches(request.getPassword(), user.getPassword())) {
+            throw new UnauthorizedException("Invalid email or password");
+        }
+
         var jwtToken = jwtService.generateToken(user);
-System.out.println(jwtToken);
+        System.out.println(jwtToken);
 
         return AuthenticationResponse.builder()
                 .token(jwtToken)
                 .build();
-
     }
-
 }
