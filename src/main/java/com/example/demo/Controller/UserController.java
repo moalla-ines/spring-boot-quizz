@@ -1,7 +1,9 @@
 package com.example.demo.Controller;
 
+import com.example.demo.Config.UnauthorizedException;
 import com.example.demo.Dto.UserDto;
 import com.example.demo.Entity.UserEntity;
+import com.example.demo.Repository.UserRepository;
 import com.example.demo.Service.QuizHistoryService;
 import com.example.demo.Service.UserService;
 
@@ -52,18 +54,24 @@ public class UserController {
         UserEntity user = userService.createUser(userDto);
         return ResponseEntity.status(HttpStatus.CREATED).body(user);
     }
-
     @PutMapping("/{id}/password")
     public ResponseEntity<Map<String, String>> updateUserPassword(@PathVariable Integer id, @RequestBody String newPassword, @RequestHeader("Authorization") String token) {
         Optional<UserEntity> optionalUser = Optional.ofNullable(userService.getUserById(id));
+
         if (optionalUser.isPresent()) {
             UserEntity user = optionalUser.get();
-            userService.updateUserPassword(user, newPassword, token);
-            return ResponseEntity.ok(Collections.singletonMap("message", "Password updated successfully"));
+            try {
+                userService.updateUserPassword(user, newPassword, token);
+                return ResponseEntity.ok(Collections.singletonMap("message", "Password updated successfully"));
+            } catch (UnauthorizedException e) {
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(Collections.singletonMap("message", "Unauthorized"));
+            }
         } else {
             return ResponseEntity.notFound().build();
         }
     }
+
+
 
 
     @PutMapping("/{id}")

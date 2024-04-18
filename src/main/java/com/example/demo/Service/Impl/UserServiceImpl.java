@@ -91,11 +91,12 @@ public class UserServiceImpl implements UserService {
         // Vérifie si le token est valide
         if (isValidToken(token)) {
             // Encode le nouveau mot de passe avant de le sauvegarder
-            user.setPassword(passwordEncoder.encode(newPassword));
+
+            String encodedPassword = passwordEncoder.encode(newPassword);
+
+            user.setPassword(encodedPassword);
             // Sauvegarde les modifications de l'utilisateur
             userRepository.save(user);
-            // Affiche le nouveau mot de passe (pour déboguer, à retirer en production)
-            System.out.println(newPassword);
         } else {
             // Lance une exception si le token est invalide ou manquant
             throw new UnauthorizedException("Invalid or missing token");
