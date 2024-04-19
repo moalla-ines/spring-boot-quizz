@@ -64,8 +64,8 @@ public  class QuizServiceImpl implements QuizService {
 
 
     @Override
-    public List<Quiz> getQuizzesByCategorie(Integer idCategorie) {
-        return null;
+    public List<Quiz> getQuizzesByCategorie(Integer idcategorie) {
+        return quizRepository.findByCategorieIdcategorie(idcategorie);
     }
 
 
@@ -89,6 +89,12 @@ public  class QuizServiceImpl implements QuizService {
     public void deleteQuiz(Integer id) {
         quizRepository.deleteById(id);
     }
+
+    @Override
+    public List<Quiz> getQuizzesByNiveau(Integer idNiveau) {
+        return quizRepository.findByNiveauIdNiveau(idNiveau);
+    }
+
 
 
 }

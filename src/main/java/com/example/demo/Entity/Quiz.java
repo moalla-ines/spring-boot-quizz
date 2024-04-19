@@ -21,6 +21,9 @@ public class Quiz {
     @ManyToOne
     @JoinColumn(name = "idcategorie")
     private Categorie categorie;
+    @ManyToOne
+    @JoinColumn(name = "idNiveau")
+    private Niveau niveau;
 
     @OneToMany(mappedBy = "quiz", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Question> questions;
@@ -28,11 +31,12 @@ public class Quiz {
     public Quiz() {
     }
 
-    public Quiz(String titre_quiz, String description, Integer nb_questions, Categorie categorie) {
+    public Quiz(String titre_quiz, String description, Integer nb_questions, Categorie categorie, Niveau niveau) {
         this.titre_quiz = titre_quiz;
         this.description = description;
         this.nb_questions = nb_questions;
         this.categorie = categorie;
+        this.niveau = niveau;
     }
 
 
@@ -64,6 +68,7 @@ public class Quiz {
         return "Quiz{" +
                 "idquiz=" + id +
                 ", categorie=" + categorie +
+                ", niveau =" + niveau +
                 ", questions=" + questions +
                 '}';
     }
@@ -99,5 +104,13 @@ public class Quiz {
 
     public void setQuizHistoryList(List<QuizHistory> quizHistoryList) {
         this.quizHistoryList = quizHistoryList;
+    }
+
+    public Niveau getNiveau() {
+        return niveau;
+    }
+
+    public void setNiveau(Niveau niveau) {
+        this.niveau = niveau;
     }
 }

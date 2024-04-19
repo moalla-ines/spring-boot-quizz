@@ -41,14 +41,15 @@ public class AuthService {
         builder.password(passwordEncoder.encode(request.getPassword()));
         builder.email(request.getEmail());
         builder.roles(Collections.singletonList(role));
-        var user = builder
-                .build();
+        var user = builder.build();
         userRepository.save(user);
         var jwtToken = jwtService.generateToken(user);
         return AuthenticationResponse.builder()
                 .token(jwtToken)
+                .id(user.getId())
                 .build();
     }
+
 
 
     public AuthenticationResponse authenticate(LoginDto request) {
@@ -56,7 +57,7 @@ public class AuthService {
         System.out.println("mdp saisie "+passwordEncoder.encode(request.getPassword()));
         UserEntity user1 = userRepository.findByEmail(request.getEmail())
                 .orElseThrow(() -> new UsernameNotFoundException("User not found with email: " + request.getEmail()));
-         System.out.println("mdp stocké " +user1.getPassword());
+        System.out.println("mdp stocké " +user1.getPassword());
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
                         request.getEmail(),
@@ -76,6 +77,7 @@ public class AuthService {
 
         return AuthenticationResponse.builder()
                 .token(jwtToken)
+                .id(user.getId())
                 .build();
     }
 }

@@ -56,9 +56,14 @@ public class QuizController {
         return ResponseEntity.noContent().build();
     }
 
-    @GetMapping("/categorie/{idCategorie}")
-    public ResponseEntity<List<Quiz>> getQuizzesByCategorie(@PathVariable Integer idCategorie) {
-        List<Quiz> quizzes = quizService.getQuizzesByCategorie(idCategorie);
+    @GetMapping("/categorie/{idcategorie}")
+    public ResponseEntity<List<Quiz>> getQuizzesByCategorie(@PathVariable Integer idcategorie) {
+        List<Quiz> quizzes = quizService.getQuizzesByCategorie(idcategorie);
+        return ResponseEntity.ok(quizzes);
+    }
+    @GetMapping("/niveau/{idNiveau}")
+    public ResponseEntity<List<Quiz>> getQuizzesByNiveau(@PathVariable Integer idNiveau) {
+        List<Quiz> quizzes = quizService.getQuizzesByNiveau(idNiveau);
         return ResponseEntity.ok(quizzes);
     }
 

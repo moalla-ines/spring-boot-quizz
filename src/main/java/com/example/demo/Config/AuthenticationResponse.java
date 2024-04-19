@@ -13,8 +13,17 @@ import lombok.NoArgsConstructor;
 
 public class AuthenticationResponse {
     private String token;
+    private Integer id;
 
     public void setToken(String jwtToken) {
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public String getToken() {

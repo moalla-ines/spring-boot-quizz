@@ -14,7 +14,7 @@ public interface QuizService {
 
     Quiz createQuiz(Quiz quizz);
 
-    List<Quiz> getQuizzesByCategorie(Integer idCategorie);
+    List<Quiz> getQuizzesByCategorie(Integer idcategorie);
 
     Quiz updateQuiz(Integer id, Quiz updatedQuizz);
 
@@ -22,4 +22,5 @@ public interface QuizService {
     void deleteQuiz(Integer id);
 
 
+    List<Quiz> getQuizzesByNiveau(Integer idNiveau);
 }
