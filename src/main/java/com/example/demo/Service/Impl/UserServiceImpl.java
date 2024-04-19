@@ -93,7 +93,9 @@ public class UserServiceImpl implements UserService {
             // Encode le nouveau mot de passe avant de le sauvegarder
 
             String encodedPassword = passwordEncoder.encode(newPassword);
-
+System.out.println(newPassword);
+System.out.println(encodedPassword);
+System.out.println(user.getPassword());
             user.setPassword(encodedPassword);
             // Sauvegarde les modifications de l'utilisateur
             userRepository.save(user);

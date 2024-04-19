@@ -57,9 +57,10 @@ public class UserController {
     @PutMapping("/{id}/password")
     public ResponseEntity<Map<String, String>> updateUserPassword(@PathVariable Integer id, @RequestBody String newPassword, @RequestHeader("Authorization") String token) {
         Optional<UserEntity> optionalUser = Optional.ofNullable(userService.getUserById(id));
-
+System.out.println(optionalUser);
         if (optionalUser.isPresent()) {
             UserEntity user = optionalUser.get();
+            System.out.println(user);
             try {
                 userService.updateUserPassword(user, newPassword, token);
                 return ResponseEntity.ok(Collections.singletonMap("message", "Password updated successfully"));
