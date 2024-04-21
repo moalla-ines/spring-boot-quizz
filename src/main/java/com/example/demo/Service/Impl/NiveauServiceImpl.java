@@ -49,4 +49,9 @@ public class NiveauServiceImpl implements NiveauService {
     public void deleteNiveau(Integer id) {
         niveauRepository.deleteById(id);
     }
+
+    @Override
+    public List<Niveau> getNiveauByCategorie(Integer idcategorie) {
+        return niveauRepository.findByCategorieIdcategorie(idcategorie);
+    }
 }

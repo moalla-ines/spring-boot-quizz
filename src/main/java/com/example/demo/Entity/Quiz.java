@@ -15,15 +15,15 @@ public class Quiz {
     private String description;
     private Integer nb_questions;
 
-    @OneToMany(mappedBy = "quiz", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<QuizHistory> quizHistoryList;
-
-    @ManyToOne
-    @JoinColumn(name = "idcategorie")
-    private Categorie categorie;
     @ManyToOne
     @JoinColumn(name = "idNiveau")
     private Niveau niveau;
+    @ManyToOne
+    @JoinColumn(name = "idcategorie")
+    private Categorie categorie;
+
+    @OneToMany(mappedBy = "quiz", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<QuizHistory> quizHistoryList;
 
     @OneToMany(mappedBy = "quiz", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Question> questions;

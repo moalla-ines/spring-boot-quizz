@@ -1,6 +1,7 @@
 package com.example.demo.Controller;
 
 import com.example.demo.Entity.Niveau;
+import com.example.demo.Entity.Quiz;
 import com.example.demo.Service.NiveauService;
 import com.example.demo.Service.NiveauService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,7 +50,11 @@ public class NiveauController {
             return ResponseEntity.notFound().build();
         }
     }
-
+    @GetMapping("/categorie/{idcategorie}")
+    public ResponseEntity<List<Niveau>> getNiveauByCategorie(@PathVariable Integer idcategorie) {
+        List<Niveau> niveau= niveauService.getNiveauByCategorie(idcategorie);
+        return ResponseEntity.ok(niveau);
+    }
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteNiveau(@PathVariable Integer id) {
        niveauService.deleteNiveau(id);
