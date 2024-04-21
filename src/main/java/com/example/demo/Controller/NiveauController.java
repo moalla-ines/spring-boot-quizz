@@ -50,11 +50,14 @@ public class NiveauController {
             return ResponseEntity.notFound().build();
         }
     }
-    @GetMapping("/categorie/{idcategorie}")
+    @GetMapping("categorie/{idcategorie}")
     public ResponseEntity<List<Niveau>> getNiveauByCategorie(@PathVariable Integer idcategorie) {
-        List<Niveau> niveau= niveauService.getNiveauByCategorie(idcategorie);
-        return ResponseEntity.ok(niveau);
+        List<Niveau> niveaux = niveauService.getNiveauByCategorie(idcategorie);
+        return niveaux != null && !niveaux.isEmpty()
+                ? ResponseEntity.ok(niveaux)
+                : ResponseEntity.notFound().build();
     }
+
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteNiveau(@PathVariable Integer id) {
        niveauService.deleteNiveau(id);

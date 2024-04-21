@@ -22,8 +22,6 @@ public class Quiz {
     @JoinColumn(name = "idcategorie")
     private Categorie categorie;
 
-    @OneToMany(mappedBy = "quiz", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<QuizHistory> quizHistoryList;
 
     @OneToMany(mappedBy = "quiz", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Question> questions;
@@ -98,13 +96,7 @@ public class Quiz {
         this.nb_questions = nb_questions;
     }
 
-    public List<QuizHistory> getQuizHistoryList() {
-        return quizHistoryList;
-    }
 
-    public void setQuizHistoryList(List<QuizHistory> quizHistoryList) {
-        this.quizHistoryList = quizHistoryList;
-    }
 
     public Niveau getNiveau() {
         return niveau;

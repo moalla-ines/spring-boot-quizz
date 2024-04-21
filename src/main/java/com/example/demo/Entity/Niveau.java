@@ -14,19 +14,14 @@ public class Niveau {
     @ManyToOne
     @JoinColumn(name = "id_categorie", referencedColumnName = "idcategorie")
     private Categorie categorie;
-    @OneToMany(mappedBy = "id", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<Quiz> quizzes;
+
+
+
     public Niveau(Integer idNiveau, String name, Categorie categorie) {
         this.idNiveau = idNiveau;
         this.name = name;
         this.categorie = categorie;
-    }
 
-    public Niveau(Integer idNiveau, String name, Categorie categorie, List<Quiz> quizzes) {
-        this.idNiveau = idNiveau;
-        this.name = name;
-        this.categorie = categorie;
-        this.quizzes = quizzes;
     }
 
     public Niveau(String name, Categorie categorie) {
@@ -37,13 +32,7 @@ public class Niveau {
     public Niveau() {
     }
 
-    public List<Quiz> getQuizzes() {
-        return quizzes;
-    }
 
-    public void setQuizzes(List<Quiz> quizzes) {
-        this.quizzes = quizzes;
-    }
 
     public Integer getIdNiveau() {
         return idNiveau;

@@ -13,33 +13,22 @@ public class Categorie {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer idcategorie;
     private String titre_categorie;
-    @OneToMany(mappedBy = "id", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<Quiz> quizzes;
-    @OneToMany(mappedBy = "idNiveau", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<Niveau> niveauList;
 
     public Categorie(Integer idcategorie, String titre_categorie, List<Quiz> quizzes, List<Niveau> niveauList) {
         this.idcategorie = idcategorie;
         this.titre_categorie = titre_categorie;
-        this.quizzes = quizzes;
-        this.niveauList = niveauList;
+
     }
 
     public Categorie(String titre_categorie, List<Niveau> niveauList) {
         this.titre_categorie = titre_categorie;
-        this.niveauList = niveauList;
+
     }
 
     public Categorie() {
     }
 
-    public List<Quiz> getQuizzes() {
-        return quizzes;
-    }
 
-    public void setQuizzes(List<Quiz> quizzes) {
-        this.quizzes = quizzes;
-    }
     public Integer getIdcategorie() {
         return idcategorie;
     }
@@ -64,11 +53,4 @@ public class Categorie {
                 '}';
     }
 
-    public List<Niveau> getNiveauList() {
-        return niveauList;
-    }
-
-    public void setNiveauList(List<Niveau> niveauList) {
-        this.niveauList = niveauList;
-    }
 }

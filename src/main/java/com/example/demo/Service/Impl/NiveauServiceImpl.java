@@ -52,6 +52,6 @@ public class NiveauServiceImpl implements NiveauService {
 
     @Override
     public List<Niveau> getNiveauByCategorie(Integer idcategorie) {
-        return niveauRepository.findByCategorieIdcategorie(idcategorie);
+        return niveauRepository.findAllByCategorieIdCategorie(idcategorie);
     }
 }
