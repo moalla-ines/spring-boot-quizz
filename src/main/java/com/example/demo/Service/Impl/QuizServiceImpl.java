@@ -47,12 +47,9 @@ public  class QuizServiceImpl implements QuizService {
             existingQuiz.setDescription(quiz.getDescription());
             existingQuiz.setNb_questions(quiz.getNb_questions());
             existingQuiz.setCategorie(quiz.getCategorie());
-            existingQuiz.setQuestions(quiz.getQuestions());
+
             existingQuiz.setNiveau(quiz.getNiveau());
 
-            for (Question question : existingQuiz.getQuestions()) {
-                question.setQuiz(existingQuiz);
-            }
 
             // Sauvegarder le quiz mis à jour
             return quizRepository.save(existingQuiz);
@@ -78,7 +75,7 @@ public  class QuizServiceImpl implements QuizService {
             Quiz existingQuiz = existingQuizOptional.get();
             updatedQuiz.setCategorie(existingQuiz.getCategorie());
             existingQuiz.setNiveau(existingQuiz.getNiveau());
-            updatedQuiz.setQuestions(existingQuiz.getQuestions());
+
             return quizRepository.save(existingQuiz);
         } else {
             throw new IllegalArgumentException("Quiz not found with id " + id);
