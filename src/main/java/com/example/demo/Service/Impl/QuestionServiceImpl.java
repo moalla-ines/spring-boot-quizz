@@ -21,8 +21,10 @@ public class QuestionServiceImpl implements QuestionService {
 
     @Override
     public List<Question> getAllQuestions() {
-        return questionRepository.findAll();
+        List<Question> questions = questionRepository.findAll();
+        return questions;
     }
+
 
     @Override
     public Optional<Question> getQuestionById(Integer id) {
@@ -55,4 +57,6 @@ public class QuestionServiceImpl implements QuestionService {
     public void deleteQuestion(Integer id) {
         questionRepository.deleteById(id);
     }
+
+
 }

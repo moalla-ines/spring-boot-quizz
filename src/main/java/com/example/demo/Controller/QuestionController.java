@@ -2,6 +2,7 @@ package com.example.demo.Controller;
 
 import com.example.demo.Entity.Question;
 import com.example.demo.Service.QuestionService;
+import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,11 +24,13 @@ public class QuestionController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Question>> getAllQuestions() {
+    public List<Question> getAllQuestions() {
         List<Question> questions = questionService.getAllQuestions();
-        return ResponseEntity.ok(questions);
+        for (Question question : questions) {
+            question.setQuiz(null);
+        }
+        return questions;
     }
-
     @GetMapping("/{id}")
     public ResponseEntity<Question> getQuestionById(@PathVariable Integer id) {
         Optional<Question> questionOptional = questionService.getQuestionById(id);

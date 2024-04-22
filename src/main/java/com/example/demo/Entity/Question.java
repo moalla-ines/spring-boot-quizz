@@ -1,8 +1,11 @@
 package com.example.demo.Entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 
 @Entity
+
 public class Question {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -15,6 +18,7 @@ public class Question {
     private Integer indice_optionCorrecte;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "idquiz")
+    @JsonIgnore  // Ignorer la sérialisation de cette propriété
     private Quiz quiz;
 
     public Integer getIdquestion() {
