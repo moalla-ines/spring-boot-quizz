@@ -47,11 +47,7 @@ public class QuizHistoryController {
         quizHistoryService.deleteQuizHistory(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
-    @GetMapping("/user/{iduser}/quiz/{idquiz}/score")
-    public ResponseEntity<Integer> getQuizScore(@PathVariable Integer iduser, @PathVariable Integer idquiz) {
-        Integer score = quizHistoryService.getQuizScore(iduser, idquiz);
-        return new ResponseEntity<>(score, HttpStatus.OK);
-    }
+
     @PostMapping("/calculate-score")
     public ResponseEntity<Integer> calculateScore(@RequestBody List<String> userAnswers) {
         List<Question> questions = null; // Récupérez les questions du quiz

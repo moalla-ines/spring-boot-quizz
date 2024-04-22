@@ -87,10 +87,8 @@ public class QuizHistoryServiceImpl implements QuizHistoryService {
         quizHistoryRepository.deleteById(id);
     }
 
-    @Override
-    public Integer getQuizScore(Integer iduser, Integer idquiz) {
-        return quizHistoryRepository.findScoreByIdUserAndIdQuiz(iduser, idquiz);
-    }
+
+
 
     @Override
     public int calculateScore(List<Question> questions, List<String> userAnswers) {
