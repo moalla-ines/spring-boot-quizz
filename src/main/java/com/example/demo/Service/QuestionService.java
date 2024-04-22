@@ -17,4 +17,5 @@ public interface QuestionService {
     void deleteQuestion(Integer id);
 
 
+    List<Question> findAllByIdQuiz(Integer idquiz);
 }

@@ -1,5 +1,6 @@
 package com.example.demo.Controller;
 
+import com.example.demo.Dto.QuizDto;
 import com.example.demo.Entity.Question;
 import com.example.demo.Entity.Quiz;
 import com.example.demo.Service.QuizService;
@@ -43,6 +44,7 @@ public class QuizController {
 
         return ResponseEntity.status(HttpStatus.CREATED).body(createdQuiz);
     }
+
 
     @PutMapping("/{id}")
     public ResponseEntity<Quiz> updateQuiz(@PathVariable Integer id, @RequestBody Quiz updatedQuiz) {

@@ -7,20 +7,18 @@ public class QuizHistory {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Integer idquizhistory;
 
     @ManyToOne
-    @JoinColumn(name = "id_user", referencedColumnName = "id")
+    @JoinColumn(name = "id_user")
     private UserEntity user;
 
     @ManyToOne
-    @JoinColumn(name = "id_quiz", referencedColumnName = "idquiz")
+    @JoinColumn(name = "id_quiz")
     private Quiz quiz;
-
     @ManyToOne
-    @JoinColumn(name = "id_score", referencedColumnName = "idscore")
+    @JoinColumn(name = "id_score")
     private Score score;
-
     public QuizHistory() {
     }
 
@@ -30,12 +28,12 @@ public class QuizHistory {
         this.score = score;
     }
 
-    public Integer getId() {
-        return id;
+    public Integer getIdquizhistory() {
+        return idquizhistory;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public void setIdquizhistory(Integer idquizhistory) {
+        this.idquizhistory = idquizhistory;
     }
 
     public UserEntity getUser() {
@@ -65,7 +63,7 @@ public class QuizHistory {
     @Override
     public String toString() {
         return "QuizHistory{" +
-                "id=" + id +
+                "idquizhistory=" + idquizhistory +
                 ", user=" + user +
                 ", quiz=" + quiz +
                 ", score=" + score +

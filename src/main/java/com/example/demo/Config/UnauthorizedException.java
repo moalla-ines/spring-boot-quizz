@@ -17,6 +17,6 @@ public class JacksonConfig implements Jackson2ObjectMapperBuilderCustomizer {
     @Override
     public void customize(Jackson2ObjectMapperBuilder jacksonObjectMapperBuilder) {
         jacksonObjectMapperBuilder.featuresToDisable(SerializationFeature.FAIL_ON_EMPTY_BEANS);
-        jacksonObjectMapperBuilder.mixIn(Quiz.class, QuizMixin.class); // Ignorer les entités proxy Hibernate
+
     }
 }}

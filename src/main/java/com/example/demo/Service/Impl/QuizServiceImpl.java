@@ -11,6 +11,8 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
 
+
+
 @Service
 public  class QuizServiceImpl implements QuizService {
 
@@ -37,24 +39,21 @@ public  class QuizServiceImpl implements QuizService {
 
     @Override
     public Quiz createQuiz(Quiz quiz) {
-        // Récupérer le quiz existant en fonction de son ID
-        Optional<Quiz> existingQuizOptional = quizRepository.findById(quiz.getId());
-
+        Optional<Quiz> existingQuizOptional = quizRepository.findById(quiz.getIdquiz());
         if (existingQuizOptional.isPresent()) {
-            // Mettre à jour l'objet existingQuiz avec les nouvelles données de quiz
+            // Mise à jour du quiz existant
             Quiz existingQuiz = existingQuizOptional.get();
             existingQuiz.setTitre_quiz(quiz.getTitre_quiz());
             existingQuiz.setDescription(quiz.getDescription());
             existingQuiz.setNb_questions(quiz.getNb_questions());
             existingQuiz.setCategorie(quiz.getCategorie());
-
+            existingQuiz.setQuestions(quiz.getQuestions());
             existingQuiz.setNiveau(quiz.getNiveau());
-
-
-            // Sauvegarder le quiz mis à jour
+            existingQuiz.getQuestions().forEach(question -> question.setQuiz(existingQuiz));
             return quizRepository.save(existingQuiz);
         } else {
-            // Le quiz n'existe pas, donc sauvegarder le nouveau quiz
+            // Nouveau quiz avec le niveau associé
+            quiz.getQuestions().forEach(question -> question.setQuiz(quiz));
             return quizRepository.save(quiz);
         }
     }
@@ -63,27 +62,24 @@ public  class QuizServiceImpl implements QuizService {
 
 
     @Override
-    public List<Quiz> getQuizzesByCategorie(Integer idcategorie) {
-        return quizRepository.findByCategorieIdcategorie(idcategorie);
-    }
-
-
-    @Override
-    public Quiz updateQuiz(Integer id, Quiz updatedQuiz) {
-        Optional<Quiz> existingQuizOptional = quizRepository.findById(id);
+    public Quiz updateQuiz(Integer idquiz, Quiz updatedQuiz) {
+        Optional<Quiz> existingQuizOptional = quizRepository.findById(idquiz);
         if (existingQuizOptional.isPresent()) {
             Quiz existingQuiz = existingQuizOptional.get();
-            updatedQuiz.setCategorie(existingQuiz.getCategorie());
-            existingQuiz.setNiveau(existingQuiz.getNiveau());
+            existingQuiz.setTitre_quiz(updatedQuiz.getTitre_quiz());
+            existingQuiz.setDescription(updatedQuiz.getDescription());
+            existingQuiz.setNb_questions(updatedQuiz.getNb_questions());
+            existingQuiz.setCategorie(updatedQuiz.getCategorie());
+            existingQuiz.setQuestions(updatedQuiz.getQuestions());
+            for (Question question : existingQuiz.getQuestions()) {
+                question.setQuiz(existingQuiz);
+            }
 
             return quizRepository.save(existingQuiz);
         } else {
-            throw new IllegalArgumentException("Quiz not found with id " + id);
+            throw new IllegalArgumentException("Quiz not found with id " + idquiz);
         }
     }
-
-
-
 
     @Override
     public void deleteQuiz(Integer id) {
@@ -91,10 +87,13 @@ public  class QuizServiceImpl implements QuizService {
     }
 
     @Override
+    public List<Quiz> getQuizzesByCategorie(Integer idcategorie) {
+        return quizRepository.findByCategorieIdcategorie(idcategorie);
+    }
+
+    @Override
     public List<Quiz> getQuizzesByNiveau(Integer idNiveau) {
         return quizRepository.findByNiveauIdNiveau(idNiveau);
     }
-
-
 
 }

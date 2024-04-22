@@ -1,6 +1,7 @@
 package com.example.demo.Controller;
 
 import com.example.demo.Entity.Question;
+import com.example.demo.Entity.Quiz;
 import com.example.demo.Service.QuestionService;
 import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,12 +25,9 @@ public class QuestionController {
     }
 
     @GetMapping
-    public List<Question> getAllQuestions() {
+    public ResponseEntity<List<Question>> getAllQuestions() {
         List<Question> questions = questionService.getAllQuestions();
-        for (Question question : questions) {
-            question.setQuiz(null);
-        }
-        return questions;
+        return ResponseEntity.ok(questions);
     }
     @GetMapping("/{id}")
     public ResponseEntity<Question> getQuestionById(@PathVariable Integer id) {
@@ -58,4 +56,10 @@ public class QuestionController {
         questionService.deleteQuestion(id);
         return ResponseEntity.noContent().build();
     }
+    @GetMapping("/quizzes/{idquiz}")
+    public ResponseEntity<List<Question>> findAllByIdQuiz(@PathVariable Integer idquiz) {
+        List<Question> questions = questionService.findAllByIdQuiz(idquiz);
+        return ResponseEntity.ok(questions);
+    }
+
 }

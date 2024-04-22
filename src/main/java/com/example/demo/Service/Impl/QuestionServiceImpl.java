@@ -21,10 +21,8 @@ public class QuestionServiceImpl implements QuestionService {
 
     @Override
     public List<Question> getAllQuestions() {
-        List<Question> questions = questionRepository.findAll();
-        return questions;
+        return questionRepository.findAll();
     }
-
 
     @Override
     public Optional<Question> getQuestionById(Integer id) {
@@ -33,8 +31,22 @@ public class QuestionServiceImpl implements QuestionService {
 
     @Override
     public Question createQuestion(Question question) {
-        return questionRepository.save(question);
+        Optional<Question> existingQuestionOptional = questionRepository.findById(question.getIdquestion());
+        if (existingQuestionOptional.isPresent()) {
+            Question existingQuestion = existingQuestionOptional.get();
+            existingQuestion.setText(question.getText());
+            existingQuestion.setOption1(question.getOption1());
+            existingQuestion.setOption2(question.getOption2());
+            existingQuestion.setOption3(question.getOption3());
+            existingQuestion.setOption4(question.getOption4());
+            existingQuestion.setIndice_optionCorrecte(question.getIndice_optionCorrecte());
+            existingQuestion.setQuiz(question.getQuiz());
+            return questionRepository.save(existingQuestion);
+        } else {
+            return questionRepository.save(question);
+        }
     }
+
 
     @Override
     public Question updateQuestion(Integer id, Question newQuestion) {
@@ -47,6 +59,7 @@ public class QuestionServiceImpl implements QuestionService {
             existingQuestion.setOption3(newQuestion.getOption3());
             existingQuestion.setOption4(newQuestion.getOption4());
             existingQuestion.setIndice_optionCorrecte(newQuestion.getIndice_optionCorrecte());
+            existingQuestion.setQuiz(newQuestion.getQuiz());
             return questionRepository.save(existingQuestion);
         } else {
             throw new RuntimeException("Question not found with id: " + id);
@@ -58,5 +71,8 @@ public class QuestionServiceImpl implements QuestionService {
         questionRepository.deleteById(id);
     }
 
-
+    @Override
+    public List<Question> findAllByIdQuiz(Integer idquiz) {
+        return questionRepository.findAllByIdQuiz(idquiz);
+    }
 }

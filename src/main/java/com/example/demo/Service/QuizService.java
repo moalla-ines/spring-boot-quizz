@@ -1,5 +1,6 @@
 package com.example.demo.Service;
 
+import com.example.demo.Dto.QuizDto;
 import com.example.demo.Entity.Quiz;
 
 
@@ -12,9 +13,11 @@ public interface QuizService {
 
     Optional<Quiz> getQuizById(Integer id);
 
-    Quiz createQuiz(Quiz quizz);
+
 
     List<Quiz> getQuizzesByCategorie(Integer idcategorie);
+
+    Quiz createQuiz(Quiz quiz);
 
     Quiz updateQuiz(Integer id, Quiz updatedQuizz);
 

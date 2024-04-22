@@ -1,5 +1,6 @@
 package com.example.demo.Entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
 import java.util.List;
@@ -9,7 +10,7 @@ public class Quiz {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "idquiz")
-    private Integer id;
+    private Integer idquiz;
 
     private String titre_quiz;
     private String description;
@@ -21,7 +22,9 @@ public class Quiz {
     @ManyToOne
     @JoinColumn(name = "idcategorie")
     private Categorie categorie;
-
+    @OneToMany(mappedBy = "quiz", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonManagedReference // Indique que cette propriété est gérée par l'autre côté de la relation
+    private List<Question> questions;
 
     public Quiz() {
     }
@@ -35,12 +38,12 @@ public class Quiz {
     }
 
 
-    public Integer getId() {
-        return id;
+    public Integer getIdquiz() {
+        return idquiz;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public void setIdquiz(Integer idquiz) {
+        this.idquiz = idquiz;
     }
 
     public Categorie getCategorie() {
@@ -50,15 +53,22 @@ public class Quiz {
     public void setCategorie(Categorie categorie) {
         this.categorie = categorie;
     }
+    public List<Question> getQuestions() {
+        return questions;
+    }
+
+    public void setQuestions(List<Question> questions) {
+        this.questions = questions;
+    }
 
 
     @Override
     public String toString() {
         return "Quiz{" +
-                "idquiz=" + id +
+                "idquiz=" + idquiz +
                 ", categorie=" + categorie +
                 ", niveau =" + niveau +
-
+                ", questions=" + questions +
                 '}';
     }
 

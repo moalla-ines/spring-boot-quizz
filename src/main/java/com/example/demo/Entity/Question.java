@@ -1,5 +1,6 @@
 package com.example.demo.Entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
@@ -16,9 +17,9 @@ public class Question {
     private String option3;
     private String option4;
     private Integer indice_optionCorrecte;
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "idquiz")
-    @JsonIgnore  // Ignorer la sérialisation de cette propriété
+    @JsonBackReference // Indique que cette propriété est gérée par l'autre côté de la relation
     private Quiz quiz;
 
     public Integer getIdquestion() {
@@ -97,6 +98,20 @@ public class Question {
     }
 
     public Question() {
+    }
+
+    @Override
+    public String toString() {
+        return "Question{" +
+                "idquestion=" + idquestion +
+                ", text='" + text + '\'' +
+                ", option1='" + option1 + '\'' +
+                ", option2='" + option2 + '\'' +
+                ", option3='" + option3 + '\'' +
+                ", option4='" + option4 + '\'' +
+                ", indice_optionCorrecte=" + indice_optionCorrecte +
+                ", quiz=" + quiz +
+                '}';
     }
 }
 

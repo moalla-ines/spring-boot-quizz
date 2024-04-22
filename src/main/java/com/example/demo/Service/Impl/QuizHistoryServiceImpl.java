@@ -17,10 +17,13 @@ public class QuizHistoryServiceImpl implements QuizHistoryService {
 
     @Autowired
     private QuizHistoryRepository quizHistoryRepository;
+
     @Autowired
     private ScoreRepository scoreRepository;
+
     @Autowired
     private UserRepository userRepository;
+
     @Autowired
     private QuizRepository quizRepository;
 
@@ -36,43 +39,33 @@ public class QuizHistoryServiceImpl implements QuizHistoryService {
 
     @Override
     public QuizHistory createQuizHistory(QuizHistory quizHistory) {
-        // Retrieve the user from the database if it exists
         UserEntity user = quizHistory.getUser();
-        if (user != null && user.getId() != null) {
-            Optional<UserEntity> existingUser = userRepository.findById(user.getId());
-            if (existingUser.isPresent()) {
-                user = existingUser.get();
-            } else {
-                user = userRepository.save(user); // Save the user if it doesn't exist
-            }
-        }
-
-        // Retrieve the quiz from the database if it exists
         Quiz quiz = quizHistory.getQuiz();
-        if (quiz != null && quiz.getId() != null) {
-            Optional<Quiz> existingQuiz = quizRepository.findById(quiz.getId());
-            if (existingQuiz.isPresent()) {
-                quiz = existingQuiz.get();
-            } else {
-                quiz = quizRepository.save(quiz); // Save the quiz if it doesn't exist
-            }
-        }
-
-        // Retrieve or save the score
         Score score = quizHistory.getScore();
-        if (score != null && score.getIdscore() != null) {
-            Optional<Score> existingScore = scoreRepository.findById(score.getIdscore());
-            if (existingScore.isPresent()) {
-                score = existingScore.get();
-            } else {
-                score = scoreRepository.save(score); // Save the score if it doesn't exist
-            }
+
+        // Save the user, quiz, and score if they don't exist
+        if (user != null && user.getId() != null) {
+            user = userRepository.findById(user.getId()).orElse(user);
+        } else {
+            user = userRepository.save(user);
         }
 
-        // Set the updated entities in the quiz history and save it
+        if (quiz != null && quiz.getIdquiz() != null) {
+            quiz = quizRepository.findById(quiz.getIdquiz()).orElse(quiz);
+        } else {
+            quiz = quizRepository.save(quiz);
+        }
+
+        if (score != null && score.getIdscore() != null) {
+            score = scoreRepository.findById(score.getIdscore()).orElse(score);
+        } else {
+            score = scoreRepository.save(score);
+        }
+
         quizHistory.setUser(user);
         quizHistory.setQuiz(quiz);
         quizHistory.setScore(score);
+
         return quizHistoryRepository.save(quizHistory);
     }
 
@@ -95,8 +88,8 @@ public class QuizHistoryServiceImpl implements QuizHistoryService {
     }
 
     @Override
-    public Integer getQuizScore(Integer userId, Integer quizId) {
-        return quizHistoryRepository.findScoreByUserIdAndQuizId(userId, quizId);
+    public Integer getQuizScore(Integer iduser, Integer idquiz) {
+        return quizHistoryRepository.findScoreByIdUserAndIdQuiz(iduser, idquiz);
     }
 
     @Override
