@@ -3,6 +3,7 @@ package com.example.demo.Entity;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
 @Entity
@@ -19,7 +20,7 @@ public class Question {
     private Integer indice_optionCorrecte;
     @ManyToOne
     @JoinColumn(name = "idquiz")
-    @JsonBackReference // Indique que cette propriété est gérée par l'autre côté de la relation
+    @JsonManagedReference // Indique que cette propriété est gérée par l'autre côté de la relation
     private Quiz quiz;
 
     public Integer getIdquestion() {

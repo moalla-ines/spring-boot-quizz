@@ -1,5 +1,6 @@
 package com.example.demo.Entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
@@ -23,7 +24,8 @@ public class Quiz {
     @JoinColumn(name = "idcategorie")
     private Categorie categorie;
     @OneToMany(mappedBy = "quiz", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JsonManagedReference // Indique que cette propriété est gérée par l'autre côté de la relation
+
+    @JsonBackReference// Indique que cette propriété est gérée par l'autre côté de la relation
     private List<Question> questions;
 
     public Quiz() {
