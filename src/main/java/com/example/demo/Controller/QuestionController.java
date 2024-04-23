@@ -56,7 +56,7 @@ public class QuestionController {
         questionService.deleteQuestion(id);
         return ResponseEntity.noContent().build();
     }
-    @GetMapping("/quizzes/{idquiz}")
+    @GetMapping("/quiz/{idquiz}")
     public ResponseEntity<List<Question>> findAllByIdQuiz(@PathVariable Integer idquiz) {
         List<Question> questions = questionService.findAllByIdQuiz(idquiz);
         return ResponseEntity.ok(questions);
