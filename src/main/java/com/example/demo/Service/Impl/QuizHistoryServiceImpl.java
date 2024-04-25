@@ -96,8 +96,8 @@ public class QuizHistoryServiceImpl implements QuizHistoryService {
         for (int i = 0; i < questions.size(); i++) {
             Question question = questions.get(i);
             String userAnswer = userAnswers.get(i);
-            if (question.getIndice_optionCorrecte() != null && userAnswer != null &&
-                    question.getIndice_optionCorrecte() == Integer.parseInt(userAnswer)) {
+            if (question.getIndiceoptionCorrecte() != null && userAnswer != null &&
+                    question.getIndiceoptionCorrecte() == Integer.parseInt(userAnswer)) {
                 score++;
             }
         }

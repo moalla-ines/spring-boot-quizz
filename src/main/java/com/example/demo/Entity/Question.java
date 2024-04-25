@@ -17,7 +17,7 @@ public class Question {
     private String option2;
     private String option3;
     private String option4;
-    private Integer indice_optionCorrecte;
+    private Integer indiceoptionCorrecte;
     @ManyToOne
     @JoinColumn(name = "idquiz")
     @JsonManagedReference // Indique que cette propriété est gérée par l'autre côté de la relation
@@ -71,12 +71,12 @@ public class Question {
         this.option4 = option4;
     }
 
-    public Integer getIndice_optionCorrecte() {
-        return indice_optionCorrecte;
+    public Integer getIndiceoptionCorrecte() {
+        return indiceoptionCorrecte;
     }
 
-    public void setIndice_optionCorrecte(Integer indice_optionCorrecte) {
-        this.indice_optionCorrecte = indice_optionCorrecte;
+    public void setIndiceoptionCorrecte(Integer indiceoptionCorrecte) {
+        this.indiceoptionCorrecte = indiceoptionCorrecte;
     }
 
     public Quiz getQuiz() {
@@ -87,14 +87,14 @@ public class Question {
         this.quiz = quiz;
     }
 
-    public Question(Integer idquestion, String text, String option1, String option2, String option3, String option4, Integer indice_optionCorrecte, Quiz quiz) {
+    public Question(Integer idquestion, String text, String option1, String option2, String option3, String option4, Integer indiceoptionCorrecte, Quiz quiz) {
         this.idquestion = idquestion;
         this.text = text;
         this.option1 = option1;
         this.option2 = option2;
         this.option3 = option3;
         this.option4 = option4;
-        this.indice_optionCorrecte = indice_optionCorrecte;
+        this.indiceoptionCorrecte = indiceoptionCorrecte;
         this.quiz = quiz;
     }
 
@@ -110,7 +110,7 @@ public class Question {
                 ", option2='" + option2 + '\'' +
                 ", option3='" + option3 + '\'' +
                 ", option4='" + option4 + '\'' +
-                ", indice_optionCorrecte=" + indice_optionCorrecte +
+                ", indiceoptionCorrecte=" + indiceoptionCorrecte +
                 ", quiz=" + quiz +
                 '}';
     }

@@ -1,8 +1,10 @@
 package com.example.demo.Entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @Entity
 public class Score {
@@ -12,15 +14,21 @@ public class Score {
     private Integer idscore;
 
     private Integer value;
+    @ManyToOne
+    @JoinColumn(name = "idquestion")
+    private Question question;
+
     @OneToMany(mappedBy = "score", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonBackReference
     private List<QuizHistory> quizHistoryList;
 
     public Score() {
     }
 
-    public Score(Integer idscore, Integer value, List<QuizHistory> quizHistoryList) {
+    public Score(Integer idscore, Integer value, Question question, List<QuizHistory> quizHistoryList) {
         this.idscore = idscore;
         this.value = value;
+        this.question = question;
 
         this.quizHistoryList = quizHistoryList;
     }
@@ -55,5 +63,13 @@ public class Score {
 
     public void setQuizHistoryList(List<QuizHistory> quizHistoryList) {
         this.quizHistoryList = quizHistoryList;
+    }
+
+    public Question getQuestion() {
+        return question;
+    }
+
+    public void setQuestion(Question question) {
+        this.question = question;
     }
 }

@@ -39,7 +39,7 @@ public class QuestionServiceImpl implements QuestionService {
             existingQuestion.setOption2(question.getOption2());
             existingQuestion.setOption3(question.getOption3());
             existingQuestion.setOption4(question.getOption4());
-            existingQuestion.setIndice_optionCorrecte(question.getIndice_optionCorrecte());
+            existingQuestion.setIndiceoptionCorrecte(question.getIndiceoptionCorrecte());
             existingQuestion.setQuiz(question.getQuiz());
             return questionRepository.save(existingQuestion);
         } else {
@@ -58,7 +58,7 @@ public class QuestionServiceImpl implements QuestionService {
             existingQuestion.setOption2(newQuestion.getOption2());
             existingQuestion.setOption3(newQuestion.getOption3());
             existingQuestion.setOption4(newQuestion.getOption4());
-            existingQuestion.setIndice_optionCorrecte(newQuestion.getIndice_optionCorrecte());
+            existingQuestion.setIndiceoptionCorrecte(newQuestion.getIndiceoptionCorrecte());
             existingQuestion.setQuiz(newQuestion.getQuiz());
             return questionRepository.save(existingQuestion);
         } else {
