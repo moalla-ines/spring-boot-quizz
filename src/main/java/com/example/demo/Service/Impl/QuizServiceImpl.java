@@ -50,11 +50,16 @@ public  class QuizServiceImpl implements QuizService {
             existingQuiz.setQuestions(quiz.getQuestions());
             existingQuiz.setNiveau(quiz.getNiveau());
             existingQuiz.getQuestions().forEach(question -> question.setQuiz(existingQuiz));
+
             return quizRepository.save(existingQuiz);
+
         } else {
+            System.out.println(quiz);
             // Nouveau quiz avec le niveau associé
             quiz.getQuestions().forEach(question -> question.setQuiz(quiz));
+            System.out.println(quiz);
             return quizRepository.save(quiz);
+
         }
     }
 

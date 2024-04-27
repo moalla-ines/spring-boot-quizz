@@ -41,8 +41,9 @@ public class QuizController {
     public ResponseEntity<Quiz> createQuiz(@RequestBody Quiz quiz ) {
 
         Quiz createdQuiz = quizService.createQuiz(quiz);
-
+        System.out.println(quiz);
         return ResponseEntity.status(HttpStatus.CREATED).body(createdQuiz);
+
     }
 
 
