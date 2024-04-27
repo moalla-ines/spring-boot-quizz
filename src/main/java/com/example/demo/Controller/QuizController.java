@@ -37,7 +37,7 @@ public class QuizController {
         return quizOptional.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
-    @PostMapping
+    @PostMapping("/create")
     public ResponseEntity<Quiz> createQuiz(@RequestBody Quiz quiz ) {
 
         Quiz createdQuiz = quizService.createQuiz(quiz);

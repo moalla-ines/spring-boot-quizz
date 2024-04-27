@@ -41,7 +41,7 @@ public  class QuizServiceImpl implements QuizService {
     public Quiz createQuiz(Quiz quiz) {
         Optional<Quiz> existingQuizOptional = quizRepository.findById(quiz.getIdquiz());
         if (existingQuizOptional.isPresent()) {
-            // Mise à jour du quiz existant
+
             Quiz existingQuiz = existingQuizOptional.get();
             existingQuiz.setTitre_quiz(quiz.getTitre_quiz());
             existingQuiz.setDescription(quiz.getDescription());
