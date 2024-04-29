@@ -1,7 +1,6 @@
 package com.example.demo.Service;
 
 import com.example.demo.Config.QuizNotFoundException;
-import com.example.demo.Dto.QuizDto;
 import com.example.demo.Entity.Quiz;
 
 
@@ -23,7 +22,7 @@ public interface QuizService {
     Quiz updateQuiz(Integer id, Quiz updatedQuizz);
 
 
-    void deleteQuiz(Integer id);
+    void deleteQuiz(Integer idquiz);
 
 
     List<Quiz> getQuizzesByNiveau(Integer idNiveau);

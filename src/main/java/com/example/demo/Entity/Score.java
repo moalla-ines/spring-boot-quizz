@@ -16,6 +16,7 @@ public class Score {
     private Integer value;
     @ManyToOne
     @JoinColumn(name = "idquestion")
+    @JsonBackReference
     private Question question;
 
     @OneToMany(mappedBy = "score", cascade = CascadeType.ALL, fetch = FetchType.LAZY)

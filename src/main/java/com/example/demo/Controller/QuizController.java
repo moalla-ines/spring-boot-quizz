@@ -48,15 +48,15 @@ public class QuizController {
     }
 
 
-    @PutMapping("/{id}")
-    public ResponseEntity<Quiz> updateQuiz(@PathVariable Integer id, @RequestBody Quiz updatedQuiz) {
-        Quiz quiz = quizService.updateQuiz(id, updatedQuiz);
+    @PutMapping("/{idquiz}")
+    public ResponseEntity<Quiz> updateQuiz(@PathVariable Integer idquiz, @RequestBody Quiz updatedQuiz) {
+        Quiz quiz = quizService.updateQuiz(idquiz, updatedQuiz);
         return ResponseEntity.ok(quiz);
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteQuiz(@PathVariable Integer id) {
-        quizService.deleteQuiz(id);
+    @DeleteMapping("/{idquiz}")
+    public ResponseEntity<Void> deleteQuiz(@PathVariable("idquiz") Integer idquiz) {
+        quizService.deleteQuiz(idquiz);
         return ResponseEntity.noContent().build();
     }
 

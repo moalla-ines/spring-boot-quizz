@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -27,7 +28,7 @@ public class Quiz {
     @OneToMany(mappedBy = "quiz", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 
   @JsonIgnoreProperties("quiz")// Indique que cette propriété est gérée par l'autre côté de la relation
-    private List<Question> questions;
+    private List<Question> questions = new ArrayList<>();;
 
     public Quiz() {
     }

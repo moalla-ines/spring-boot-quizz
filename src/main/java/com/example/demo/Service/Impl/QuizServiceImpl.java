@@ -54,7 +54,7 @@ public  class QuizServiceImpl implements QuizService {
                 }
                 return quizRepository.save(existingQuiz);
             } else {
-                // Gérer l'erreur ici si l'identifiant existe mais le quiz n'a pas été trouvé
+
                 throw new QuizNotFoundException("Quiz not found with ID: " + quiz.getIdquiz());
             }
         } else {
@@ -62,7 +62,7 @@ public  class QuizServiceImpl implements QuizService {
                 quiz.getQuestions().forEach(question -> question.setQuiz(quiz));
             }
             if (quiz.getNiveau() != null && quiz.getCategorie() != null) {
-                // Traiter le niveau et la catégorie du quiz
+
             }
             return quizRepository.save(quiz);
         }
@@ -79,10 +79,6 @@ public  class QuizServiceImpl implements QuizService {
             existingQuiz.setDescription(updatedQuiz.getDescription());
             existingQuiz.setNb_questions(updatedQuiz.getNb_questions());
             existingQuiz.setCategorie(updatedQuiz.getCategorie());
-            existingQuiz.setQuestions(updatedQuiz.getQuestions());
-            for (Question question : existingQuiz.getQuestions()) {
-                question.setQuiz(existingQuiz);
-            }
 
             return quizRepository.save(existingQuiz);
         } else {
@@ -90,9 +86,11 @@ public  class QuizServiceImpl implements QuizService {
         }
     }
 
+
+
     @Override
-    public void deleteQuiz(Integer id) {
-        quizRepository.deleteById(id);
+    public void deleteQuiz(Integer idquiz) {
+        quizRepository.deleteById(idquiz);
     }
 
     @Override
