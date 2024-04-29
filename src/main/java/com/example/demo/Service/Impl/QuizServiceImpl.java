@@ -39,29 +39,33 @@ public  class QuizServiceImpl implements QuizService {
 
     @Override
     public Quiz createQuiz(Quiz quiz) {
-        Optional<Quiz> existingQuizOptional = quizRepository.findById(quiz.getIdquiz());
-        if (existingQuizOptional.isPresent()) {
-
-            Quiz existingQuiz = existingQuizOptional.get();
-            existingQuiz.setTitre_quiz(quiz.getTitre_quiz());
-            existingQuiz.setDescription(quiz.getDescription());
-            existingQuiz.setNb_questions(quiz.getNb_questions());
-            existingQuiz.setCategorie(quiz.getCategorie());
-            existingQuiz.setQuestions(quiz.getQuestions());
-            existingQuiz.setNiveau(quiz.getNiveau());
-            existingQuiz.getQuestions().forEach(question -> question.setQuiz(existingQuiz));
-
-            return quizRepository.save(existingQuiz);
-
+        if (quiz.getIdquiz() != null) {
+            Optional<Quiz> existingQuizOptional = quizRepository.findById(quiz.getIdquiz());
+            if (existingQuizOptional.isPresent()) {
+                Quiz existingQuiz = existingQuizOptional.get();
+                existingQuiz.setTitre_quiz(quiz.getTitre_quiz());
+                existingQuiz.setDescription(quiz.getDescription());
+                existingQuiz.setNb_questions(quiz.getNb_questions());
+                existingQuiz.setCategorie(quiz.getCategorie());
+                existingQuiz.setQuestions(quiz.getQuestions());
+                existingQuiz.setNiveau(quiz.getNiveau());
+                if (existingQuiz.getQuestions() != null) {
+                    existingQuiz.getQuestions().forEach(question -> question.setQuiz(existingQuiz));
+                }
+                return quizRepository.save(existingQuiz);
+            } else {
+                // Gérer l'erreur ici si l'identifiant existe mais le quiz n'a pas été trouvé
+                return null;
+            }
         } else {
-            System.out.println(quiz);
-            // Nouveau quiz avec le niveau associé
-            quiz.getQuestions().forEach(question -> question.setQuiz(quiz));
-            System.out.println(quiz);
+            if (quiz.getQuestions() != null) {
+                quiz.getQuestions().forEach(question -> question.setQuiz(quiz));
+            }
             return quizRepository.save(quiz);
-
         }
     }
+
+
 
 
 

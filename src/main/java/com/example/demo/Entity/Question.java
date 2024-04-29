@@ -20,7 +20,7 @@ public class Question {
     private Integer indiceoptionCorrecte;
     @ManyToOne
     @JoinColumn(name = "idquiz")
-    @JsonManagedReference // Indique que cette propriété est gérée par l'autre côté de la relation
+ @JsonBackReference// Indique que cette propriété est gérée par l'autre côté de la relation
     private Quiz quiz;
 
     public Integer getIdquestion() {

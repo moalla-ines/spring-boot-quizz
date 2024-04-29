@@ -18,7 +18,7 @@ public class QuizHistory {
     @JoinColumn(name = "id_quiz")
     private Quiz quiz;
     @ManyToOne
-    @JsonManagedReference
+
     @JoinColumn(name = "id_score")
     private Score score;
     public QuizHistory() {
