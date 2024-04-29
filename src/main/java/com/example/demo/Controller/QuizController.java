@@ -1,5 +1,6 @@
 package com.example.demo.Controller;
 
+import com.example.demo.Config.QuizNotFoundException;
 import com.example.demo.Dto.QuizDto;
 import com.example.demo.Entity.Question;
 import com.example.demo.Entity.Quiz;
@@ -38,7 +39,7 @@ public class QuizController {
     }
 
     @PostMapping("/create")
-    public ResponseEntity<Quiz> createQuiz(@RequestBody Quiz quiz ) {
+    public ResponseEntity<Quiz> createQuiz(@RequestBody Quiz quiz ) throws QuizNotFoundException {
 
         Quiz createdQuiz = quizService.createQuiz(quiz);
         System.out.println(quiz);

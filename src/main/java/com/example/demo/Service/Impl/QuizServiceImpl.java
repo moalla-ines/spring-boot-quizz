@@ -1,10 +1,12 @@
 package com.example.demo.Service.Impl;
 
+import com.example.demo.Config.QuizNotFoundException;
 import com.example.demo.Entity.Question;
 import com.example.demo.Entity.Quiz;
 import com.example.demo.Repository.QuestionRepository;
 import com.example.demo.Repository.QuizRepository;
 import com.example.demo.Service.QuizService;
+import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -37,8 +39,8 @@ public  class QuizServiceImpl implements QuizService {
         return quizRepository.findById(id);
     }
 
-    @Override
-    public Quiz createQuiz(Quiz quiz) {
+
+    public Quiz createQuiz(Quiz quiz) throws QuizNotFoundException {
         if (quiz.getIdquiz() != null) {
             Optional<Quiz> existingQuizOptional = quizRepository.findById(quiz.getIdquiz());
             if (existingQuizOptional.isPresent()) {
@@ -46,27 +48,25 @@ public  class QuizServiceImpl implements QuizService {
                 existingQuiz.setTitre_quiz(quiz.getTitre_quiz());
                 existingQuiz.setDescription(quiz.getDescription());
                 existingQuiz.setNb_questions(quiz.getNb_questions());
-                existingQuiz.setCategorie(quiz.getCategorie());
                 existingQuiz.setQuestions(quiz.getQuestions());
-                existingQuiz.setNiveau(quiz.getNiveau());
                 if (existingQuiz.getQuestions() != null) {
                     existingQuiz.getQuestions().forEach(question -> question.setQuiz(existingQuiz));
                 }
                 return quizRepository.save(existingQuiz);
             } else {
                 // Gérer l'erreur ici si l'identifiant existe mais le quiz n'a pas été trouvé
-                return null;
+                throw new QuizNotFoundException("Quiz not found with ID: " + quiz.getIdquiz());
             }
         } else {
             if (quiz.getQuestions() != null) {
                 quiz.getQuestions().forEach(question -> question.setQuiz(quiz));
             }
+            if (quiz.getNiveau() != null && quiz.getCategorie() != null) {
+                // Traiter le niveau et la catégorie du quiz
+            }
             return quizRepository.save(quiz);
         }
     }
-
-
-
 
 
 

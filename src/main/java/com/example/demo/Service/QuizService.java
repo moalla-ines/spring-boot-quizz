@@ -1,5 +1,6 @@
 package com.example.demo.Service;
 
+import com.example.demo.Config.QuizNotFoundException;
 import com.example.demo.Dto.QuizDto;
 import com.example.demo.Entity.Quiz;
 
@@ -17,7 +18,7 @@ public interface QuizService {
 
     List<Quiz> getQuizzesByCategorie(Integer idcategorie);
 
-    Quiz createQuiz(Quiz quiz);
+    Quiz createQuiz(Quiz quiz) throws QuizNotFoundException;
 
     Quiz updateQuiz(Integer id, Quiz updatedQuizz);
 
