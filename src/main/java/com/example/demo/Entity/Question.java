@@ -18,6 +18,7 @@ public class Question {
     private String option3;
     private String option4;
     private Integer indiceoptionCorrecte;
+
     @ManyToOne
     @JoinColumn(name = "idquiz")
  @JsonBackReference// Indique que cette propriété est gérée par l'autre côté de la relation

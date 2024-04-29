@@ -21,6 +21,11 @@ public class ScoreController {
     private ScoreService scoreService;
     private QuestionService questionService;
 
+    public ScoreController(ScoreService scoreService, QuestionService questionService) {
+        this.scoreService = scoreService;
+        this.questionService = questionService;
+    }
+
     @GetMapping
     public ResponseEntity<List<Score>> getAllScores() {
         List<Score> scores = scoreService.getAllScores();
