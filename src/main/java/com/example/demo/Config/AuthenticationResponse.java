@@ -15,6 +15,15 @@ public class AuthenticationResponse {
     private String token;
     private Integer id;
 
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
+    }
+
+    private  String role;
     public void setToken(String jwtToken) {
     }
 

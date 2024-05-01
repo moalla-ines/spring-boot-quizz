@@ -51,9 +51,9 @@ public class QuestionController {
         }
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteQuestion(@PathVariable Integer id) {
-        questionService.deleteQuestion(id);
+    @DeleteMapping("/{idquestion}")
+    public ResponseEntity<Void> deleteQuestion(@PathVariable Integer idquestion) {
+        questionService.deleteQuestion(idquestion);
         return ResponseEntity.noContent().build();
     }
     @GetMapping("/quiz/{idquiz}")

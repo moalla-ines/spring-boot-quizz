@@ -35,6 +35,9 @@ public class AuthService {
 
 
     public AuthenticationResponse register(UserDto request) {
+        if (userRepository.findByUsername(request.getUsername()).isPresent()) {
+            throw new RuntimeException("Username already exists");
+        }
         Role role = new Role("user");
         UserEntity.UserEntityBuilder builder = UserEntity.builder();
         builder.username(request.getUsername());
@@ -47,6 +50,7 @@ public class AuthService {
         return AuthenticationResponse.builder()
                 .token(jwtToken)
                 .id(user.getId())
+                .role(role.getName())
                 .build();
     }
 
@@ -78,6 +82,9 @@ public class AuthService {
         return AuthenticationResponse.builder()
                 .token(jwtToken)
                 .id(user.getId())
+                .role(user.getRoles().get(0).getName()) // Supposant que l'utilisateur a un seul rôle
                 .build();
+
     }
+
 }

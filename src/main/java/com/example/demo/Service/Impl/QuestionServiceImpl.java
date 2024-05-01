@@ -31,20 +31,24 @@ public class QuestionServiceImpl implements QuestionService {
 
     @Override
     public Question createQuestion(Question question) {
-        Optional<Question> existingQuestionOptional = questionRepository.findById(question.getIdquestion());
-        if (existingQuestionOptional.isPresent()) {
-            Question existingQuestion = existingQuestionOptional.get();
-            existingQuestion.setText(question.getText());
-            existingQuestion.setOption1(question.getOption1());
-            existingQuestion.setOption2(question.getOption2());
-            existingQuestion.setOption3(question.getOption3());
-            existingQuestion.setOption4(question.getOption4());
-            existingQuestion.setIndiceoptionCorrecte(question.getIndiceoptionCorrecte());
-            existingQuestion.setQuiz(question.getQuiz());
-            return questionRepository.save(existingQuestion);
-        } else {
+        if (question.getIdquestion() != null) {
+            Optional<Question> existingQuestionOptional = questionRepository.findById(question.getIdquestion());
+            if (existingQuestionOptional.isPresent()) {
+                Question existingQuestion = existingQuestionOptional.get();
+                existingQuestion.setText(question.getText());
+                existingQuestion.setOption1(question.getOption1());
+                existingQuestion.setOption2(question.getOption2());
+                existingQuestion.setOption3(question.getOption3());
+                existingQuestion.setOption4(question.getOption4());
+                existingQuestion.setIndiceoptionCorrecte(question.getIndiceoptionCorrecte());
+                return questionRepository.save(existingQuestion);
+            }
+        } else if (question.getQuiz() != null) {
+            // Save a new question if idquestion is null and quiz is not null
             return questionRepository.save(question);
         }
+
+        throw new IllegalArgumentException("idquestion is null and quiz is null");
     }
 
 
@@ -67,8 +71,8 @@ public class QuestionServiceImpl implements QuestionService {
     }
 
     @Override
-    public void deleteQuestion(Integer id) {
-        questionRepository.deleteById(id);
+    public void deleteQuestion(Integer idquestion) {
+        questionRepository.deleteById(idquestion);
     }
 
     @Override

@@ -14,7 +14,7 @@ public interface QuestionService {
 
     Question updateQuestion(Integer id, Question newQuestion);
 
-    void deleteQuestion(Integer id);
+    void deleteQuestion(Integer idquestion);
 
 
     List<Question> findAllByIdQuiz(Integer idquiz);
