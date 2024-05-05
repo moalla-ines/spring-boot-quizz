@@ -20,19 +20,17 @@ public class Score {
     @JsonBackReference
     private Question question;
 
-    @OneToMany(mappedBy = "score", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JsonIgnoreProperties
-    private List<QuizHistory> quizHistoryList;
+
 
     public Score() {
     }
 
-    public Score(Integer idscore, Integer value, Question question, List<QuizHistory> quizHistoryList) {
+    public Score(Integer idscore, Integer value, Question question) {
         this.idscore = idscore;
         this.value = value;
         this.question = question;
 
-        this.quizHistoryList = quizHistoryList;
+
     }
 
     public Integer getIdscore() {
@@ -59,13 +57,6 @@ public class Score {
                 '}';
     }
 
-    public List<QuizHistory> getQuizHistoryList() {
-        return quizHistoryList;
-    }
-
-    public void setQuizHistoryList(List<QuizHistory> quizHistoryList) {
-        this.quizHistoryList = quizHistoryList;
-    }
 
     public Question getQuestion() {
         return question;

@@ -17,6 +17,4 @@ public interface QuizHistoryService {
     void deleteQuizHistory(Integer id);
 
 
-
-    int calculateScore(List<Question> questions, List<String> userAnswers);
 }

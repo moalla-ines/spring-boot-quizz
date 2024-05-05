@@ -1,5 +1,6 @@
 package com.example.demo.Entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
@@ -9,25 +10,30 @@ public class QuizHistory {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer idquizhistory;
+    private Integer result ;
 
     @ManyToOne
     @JoinColumn(name = "id_user")
+    @JsonBackReference
     private UserEntity user;
 
     @ManyToOne
+    @JsonBackReference
     @JoinColumn(name = "id_quiz")
-    private Quiz quiz;
-    @ManyToOne
 
-    @JoinColumn(name = "id_score")
-    private Score score;
+    private Quiz quiz;
+
+
+
     public QuizHistory() {
     }
 
-    public QuizHistory(UserEntity user, Quiz quiz, Score score) {
+    public QuizHistory(Integer result, UserEntity user, Quiz quiz) {
+        this.result = result;
+
         this.user = user;
         this.quiz = quiz;
-        this.score = score;
+
     }
 
     public Integer getIdquizhistory() {
@@ -54,13 +60,7 @@ public class QuizHistory {
         this.quiz = quiz;
     }
 
-    public Score getScore() {
-        return score;
-    }
 
-    public void setScore(Score score) {
-        this.score = score;
-    }
 
     @Override
     public String toString() {
@@ -68,7 +68,15 @@ public class QuizHistory {
                 "idquizhistory=" + idquizhistory +
                 ", user=" + user +
                 ", quiz=" + quiz +
-                ", score=" + score +
                 '}';
+    }
+
+
+    public Integer getResult() {
+        return result;
+    }
+
+    public void setResult(Integer result) {
+        this.result = result;
     }
 }

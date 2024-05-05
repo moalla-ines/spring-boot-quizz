@@ -39,35 +39,41 @@ public class QuizHistoryServiceImpl implements QuizHistoryService {
 
     @Override
     public QuizHistory createQuizHistory(QuizHistory quizHistory) {
+
         UserEntity user = quizHistory.getUser();
         Quiz quiz = quizHistory.getQuiz();
-        Score score = quizHistory.getScore();
 
-        // Save the user, quiz, and score if they don't exist
+        // Assurez-vous que l'utilisateur existe en base de données
         if (user != null && user.getId() != null) {
-            user = userRepository.findById(user.getId()).orElse(user);
+            Optional<UserEntity> existingUser = userRepository.findById(user.getId());
+            if (existingUser.isPresent()) {
+                user = existingUser.get();
+            } else {
+                throw new IllegalArgumentException("User not found with ID: " + user.getId());
+            }
         } else {
-            user = userRepository.save(user);
+            throw new IllegalArgumentException("User ID is required");
         }
 
+        // Assurez-vous que le quiz existe en base de données
         if (quiz != null && quiz.getIdquiz() != null) {
-            quiz = quizRepository.findById(quiz.getIdquiz()).orElse(quiz);
+            Optional<Quiz> existingQuiz = quizRepository.findById(quiz.getIdquiz());
+            if (existingQuiz.isPresent()) {
+                quiz = existingQuiz.get();
+            } else {
+                throw new IllegalArgumentException("Quiz not found with ID: " + quiz.getIdquiz());
+            }
         } else {
-            quiz = quizRepository.save(quiz);
+            throw new IllegalArgumentException("Quiz ID is required");
         }
 
-        if (score != null && score.getIdscore() != null) {
-            score = scoreRepository.findById(score.getIdscore()).orElse(score);
-        } else {
-            score = scoreRepository.save(score);
-        }
-
+        // Met à jour les références dans l'historique du quiz
         quizHistory.setUser(user);
         quizHistory.setQuiz(quiz);
-        quizHistory.setScore(score);
 
         return quizHistoryRepository.save(quizHistory);
     }
+
 
     @Override
     public QuizHistory updateQuizHistory(Integer id, QuizHistory newQuizHistory) {
@@ -76,7 +82,7 @@ public class QuizHistoryServiceImpl implements QuizHistoryService {
             QuizHistory quizHistory = existingQuizHistory.get();
             quizHistory.setQuiz(newQuizHistory.getQuiz());
             quizHistory.setUser(newQuizHistory.getUser());
-            quizHistory.setScore(newQuizHistory.getScore());
+
             return quizHistoryRepository.save(quizHistory);
         }
         return null;
@@ -88,19 +94,4 @@ public class QuizHistoryServiceImpl implements QuizHistoryService {
     }
 
 
-
-
-    @Override
-    public int calculateScore(List<Question> questions, List<String> userAnswers) {
-        int score = 0;
-        for (int i = 0; i < questions.size(); i++) {
-            Question question = questions.get(i);
-            String userAnswer = userAnswers.get(i);
-            if (question.getIndiceoptionCorrecte() != null && userAnswer != null &&
-                    question.getIndiceoptionCorrecte() == Integer.parseInt(userAnswer)) {
-                score++;
-            }
-        }
-        return score;
-    }
 }

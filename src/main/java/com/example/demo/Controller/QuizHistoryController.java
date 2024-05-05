@@ -48,11 +48,5 @@ public class QuizHistoryController {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
-    @PostMapping("/calculate-score")
-    public ResponseEntity<Integer> calculateScore(@RequestBody List<String> userAnswers) {
-        List<Question> questions = null; // Récupérez les questions du quiz
-        int score = quizHistoryService.calculateScore(questions, userAnswers);
-        return new ResponseEntity<>(score, HttpStatus.OK);
-    }
 
 }
