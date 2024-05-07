@@ -10,11 +10,13 @@ public interface QuizHistoryService {
 
     QuizHistory getQuizHistoryById(Integer id);
 
-    QuizHistory createQuizHistory(QuizHistory quizHistory);
+
+    QuizHistory createQuizHistory(Integer iduser,Integer idquiz, Integer value);
 
     QuizHistory updateQuizHistory(Integer id, QuizHistory quizHistory);
 
     void deleteQuizHistory(Integer id);
 
 
+    List<QuizHistory>  getQuizHistoryByIduser(Integer iduser);
 }

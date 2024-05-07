@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/v1/quiz-history")
@@ -29,12 +30,20 @@ public class QuizHistoryController {
         QuizHistory quizHistory = quizHistoryService.getQuizHistoryById(id);
         return new ResponseEntity<>(quizHistory, HttpStatus.OK);
     }
+    @GetMapping("/user/{iduser}")
+    public ResponseEntity<List<QuizHistory>> getQuizHistoryByIduser(@PathVariable Integer iduser) {
+        List<QuizHistory> quizHistoryList = quizHistoryService.getQuizHistoryByIduser(iduser);
+        return new ResponseEntity<>(quizHistoryList, HttpStatus.OK);
+    }
 
-    @PostMapping
-    public ResponseEntity<QuizHistory> createQuizHistory(@RequestBody QuizHistory quizHistory) {
-        QuizHistory createdQuizHistory = quizHistoryService.createQuizHistory(quizHistory);
+
+
+    @PostMapping("/{iduser}/{idquiz}")
+    public ResponseEntity<QuizHistory> createQuizHistory(@PathVariable Integer iduser , @PathVariable Integer idquiz,@RequestBody Integer value) {
+        QuizHistory createdQuizHistory = quizHistoryService.createQuizHistory(iduser,idquiz,value);
         return new ResponseEntity<>(createdQuizHistory, HttpStatus.CREATED);
     }
+
 
     @PutMapping("/{id}")
     public ResponseEntity<QuizHistory> updateQuizHistory(@PathVariable Integer id, @RequestBody QuizHistory quizHistory) {

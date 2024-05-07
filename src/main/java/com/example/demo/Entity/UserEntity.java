@@ -1,5 +1,6 @@
 package com.example.demo.Entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -38,7 +39,7 @@ public class UserEntity implements UserDetails {
 
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JsonIgnoreProperties
+    @JsonBackReference("user")
     private List<QuizHistory> quizHistoryList;
 
     public UserEntity(String username, String password, String email, List<Role>roles, List<QuizHistory> quizHistoryList) {
@@ -118,7 +119,7 @@ public class UserEntity implements UserDetails {
     }
 
     public String getEmail() {
-        return email;
+        return username;
     }
 
     public void setEmail(String email) {

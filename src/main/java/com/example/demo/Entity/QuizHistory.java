@@ -1,6 +1,7 @@
 package com.example.demo.Entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
@@ -14,13 +15,15 @@ public class QuizHistory {
 
     @ManyToOne
     @JoinColumn(name = "id_user")
-    @JsonBackReference
+
+    @JsonIgnoreProperties
     private UserEntity user;
 
     @ManyToOne
-    @JsonBackReference
+
     @JoinColumn(name = "id_quiz")
 
+    @JsonIgnoreProperties("quiz")
     private Quiz quiz;
 
 

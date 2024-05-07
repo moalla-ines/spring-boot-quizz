@@ -2,7 +2,7 @@ package com.example.demo.Entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import jakarta.persistence.*;
 
 import java.util.ArrayList;
@@ -29,6 +29,10 @@ public class Quiz {
 
   @JsonIgnoreProperties("quiz")// Indique que cette propriété est gérée par l'autre côté de la relation
     private List<Question> questions = new ArrayList<>();;
+    @OneToMany(mappedBy = "quiz", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+   // Indique que cette propriété est gérée par l'autre côté de la relation
+    @JsonBackReference
+    private List<QuizHistory> quizHistoryList;
 
     public Quiz() {
     }
@@ -109,5 +113,14 @@ public class Quiz {
 
     public void setNiveau(Niveau niveau) {
         this.niveau = niveau;
+    }
+
+
+    public List<QuizHistory> getQuizHistoryList() {
+        return quizHistoryList;
+    }
+
+    public void setQuizHistoryList(List<QuizHistory> quizHistoryList) {
+        this.quizHistoryList = quizHistoryList;
     }
 }

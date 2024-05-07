@@ -38,40 +38,33 @@ public class QuizHistoryServiceImpl implements QuizHistoryService {
     }
 
     @Override
-    public QuizHistory createQuizHistory(QuizHistory quizHistory) {
+    public QuizHistory createQuizHistory(Integer iduser, Integer idquiz, Integer value) {
+        System.out.println("user: "+iduser);
+        System.out.println("idquiz: "+idquiz);
 
-        UserEntity user = quizHistory.getUser();
-        Quiz quiz = quizHistory.getQuiz();
+
 
         // Assurez-vous que l'utilisateur existe en base de données
-        if (user != null && user.getId() != null) {
-            Optional<UserEntity> existingUser = userRepository.findById(user.getId());
-            if (existingUser.isPresent()) {
-                user = existingUser.get();
-            } else {
-                throw new IllegalArgumentException("User not found with ID: " + user.getId());
-            }
-        } else {
-            throw new IllegalArgumentException("User ID is required");
-        }
+        Optional<UserEntity> existingUser = userRepository.findById(iduser);
+        if (existingUser.isPresent()) {
+            UserEntity user = existingUser.get();
 
-        // Assurez-vous que le quiz existe en base de données
-        if (quiz != null && quiz.getIdquiz() != null) {
-            Optional<Quiz> existingQuiz = quizRepository.findById(quiz.getIdquiz());
+            // Assurez-vous que le quiz existe en base de données
+            Optional<Quiz> existingQuiz = quizRepository.findById(idquiz);
             if (existingQuiz.isPresent()) {
-                quiz = existingQuiz.get();
+                Quiz quiz = existingQuiz.get();
+
+                // Créer un nouvel historique de quiz
+                QuizHistory quizHistory = new QuizHistory(value, user, quiz);
+
+                // Enregistrer l'historique du quiz
+                return quizHistoryRepository.save(quizHistory);
             } else {
-                throw new IllegalArgumentException("Quiz not found with ID: " + quiz.getIdquiz());
+                throw new IllegalArgumentException("Quiz not found with ID: " + idquiz);
             }
         } else {
-            throw new IllegalArgumentException("Quiz ID is required");
+            throw new IllegalArgumentException("User not found with ID: " + iduser);
         }
-
-        // Met à jour les références dans l'historique du quiz
-        quizHistory.setUser(user);
-        quizHistory.setQuiz(quiz);
-
-        return quizHistoryRepository.save(quizHistory);
     }
 
 
@@ -92,6 +85,12 @@ public class QuizHistoryServiceImpl implements QuizHistoryService {
     public void deleteQuizHistory(Integer id) {
         quizHistoryRepository.deleteById(id);
     }
+
+    @Override
+    public List<QuizHistory> getQuizHistoryByIduser(Integer iduser) {
+        return quizHistoryRepository.findByUserId(iduser);
+    }
+
 
 
 }
