@@ -38,6 +38,11 @@ public class AuthService {
         if (userRepository.findByUsername(request.getUsername()).isPresent()) {
             throw new RuntimeException("Username already exists");
         }
+
+        if (userRepository.findByEmail(request.getEmail()).isPresent()) {
+            throw new RuntimeException("Email already exists");
+        }
+
         Role role = new Role("user");
         UserEntity.UserEntityBuilder builder = UserEntity.builder();
         builder.username(request.getUsername());
