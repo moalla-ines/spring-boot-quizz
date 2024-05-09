@@ -41,11 +41,11 @@ public class QuestionController {
         return ResponseEntity.status(HttpStatus.CREATED).body(createdQuestion);
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<Question> updateQuestion(@PathVariable Integer id, @RequestBody Question newQuestion) {
-        Question updatedQuestion = questionService.updateQuestion(id, newQuestion);
-        if (updatedQuestion != null) {
-            return ResponseEntity.ok(updatedQuestion);
+    @PutMapping("/{idquestion}")
+    public ResponseEntity<Question> updateQuestion(@PathVariable Integer idquestion, @RequestBody Question updatedQuestion) {
+        Question question = questionService.updateQuestion(idquestion, updatedQuestion);
+        if (question != null) {
+            return ResponseEntity.ok(question);
         } else {
             return ResponseEntity.notFound().build();
         }

@@ -12,7 +12,7 @@ public interface QuestionService {
 
     Question createQuestion(Question question);
 
-    Question updateQuestion(Integer id, Question newQuestion);
+    Question updateQuestion(Integer idquestion, Question  updatedQuestion);
 
     void deleteQuestion(Integer idquestion);
 

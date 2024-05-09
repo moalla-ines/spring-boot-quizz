@@ -53,22 +53,21 @@ public class QuestionServiceImpl implements QuestionService {
 
 
     @Override
-    public Question updateQuestion(Integer id, Question newQuestion) {
-        Optional<Question> optionalQuestion = questionRepository.findById(id);
-        if (optionalQuestion.isPresent()) {
-            Question existingQuestion = optionalQuestion.get();
-            existingQuestion.setText(newQuestion.getText());
-            existingQuestion.setOption1(newQuestion.getOption1());
-            existingQuestion.setOption2(newQuestion.getOption2());
-            existingQuestion.setOption3(newQuestion.getOption3());
-            existingQuestion.setOption4(newQuestion.getOption4());
-            existingQuestion.setIndiceoptionCorrecte(newQuestion.getIndiceoptionCorrecte());
-            existingQuestion.setQuiz(newQuestion.getQuiz());
-            return questionRepository.save(existingQuestion);
-        } else {
-            throw new RuntimeException("Question not found with id: " + id);
-        }
+    public Question updateQuestion(Integer idquestion, Question updatedQuestion) {
+        return questionRepository.findById(idquestion)
+                .map(existingQuestion -> {
+                    existingQuestion.setText(updatedQuestion.getText());
+                    existingQuestion.setOption1(updatedQuestion.getOption1());
+                    existingQuestion.setOption2(updatedQuestion.getOption2());
+                    existingQuestion.setOption3(updatedQuestion.getOption3());
+                    existingQuestion.setOption4(updatedQuestion.getOption4());
+                    existingQuestion.setIndiceoptionCorrecte(updatedQuestion.getIndiceoptionCorrecte());
+                    existingQuestion.setQuiz(updatedQuestion.getQuiz());
+                    return questionRepository.save(existingQuestion);
+                })
+                .orElseThrow(() -> new RuntimeException("Question not found with id: " + idquestion));
     }
+
 
     @Override
     public void deleteQuestion(Integer idquestion) {
