@@ -74,7 +74,12 @@ public class UserServiceImpl implements UserService {
             }
             if (StringUtils.isNotBlank(newUserDto.getEmail())) {
                 existingUser.setEmail(newUserDto.getEmail());
+
             }
+            if (StringUtils.isNotBlank(String.valueOf(newUserDto.getRoles()))) {
+                existingUser.setRoles(newUserDto.getRoles());
+            }
+
             return userRepository.save(existingUser);
 
         }

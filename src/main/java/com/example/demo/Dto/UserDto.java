@@ -1,12 +1,7 @@
 package com.example.demo.Dto;
 
-
 import com.example.demo.Entity.Role;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
 
-import java.util.Collection;
 import java.util.List;
 
 public class UserDto {
@@ -14,15 +9,14 @@ public class UserDto {
     private String username;
     private String password;
     private String email;
-private Role role;
+    private List<Role> roles;
 
-    public UserDto(Integer iduser, String username, String password, String email, Role role) {
+    public UserDto(Integer iduser, String username, String password, String email, List<Role> roles) {
         this.iduser = iduser;
         this.username = username;
         this.password = password;
         this.email = email;
-
-        this.role = role;
+        this.roles = roles;
     }
 
     public UserDto() {
@@ -40,13 +34,9 @@ private Role role;
         return username;
     }
 
-
-
     public void setUsername(String username) {
         this.username = username;
     }
-
-
 
     public String getPassword() {
         return password;
@@ -64,9 +54,13 @@ private Role role;
         this.email = email;
     }
 
+    public List<Role> getRoles() {
+        return roles;
+    }
 
-
-
+    public void setRoles(List<Role> roles) {
+        this.roles = roles;
+    }
 
     @Override
     public String toString() {
@@ -75,16 +69,7 @@ private Role role;
                 ", username='" + username + '\'' +
                 ", password='" + password + '\'' +
                 ", email='" + email + '\'' +
-
+                ", roles=" + roles +
                 '}';
-    }
-
-
-    public Role getRole() {
-        return role;
-    }
-
-    public void setRole(Role role) {
-        this.role = role;
     }
 }
