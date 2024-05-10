@@ -1,5 +1,6 @@
 package com.example.demo.Entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 
 @Entity
@@ -15,6 +16,7 @@ public class TypeUser {
 
     @ManyToOne
     @JoinColumn(name = "role_id")
+    @JsonBackReference
     private Role role;
 
     public Integer getIdTypeUser() {
@@ -41,4 +43,3 @@ public class TypeUser {
         this.role = role;
     }
 }
-

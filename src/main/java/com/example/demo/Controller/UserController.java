@@ -2,8 +2,9 @@ package com.example.demo.Controller;
 
 import com.example.demo.Config.UnauthorizedException;
 import com.example.demo.Dto.UserDto;
+import com.example.demo.Entity.Role;
 import com.example.demo.Entity.UserEntity;
-import com.example.demo.Repository.UserRepository;
+import com.example.demo.Service.Impl.RoleService;
 import com.example.demo.Service.QuizHistoryService;
 import com.example.demo.Service.UserService;
 
@@ -26,12 +27,14 @@ public class UserController {
     private final UserService userService;
     private final QuizHistoryService quizHistoryService;
     private final PasswordEncoder passwordEncoder;
+    private  final RoleService roleService;
 
     @Autowired
-    public UserController(UserService userService, QuizHistoryService quizHistoryService, PasswordEncoder passwordEncoder) {
+    public UserController(UserService userService, QuizHistoryService quizHistoryService, PasswordEncoder passwordEncoder, RoleService roleService) {
         this.userService = userService;
         this.quizHistoryService = quizHistoryService;
         this.passwordEncoder = passwordEncoder;
+        this.roleService = roleService;
     }
 
     @GetMapping
@@ -76,8 +79,13 @@ System.out.println(optionalUser);
 
 
     @PutMapping("/{id}")
-    public ResponseEntity<UserEntity> updateUser(@PathVariable Integer id, @RequestBody UserDto userDto) {
-        UserEntity updatedUser = userService.updateUser(id, userDto);
+    public ResponseEntity<UserEntity> updateUser(@PathVariable Integer id, @RequestParam String name) {
+        Optional<Role> role = roleService.findRoleByName(name); // Assuming you have a method in your service to find a role by name
+        if (role == null) {
+            return ResponseEntity.notFound().build();
+        }
+
+        UserEntity updatedUser = userService.updateUserRole(id, role);
         if (updatedUser != null) {
             return ResponseEntity.ok(updatedUser);
         } else {
@@ -85,9 +93,18 @@ System.out.println(optionalUser);
         }
     }
 
+
+
+
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteUser(@PathVariable Integer id) {
-        userService.deleteUser(id);
-        return ResponseEntity.noContent().build();
-    }
-}
+        try {
+            userService.deleteUserAndRelatedEntities(id);
+            return ResponseEntity.noContent().build();
+        } catch (Exception e) {
+            // Gérer l'erreur de suppression
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+    }}
+
+

@@ -1,5 +1,6 @@
 package com.example.demo.Entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -10,12 +11,13 @@ import java.util.List;
 
 
 @Table(name = "roles")
-public class Role  {
+public class Role {
 
     @Id
-@GeneratedValue(strategy = GenerationType.IDENTITY)
-private Integer idrole;
-private String name;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer idrole;
+    private String name;
+
 
     public Role(Integer idrole, String name) {
         this.idrole = idrole;
@@ -46,4 +48,5 @@ private String name;
         this.name = name;
 
     }
+
 }

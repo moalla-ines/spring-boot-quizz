@@ -6,9 +6,10 @@ import com.example.demo.Entity.Role;
 import com.example.demo.Entity.UserEntity;
 import com.example.demo.Repository.RoleRepository;
 import com.example.demo.Repository.UserRepository;
+import com.example.demo.Repository.TypeUserRepository;
 import com.example.demo.Service.UserService;
-import io.micrometer.common.util.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -21,7 +22,8 @@ public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final RoleRepository roleRepository;
-
+    @Autowired
+    private TypeUserRepository typeUserRepository;
     @Autowired
     public UserServiceImpl(UserRepository userRepository, PasswordEncoder passwordEncoder, RoleRepository roleRepository) {
         this.userRepository = userRepository;
@@ -61,35 +63,8 @@ public class UserServiceImpl implements UserService {
         return userRepository.save(user);
     }
 
-    @Override
-    public UserEntity updateUser(Integer id, UserDto newUserDto) {
-        Optional<UserEntity> optionalUser = userRepository.findById(id);
-        if (optionalUser.isPresent()) {
-            UserEntity existingUser = optionalUser.get();
-            if (StringUtils.isNotBlank(newUserDto.getPassword())) {
-                existingUser.setPassword(passwordEncoder.encode(newUserDto.getPassword()));
-            }
-            if (StringUtils.isNotBlank(newUserDto.getUsername())) {
-                existingUser.setUsername(newUserDto.getUsername());
-            }
-            if (StringUtils.isNotBlank(newUserDto.getEmail())) {
-                existingUser.setEmail(newUserDto.getEmail());
 
-            }
-            if (StringUtils.isNotBlank(String.valueOf(newUserDto.getRoles()))) {
-                existingUser.setRoles(newUserDto.getRoles());
-            }
 
-            return userRepository.save(existingUser);
-
-        }
-        return null;
-    }
-
-    @Override
-    public void deleteUser(Integer id) {
-        userRepository.deleteById(id);
-    }
 
     @Override
     public void updateUserPassword(UserEntity user, String newPassword, String token) {
@@ -109,6 +84,41 @@ System.out.println(user.getPassword());
             throw new UnauthorizedException("Invalid or missing token");
         }
     }
+
+    public void deleteUserAndRelatedEntities(Integer id) throws ChangeSetPersister.NotFoundException {
+        UserEntity user = userRepository.findById(id).orElseThrow(() -> new ChangeSetPersister.NotFoundException());
+
+        // Supprimer les entrées liées dans la table type_user
+        typeUserRepository.deleteByUser(user);
+
+        // Supprimer l'utilisateur
+        userRepository.delete(user);
+    }
+
+    @Override
+    public UserEntity updateUserRole(Integer id, Optional<Role> role) {
+        return null;
+    }
+
+    @Override
+    public UserEntity updateUserRole(Integer id, String roleName) {
+        UserEntity user = userRepository.findById(id).orElse(null);
+        if (user != null) {
+            Role role = roleRepository.findByName(roleName).orElse(null);
+            if (role != null) {
+                // Mettre à jour le rôle de l'utilisateur
+                user.setRoles(new ArrayList<>());
+                user.getRoles().add(role);
+                return userRepository.save(user);
+            }
+        }
+        return null;
+    }
+
+    public Optional<Role> findRoleByName(String name) {
+        return roleRepository.findByName(name);
+    }
+
 
     private boolean isValidToken(String token) {
         System.out.println(token);
