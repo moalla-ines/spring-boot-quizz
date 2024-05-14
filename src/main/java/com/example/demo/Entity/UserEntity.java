@@ -31,6 +31,10 @@ public class UserEntity implements UserDetails {
     private String username;
     private String password;
     private String email;
+
+
+
+    private Integer existe;
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable(name = "type_user",joinColumns =
     @JoinColumn(name = "user_id",referencedColumnName = "id"),
@@ -50,11 +54,12 @@ public class UserEntity implements UserDetails {
         this.quizHistoryList = quizHistoryList != null ? quizHistoryList : new ArrayList<>();
     }
 
-    public UserEntity(String username, String password, String email, List<Role> roles) {
+    public UserEntity(String username, String password, String email, List<Role> roles, Integer existe) {
         this.username = username;
         this.password = password;
         this.email = email;
         this.roles = roles;
+        this.existe = existe;
     }
 
     public UserEntity(List<QuizHistory> quizHistoryList) {
@@ -78,7 +83,13 @@ public class UserEntity implements UserDetails {
     public String getUsername() {
         return email;
     }
+    public Integer getExiste() {
+        return existe;
+    }
 
+    public void setExiste(Integer existe) {
+        this.existe = existe;
+    }
     @Override
     public boolean isAccountNonExpired() {
         return true;

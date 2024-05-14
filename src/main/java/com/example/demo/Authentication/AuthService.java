@@ -7,7 +7,11 @@ import com.example.demo.Dto.LoginDto;
 import com.example.demo.Dto.UserDto;
 import com.example.demo.Entity.Role;
 import com.example.demo.Entity.UserEntity;
+import com.example.demo.Repository.TokenRepository;
 import com.example.demo.Repository.UserRepository;
+import com.fasterxml.jackson.core.JsonFactory;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -16,7 +20,10 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.security.SecureRandom;
+import java.time.LocalDateTime;
 import java.util.Collections;
+import java.util.Date;
 
 @Service
 
@@ -25,12 +32,14 @@ public class AuthService {
     private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
-
-    public AuthService(UserRepository userRepository, PasswordEncoder passwordEncoder, JwtService jwtService, AuthenticationManager authenticationManager) {
+private  final TokenRepository tokenRepository;
+    public AuthService(UserRepository userRepository, PasswordEncoder passwordEncoder, JwtService jwtService, AuthenticationManager authenticationManager, TokenRepository tokenRepository) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.jwtService = jwtService;
+
         this.authenticationManager = authenticationManager;
+        this.tokenRepository = tokenRepository;
     }
 
 
@@ -59,6 +68,33 @@ public class AuthService {
                 .build();
     }
 
+    private void sendValidationEmail(UserEntity user) {
+        var newToken =generateAndSaveActivationToken(user);
+        //send email
+    }
+
+    private String generateAndSaveActivationToken(UserEntity user) {
+        String generatedToken = generateActivationCode(6);
+        var token = Token.builder()
+                .token(generatedToken)
+                .createAt(LocalDateTime.now())
+                .expiresAt(LocalDateTime.now().plusMinutes(15))
+                .user(user)
+                .build();
+        tokenRepository.save(token);
+        return generatedToken;
+    }
+
+    private String generateActivationCode(int length) {
+        String characteres = "0123456789";
+        StringBuilder codeBuilder = new StringBuilder();
+        SecureRandom secureRandom = new SecureRandom();
+        for (int i = 0; i< length ; i++){
+            int randomIndex = secureRandom.nextInt(characteres.length());
+            codeBuilder.append(characteres.charAt(randomIndex));
+        }
+        return  codeBuilder.toString();
+    }
 
 
     public AuthenticationResponse authenticate(LoginDto request) {

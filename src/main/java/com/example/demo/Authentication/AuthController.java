@@ -1,6 +1,7 @@
 package com.example.demo.Authentication;
 
 import com.example.demo.Config.AuthenticationResponse;
+import com.example.demo.Config.JwtService;
 import com.example.demo.Dto.LoginDto;
 import com.example.demo.Dto.UserDto;
 import lombok.RequiredArgsConstructor;
@@ -12,9 +13,10 @@ import org.springframework.web.bind.annotation.*;
 @CrossOrigin( )
 public class AuthController {
     private final AuthService authService;
-
-    public AuthController(AuthService authService) {
+private final JwtService jwtService;
+    public AuthController(AuthService authService, JwtService jwtService) {
         this.authService = authService;
+        this.jwtService = jwtService;
     }
 
     @PostMapping("/register")
@@ -26,5 +28,19 @@ public class AuthController {
     public ResponseEntity<AuthenticationResponse> authenticate(
             @RequestBody LoginDto request){
         return ResponseEntity.ok(authService.authenticate(request));
+    }
+    @PostMapping("/send-verification-email")
+    public ResponseEntity<?> sendVerificationEmail(@RequestBody String email) {
+        String token = jwtService.generateVerificationToken(email);
+
+        return ResponseEntity.ok("Email de vérification envoyé avec succès");
+    }
+
+    @GetMapping("/verify-email")
+    public ResponseEntity<?> verifyEmail(@RequestParam String token) {
+        String email = jwtService.extractEmailFromToken(token);
+        // Vérifiez si l'email est valide
+        // Mettez à jour le statut de vérification de l'utilisateur dans la base de données
+        return ResponseEntity.ok("Email vérifié avec succès");
     }
 }

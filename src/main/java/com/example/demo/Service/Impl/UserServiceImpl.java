@@ -33,7 +33,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<UserEntity> getAllUsers() {
-        return userRepository.findAll();
+        return userRepository.findByExiste(1);
     }
 
     @Override
@@ -87,13 +87,10 @@ System.out.println(user.getPassword());
 
     public void deleteUserAndRelatedEntities(Integer id) throws ChangeSetPersister.NotFoundException {
         UserEntity user = userRepository.findById(id).orElseThrow(() -> new ChangeSetPersister.NotFoundException());
-
-        // Supprimer les entrées liées dans la table type_user
-        typeUserRepository.deleteByUser(user);
-
-        // Supprimer l'utilisateur
-        userRepository.delete(user);
+        user.setExiste(0); // Mettre à jour la propriété existe à 0
+        userRepository.save(user); // Enregistrer les modifications dans la base de données
     }
+
 
     @Override
     public UserEntity updateUserRole(Integer id, Optional<Role> role) {
