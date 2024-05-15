@@ -58,6 +58,7 @@ private  final TokenRepository tokenRepository;
         builder.password(passwordEncoder.encode(request.getPassword()));
         builder.email(request.getEmail());
         builder.roles(Collections.singletonList(role));
+        builder.existe(1);
         var user = builder.build();
         userRepository.save(user);
         var jwtToken = jwtService.generateToken(user);
