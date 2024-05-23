@@ -11,6 +11,37 @@ public class UserDto {
     private String email;
     private List<Role> roles;
 
+    private boolean enabled;
+    private String verificationToken;
+
+
+    public boolean isEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
+    }
+
+    public String getVerificationToken() {
+        return verificationToken;
+    }
+
+
+    public UserDto(Integer iduser, String username, String password, String email, List<Role> roles, boolean enabled, String verificationToken) {
+        this.iduser = iduser;
+        this.username = username;
+        this.password = password;
+        this.email = email;
+        this.roles = roles;
+        this.enabled = enabled;
+        this.verificationToken = verificationToken;
+    }
+
+    public void setVerificationToken(String verificationToken) {
+        this.verificationToken = verificationToken;
+    }
+
     public UserDto(Integer iduser, String username, String password, String email, List<Role> roles) {
         this.iduser = iduser;
         this.username = username;

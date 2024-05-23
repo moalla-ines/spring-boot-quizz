@@ -5,6 +5,7 @@ import com.example.demo.Config.JwtService;
 import com.example.demo.Dto.LoginDto;
 import com.example.demo.Dto.UserDto;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,34 +14,34 @@ import org.springframework.web.bind.annotation.*;
 @CrossOrigin( )
 public class AuthController {
     private final AuthService authService;
-private final JwtService jwtService;
+    private final JwtService jwtService;
+
     public AuthController(AuthService authService, JwtService jwtService) {
         this.authService = authService;
         this.jwtService = jwtService;
     }
 
     @PostMapping("/register")
-    public ResponseEntity<AuthenticationResponse> register(
-            @RequestBody UserDto request){
-        return ResponseEntity.ok(authService.register(request));
+
+    public ResponseEntity<String> registerUser(@RequestBody UserDto userDto) {
+        System.out.println("hey");
+        authService.register(userDto);
+        return ResponseEntity.ok("Registration successful. Please check your email for verification.");
     }
+
+
+    @GetMapping("/verify")
+    public ResponseEntity<String> verifyUser(@RequestParam("token") String token) {
+        if (authService.verifyUser(token)) {
+            return ResponseEntity.ok("Verification successful. You can now log in.");
+        } else {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid token.");
+        }
+    }
+
     @PostMapping("/authenticate")
     public ResponseEntity<AuthenticationResponse> authenticate(
-            @RequestBody LoginDto request){
+            @RequestBody LoginDto request) {
         return ResponseEntity.ok(authService.authenticate(request));
-    }
-    @PostMapping("/send-verification-email")
-    public ResponseEntity<?> sendVerificationEmail(@RequestBody String email) {
-        String token = jwtService.generateVerificationToken(email);
-
-        return ResponseEntity.ok("Email de vérification envoyé avec succès");
-    }
-
-    @GetMapping("/verify-email")
-    public ResponseEntity<?> verifyEmail(@RequestParam String token) {
-        String email = jwtService.extractEmailFromToken(token);
-        // Vérifiez si l'email est valide
-        // Mettez à jour le statut de vérification de l'utilisateur dans la base de données
-        return ResponseEntity.ok("Email vérifié avec succès");
     }
 }

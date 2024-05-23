@@ -27,4 +27,6 @@ public interface UserService {
     UserEntity updateUserRole(Integer id, Optional<Role> role);
 
     UserEntity updateUserRole(Integer id, String roleName);
+    void createPasswordResetTokenForUser(UserEntity user, String token);
+    void sendResetTokenEmail(String token, UserEntity user);
 }

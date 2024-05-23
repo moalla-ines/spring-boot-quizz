@@ -31,8 +31,20 @@ public class UserEntity implements UserDetails {
     private String username;
     private String password;
     private String email;
+    private boolean enabled;
+    private String verificationToken;
 
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
+    }
 
+    public String getVerificationToken() {
+        return verificationToken;
+    }
+
+    public void setVerificationToken(String verificationToken) {
+        this.verificationToken = verificationToken;
+    }
 
     private Integer existe;
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
@@ -60,6 +72,17 @@ public class UserEntity implements UserDetails {
         this.email = email;
         this.roles = roles;
         this.existe = existe;
+    }
+
+    public UserEntity(String username, String password, String email, boolean enabled, String verificationToken, Integer existe, List<Role> roles, List<QuizHistory> quizHistoryList) {
+        this.username = username;
+        this.password = password;
+        this.email = email;
+        this.enabled = enabled;
+        this.verificationToken = verificationToken;
+        this.existe = existe;
+        this.roles = roles;
+        this.quizHistoryList = quizHistoryList;
     }
 
     public UserEntity(List<QuizHistory> quizHistoryList) {

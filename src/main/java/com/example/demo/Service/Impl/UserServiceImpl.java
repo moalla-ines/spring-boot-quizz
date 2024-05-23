@@ -2,17 +2,26 @@ package com.example.demo.Service.Impl;
 
 import com.example.demo.Config.UnauthorizedException;
 import com.example.demo.Dto.UserDto;
+import com.example.demo.Entity.PasswordResetToken;
 import com.example.demo.Entity.Role;
 import com.example.demo.Entity.UserEntity;
+import com.example.demo.Repository.PasswordResetTokenRepository;
 import com.example.demo.Repository.RoleRepository;
 import com.example.demo.Repository.UserRepository;
 import com.example.demo.Repository.TypeUserRepository;
 import com.example.demo.Service.UserService;
+import jakarta.mail.MessagingException;
+import jakarta.mail.internet.MimeMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.crossstore.ChangeSetPersister;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.io.UnsupportedEncodingException;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -23,12 +32,15 @@ public class UserServiceImpl implements UserService {
     private final PasswordEncoder passwordEncoder;
     private final RoleRepository roleRepository;
     @Autowired
-    private TypeUserRepository typeUserRepository;
+    private PasswordResetTokenRepository tokenRepository;
+
+    private JavaMailSender mailSender;
     @Autowired
-    public UserServiceImpl(UserRepository userRepository, PasswordEncoder passwordEncoder, RoleRepository roleRepository) {
+    public UserServiceImpl(UserRepository userRepository, PasswordEncoder passwordEncoder, RoleRepository roleRepository,JavaMailSender mailSender) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.roleRepository = roleRepository;
+        this.mailSender = mailSender;
     }
 
     @Override
@@ -63,9 +75,45 @@ public class UserServiceImpl implements UserService {
         return userRepository.save(user);
     }
 
+    public void createPasswordResetTokenForUser(UserEntity user, String token) {
+        // Check if a token for this user already exists and delete it
+        PasswordResetToken existingToken = tokenRepository.findByUser(user);
 
+        if (existingToken != null) {
+            tokenRepository.delete(existingToken);
+        }
 
+        // Create and save a new token
+        PasswordResetToken myToken = new PasswordResetToken(token, user);
+        System.out.println("myToken "+myToken);
+        tokenRepository.save(myToken);
+    }
 
+    public void sendResetTokenEmail(String token, UserEntity user) {
+        System.out.println(token);
+
+        String subject = "Demande de réinitialisation de mot de passe";
+        String senderName = "CODE CRAFTER";
+        String url ="http://localhost:8080/api/v1/reset-password?token=" + token;
+        String mailContent = "<p>Cher " + user.getEmail() + ",</p>";
+        mailContent += "<p>Vous trouverez ce code ci-dessous pour réinitialiser votre mot de passe :</p>";
+        mailContent += "<p CODE: </p>"+token+" " ;
+        mailContent += "<p>Merci,<br>CODE CRAFTER</p>";
+        MimeMessage message = mailSender.createMimeMessage();
+        try {
+            MimeMessageHelper helper = new MimeMessageHelper(message, true);
+            helper.setFrom("eshopcommerce11@gmail.com", senderName);
+            helper.setTo(user.getUsername());
+            helper.setSubject(subject);
+            helper.setText(mailContent, true);
+            mailSender.send(message);
+        } catch (MessagingException e) {
+            e.printStackTrace();
+        } catch (UnsupportedEncodingException e) {
+            throw new RuntimeException(e);
+        }
+
+    }
     @Override
     public void updateUserPassword(UserEntity user, String newPassword, String token) {
         // Vérifie si le token est valide
@@ -73,9 +121,9 @@ public class UserServiceImpl implements UserService {
             // Encode le nouveau mot de passe avant de le sauvegarder
 
             String encodedPassword = passwordEncoder.encode(newPassword);
-System.out.println(newPassword);
-System.out.println(encodedPassword);
-System.out.println(user.getPassword());
+            System.out.println(newPassword);
+            System.out.println(encodedPassword);
+            System.out.println(user.getPassword());
             user.setPassword(encodedPassword);
             // Sauvegarde les modifications de l'utilisateur
             userRepository.save(user);
